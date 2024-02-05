@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "405331820191",
+    "project_id": "nsut-bazaar",
+    "storage_bucket": "nsut-bazaar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:405331820191:android:a8bd3ec3fbea7d856d2caa",
+        "android_client_info": {
+          "package_name": "com.example.nsutbazaar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGYU-eEopH6ot_8rZdvo8YLZq9sKynDu0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
