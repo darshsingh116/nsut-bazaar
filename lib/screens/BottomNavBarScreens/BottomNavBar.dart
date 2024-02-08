@@ -4,8 +4,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:nsutbazaar/repositories/firebase_storage_repo.dart';
-import 'package:nsutbazaar/screens/BottomNavBarScreens/dashboard.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/listings.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/profile_page.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/requests.dart';
 import 'package:nsutbazaar/widgets/backgroundContainer.dart';
 import 'package:nsutbazaar/widgets/hackethix_appBar.dart';
 import 'package:nsutbazaar/widgets/app_bar_drawer.dart';
@@ -20,12 +21,17 @@ class NavBarScreens extends StatefulWidget {
 class _NavBarScreensState extends State<NavBarScreens> {
   @override
   // ignore: must_call_super
-  initState() {;
+  initState() {
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     super.initState();
   }
 
-  int index = 0;
-  List<Widget> screensList = [Dashboard()];
+  int index = 1;
+  List<Widget> screensList = [
+    RequestsScreen(),
+    ListingsScreen(),
+    ProfilePage()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +52,11 @@ class _NavBarScreensState extends State<NavBarScreens> {
               color: Color.fromARGB(
                   255, 205, 255, 68)), // Set the color for selected icons
           unselectedIconTheme:
-              IconThemeData(color: Color.fromARGB(255, 84,83,84)),
+              IconThemeData(color: Color.fromARGB(255, 84, 83, 84)),
           selectedItemColor: Color.fromARGB(255, 205, 255,
               68), // Set the color for selected items (icons and text)
-          unselectedItemColor: Color.fromARGB(255, 84,83,84), // Set the color for unselected items (icons and text)
+          unselectedItemColor: Color.fromARGB(255, 84, 83,
+              84), // Set the color for unselected items (icons and text)
           iconSize: 30, // Set the size of the icons
           items: getBottomTabs(NavBarItems),
           onTap: (value) {
@@ -75,12 +82,8 @@ class MyTabItem {
 }
 
 List<MyTabItem> NavBarItems = [
-  MyTabItem('Events Screen', 'Events', Icons.calendar_month_outlined),
-  MyTabItem('Practice Screen', 'Practice', Icons.question_answer_outlined),
-  
-  MyTabItem('Dashboard Screen', 'Dashboard', Icons.speed_outlined),
-  MyTabItem('Resources Screen', 'Resources', Icons.menu_book_outlined),
-  
+  MyTabItem('Requests Screen', 'Requests', Icons.request_quote),
+  MyTabItem('Listings Screen', 'Listings', Icons.compass_calibration),
   MyTabItem('Profile Screen', 'Profile', Icons.person),
 ];
 
@@ -92,26 +95,3 @@ List<BottomNavigationBarItem> getBottomTabs(List<MyTabItem> items) {
         backgroundColor: Colors.transparent);
   }).toList();
 }
-
-int _selectedIndex = 0;
-TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-  ];
-
-  // void _onItemTapped(int index) {
-  //   setState(() {
-  //     _selectedIndex = index;
-  //   });
-  // }

@@ -4,20 +4,26 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nsutbazaar/models/User.dart';
 
 class FirebaseRepository {
-  final _firebaseAuth = FirebaseAuth.instance;
-  final _firebaseFirestore = FirebaseFirestore.instance;
+  final firebaseAuth = FirebaseAuth.instance;
+  final firebaseFirestore = FirebaseFirestore.instance;
   late User user;
   late UserModel userModel;
 
+
+  // String? getCurrentUserId() {
+  //   User? user = firebaseAuth.currentUser;
+  //   return user?.uid;
+  // }
+
   Future<int> alreadyLoggedIn() async {
-    User? user = await _firebaseAuth.currentUser;
+    User? user = await firebaseAuth.currentUser;
 
     if (user == null) {
       return 1;
     } else {
       this.user = user;
       var response =
-          await _firebaseFirestore.collection("Users").doc(user.uid).get();
+          await firebaseFirestore.collection("Users").doc(user.uid).get();
       userModel = UserModel.fromMap(response.data()!);
       return 0;
     }
@@ -25,13 +31,13 @@ class FirebaseRepository {
 
   Future<int> login({required String email, required String password}) async {
     try {
-      var userCredential = await _firebaseAuth.signInWithEmailAndPassword(
+      var userCredential = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
       print("loggedin1");
       user = userCredential.user!;
 
       var response =
-          await _firebaseFirestore.collection("Users").doc(user.uid).get();
+          await firebaseFirestore.collection("Users").doc(user.uid).get();
 
       print(response.data()!);
       print("hui hui");
@@ -55,11 +61,12 @@ class FirebaseRepository {
       required String fullName}) async {
     //regsitration
     try {
-      var userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+      var userCredential = await firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       user = userCredential.user!;
 //data model entry
       userModel = UserModel(
+          uid: user.uid,
           username: username,
           email: user.email ?? "email",
           fullname: fullName,
@@ -70,7 +77,7 @@ class FirebaseRepository {
      
 
       //data model entry finished
-      await _firebaseFirestore
+      await firebaseFirestore
           .collection("Users")
           .doc(user.uid)
           .set(userModel.toJson());
@@ -93,7 +100,7 @@ class FirebaseRepository {
 
   Future<void> updateUserModel() async {
     print("user updated!");
-    await _firebaseFirestore
+    await firebaseFirestore
         .collection("Users")
         .doc(user.uid)
         .update(userModel.toJson());
@@ -105,7 +112,7 @@ class FirebaseRepository {
   // //get events model
   // Future<Object> getEvents() async {
   //   try {
-  //     var response = await _firebaseFirestore.collection("Events").get();
+  //     var response = await firebaseFirestore.collection("Events").get();
   //     //print("response");
   //     var list =
   //         response.docs.map((doc) => EventModel.fromMap(doc.data())).toList();
@@ -123,7 +130,7 @@ class FirebaseRepository {
   // }
 
   Future<void> logOut() async {
-    await _firebaseAuth.signOut();
+    await firebaseAuth.signOut();
   }
 }
 

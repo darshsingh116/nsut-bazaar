@@ -44,7 +44,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final fullName = event.fullName;
       //print("hai2");
       int success = await event.authRepository.signUp(
-          email: email, password: password, username: username,rollNumber: rollnumber,phoneNumber:phone, fullName:fullName);
+          email: email,
+          password: password,
+          username: username,
+          rollNumber: rollnumber,
+          phoneNumber: phone,
+          fullName: fullName);
 
       if (success == 1) {
         emit(AuthStateLoggedIn());
@@ -66,6 +71,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEventInitialize>((event, emit) async {
       print("inside bloc");
       int status = await event.authRepository.alreadyLoggedIn();
+      print(status);
       if (status == 1) {
         emit(AuthStateLoggedOut());
       } else {

@@ -5,9 +5,11 @@ class backgroundContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
+    return Container(
+          child:Container(
+                      child: child,
+                      decoration: BoxDecoration(color: Colors.transparent),
+                    ),
           height: MediaQuery.of(context).size.height * 1,
           decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -19,30 +21,6 @@ class backgroundContainer extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           )),
-        ),
-        // Container(
-        //   height: MediaQuery.of(context).size.height * 0.3,
-        //   decoration: BoxDecoration(color: Color.fromARGB(77, 255, 255, 255)),
-        // ),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width * 0.015,
-              color: Color.fromARGB(255, 206, 255, 68),
-            ),
-            Expanded(
-              child: Container(
-                      child: child,
-                      decoration: BoxDecoration(color: Colors.transparent),
-                    ),
-            )
-          ],
-        ),
-        
-      ],
-    );
+        );
   }
 }

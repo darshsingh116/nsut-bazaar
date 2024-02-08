@@ -1,11 +1,13 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 
 class ProductModel {
+  String userid; // Renamed parameter
+
   String productName;
   double price;
   String description;
 
   ProductModel({
+    required this.userid, // Updated constructor
     required this.productName,
     required this.price,
     required this.description,
@@ -13,6 +15,7 @@ class ProductModel {
 
   factory ProductModel.fromMap(Map<String, dynamic> map) {
     return ProductModel(
+      userid: map['userid'] as String, // Updated fromMap method
       productName: map['productName'] as String,
       price: map['price'] as double,
       description: map['description'] as String,
@@ -21,6 +24,7 @@ class ProductModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'userid': userid, // Updated toJson method
       'productName': productName,
       'price': price,
       'description': description,

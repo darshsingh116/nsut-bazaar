@@ -236,7 +236,7 @@ class RegisterScreen extends HookWidget {
                                         password: password,
                                         rollnumber: rollnumber,
                                         username: username,
-                                        phone: phonenumber as int,
+                                        phone: int.parse(phonenumber),
                                         fullName: fullname,
                                         authRepository: authRepository,
                                       ));
