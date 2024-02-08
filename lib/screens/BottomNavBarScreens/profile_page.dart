@@ -5,8 +5,6 @@ import 'package:nsutbazaar/auth/bloc/auth_event.dart';
 import 'package:nsutbazaar/auth/bloc/auth_state.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:nsutbazaar/auth/login.dart';
-import 'package:nsutbazaar/widgets/backgroundContainer.dart';
-import 'package:nsutbazaar/widgets/hackethix_appBar.dart';
 import 'dart:ui';
 
 class ProfilePage extends StatefulWidget {

@@ -1,14 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nsutbazaar/repositories/firebase_repo.dart';
-import 'package:nsutbazaar/repositories/firebase_storage_repo.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/listings.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/profile_page.dart';
-import 'package:nsutbazaar/screens/BottomNavBarScreens/requests.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/requests.dart';
 import 'package:nsutbazaar/widgets/backgroundContainer.dart';
-import 'package:nsutbazaar/widgets/hackethix_appBar.dart';
+import 'package:nsutbazaar/widgets/nsutbazaar_appBar.dart';
 import 'package:nsutbazaar/widgets/app_bar_drawer.dart';
 
 class NavBarScreens extends StatefulWidget {
@@ -22,7 +19,6 @@ class _NavBarScreensState extends State<NavBarScreens> {
   @override
   // ignore: must_call_super
   initState() {
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     super.initState();
   }
 
@@ -39,7 +35,7 @@ class _NavBarScreensState extends State<NavBarScreens> {
       child: Scaffold(
         drawer: AppBarDrawer(context),
         extendBodyBehindAppBar: true,
-        appBar: hackethixAppBar(NavBarItems[index].title, context),
+        appBar: nsutbazaarAppBar(NavBarItems[index].title, context),
         backgroundColor: Colors.transparent,
         body: screensList[index],
         bottomNavigationBar: BottomNavigationBar(

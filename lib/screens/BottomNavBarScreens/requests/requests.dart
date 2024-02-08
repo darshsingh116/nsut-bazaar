@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:nsutbazaar/models/ProductModel.dart'; // Import your ProductModel
+import 'package:nsutbazaar/models/ProductModel.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
-import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_bloc.dart';
-import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_event.dart';
-import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_state.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/bloc/requests_bloc.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/bloc/requests_event.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/bloc/requests_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ListingsScreen extends StatefulWidget {
-  const ListingsScreen({Key? key}) : super(key: key);
+class RequestsScreen extends StatefulWidget {
+  const RequestsScreen({Key? key}) : super(key: key);
 
   @override
-  State<ListingsScreen> createState() => _ListingsScreenState();
+  State<RequestsScreen> createState() => _RequestsScreenState();
 }
 
-class _ListingsScreenState extends State<ListingsScreen> {
+class _RequestsScreenState extends State<RequestsScreen> {
+
   @override
   Widget build(BuildContext context) {
-    final listingsBloc = context.read<ListingsBloc>();
+    final listingsBloc = context.read<RequestsBloc>();
     final firebaseRepository = context.read<FirebaseRepository>();
 
-    return BlocConsumer<ListingsBloc, ListingsState>(
+    return BlocConsumer<RequestsBloc, RequestsState>(
       listener: (context, state) {},
       builder: (context, state) {
-        if (state is ListingsStateInitial) {
+        if (state is RequestsStateInitial) {
           listingsBloc.add(
-              ListingsEventGetAllList(firebaseRepository: firebaseRepository));
+              RequestsEventGetAllList(firebaseRepository: firebaseRepository));
         }
         return Scaffold(
           backgroundColor: Colors.transparent,
           body: SafeArea(
             child: Column(
-              children: [
+              children:[
                 Padding(
           padding: const EdgeInsets.all(8.0),
           child: SearchAnchor(
@@ -42,7 +43,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                     EdgeInsets.symmetric(horizontal: 16.0)),
                 onSubmitted: (searchParameter) {
                   listingsBloc.add(
-              ListingsEventGetSearchedList(firebaseRepository: firebaseRepository, searchParameter: searchParameter));
+              RequestsEventGetSearchedList(firebaseRepository: firebaseRepository, searchParameter: searchParameter));
                 },
                 leading: const Icon(Icons.search),
               );
@@ -52,12 +53,12 @@ class _ListingsScreenState extends State<ListingsScreen> {
             }
           ),
         ),
-                BlocBuilder<ListingsBloc, ListingsState>(
+                BlocBuilder<RequestsBloc, RequestsState>(
                   builder: (context, state) {
-                    if (state is ListingsStateLoading ||
-                        state is ListingsStateInitial) {
+                    if (state is RequestsStateLoading ||
+                        state is RequestsStateInitial) {
                       return CircularProgressIndicator();
-                    } else if (state is ListingsStateGotList) {
+                    } else if (state is RequestsStateGotList) {
                       if (state.productList.isEmpty) {
                         return Text('No products available');
                       } else {

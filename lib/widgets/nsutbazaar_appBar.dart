@@ -2,16 +2,16 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-PreferredSize hackethixAppBar(String title, BuildContext context) {
+PreferredSize nsutbazaarAppBar(String title, BuildContext context) {
   Future<void> InfoDialog(BuildContext context) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('HackethiX App Info'),
+          title: const Text('NsutBazaar App Info'),
           content: const Text(
-            'This app belongs to HackethiX.NSUT society.\n'
-            'For more info contact tech.hackethix.nsut@gmail.com\n',
+            'This app belongs to NsutBazaar society.\n'
+            'For more info contact techNsutBazaar@gmail.com\n',
           ),
           actions: <Widget>[
             TextButton(

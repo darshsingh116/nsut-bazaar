@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:nsutbazaar/models/ProductModel.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_bloc.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_event.dart';
 import 'package:nsutbazaar/utils/product_firestore.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_state.dart';
 
 class AddListingScreen extends StatefulWidget {
   const AddListingScreen({Key? key}) : super(key: key);
@@ -76,24 +79,23 @@ class _AddListingScreenState extends State<AddListingScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
                   onPressed: () async {
-                    
-                    
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
 
-                        // Create ProductModel instance
-                        ProductModel product = ProductModel(
-                          userid: authRepository.userModel.uid,
-                          productName: _productName,
-                          price: _price,
-                          description: _description,
-                        );
+                      // Create ProductModel instance
+                      ProductModel product = ProductModel(
+                        userid: authRepository.userModel.uid,
+                        productName: _productName,
+                        price: _price,
+                        description: _description,
+                      );
 
-                        productFirestore.addSellProduct(product);
-                      }
-                  
+                      productFirestore.addSellProduct(product);
+                    }
+
                     // Optionally, you can navigate back to previous screen
                     Navigator.pop(context);
+                    context.read<ListingsBloc>().emit(ListingsStateInitial());
                   },
                   child: const Text('Submit'),
                 ),

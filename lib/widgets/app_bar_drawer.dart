@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/BottomNavBar.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_bloc.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_event.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_state.dart';
 import 'package:nsutbazaar/screens/DrawerScreens/my_listings.dart';
 import 'package:nsutbazaar/screens/DrawerScreens/my_requests.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 Drawer AppBarDrawer(
   BuildContext context,
@@ -18,8 +22,7 @@ Drawer AppBarDrawer(
         SizedBox(
           height: 300,
           child: DrawerHeader(
-            decoration: BoxDecoration(
-            ),
+            decoration: BoxDecoration(),
             child: Column(
               children: [
                 // Image.asset(
@@ -70,10 +73,11 @@ Drawer AppBarDrawer(
                     color: Color.fromARGB(255, 0, 0, 0), fontSize: 17),
               ),
               onTap: () {
+                Navigator.pop(context);
                 Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MyListings()),
-          );
+                  context,
+                  MaterialPageRoute(builder: (context) => MyListings()),
+                );
                 
               },
             ),
@@ -89,10 +93,11 @@ Drawer AppBarDrawer(
                     color: Color.fromARGB(255, 0, 0, 0), fontSize: 17),
               ),
               onTap: () {
+                Navigator.pop(context);
                 Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MyRequests()),
-          );
+                  context,
+                  MaterialPageRoute(builder: (context) => MyRequests()),
+                );
               },
             ),
           ),

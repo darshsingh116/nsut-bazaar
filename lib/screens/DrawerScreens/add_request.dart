@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:nsutbazaar/models/ProductModel.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/bloc/requests_state.dart';
 import 'package:nsutbazaar/screens/DrawerScreens/my_requests.dart';
 import 'package:nsutbazaar/utils/product_firestore.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_bloc.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/bloc/requests_bloc.dart';
 
 class AddRequestScreen extends StatefulWidget {
   const AddRequestScreen({Key? key}) : super(key: key);
@@ -100,11 +103,8 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                         productFirestore.addRequestProduct(product);
                       }
 
-                      // Optionally, you can navigate back to previous screen
-                      Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => MyRequests()),
-          );
+                      Navigator.pop(context);
+                    context.read<RequestsBloc>().emit(RequestsStateInitial());
 
                     },
                     child: const Text('Submit'),

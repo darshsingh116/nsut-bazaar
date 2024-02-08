@@ -7,6 +7,8 @@ import 'package:nsutbazaar/repositories/firebase_storage_repo.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:nsutbazaar/firebase_options.dart';
 import 'package:nsutbazaar/auth/login.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_bloc.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/bloc/requests_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +35,8 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AuthBloc>(create: (BuildContext context) => AuthBloc()),
+          BlocProvider<ListingsBloc>(create: (BuildContext context) => ListingsBloc()),
+          BlocProvider<RequestsBloc>(create: (BuildContext context) => RequestsBloc()),
           BlocProvider<FirebaseStorageBloc>(
               create: (BuildContext context) => FirebaseStorageBloc()),
         ],
