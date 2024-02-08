@@ -16,10 +16,3 @@ class FirebaseStorageBloc
     
   }
 }
-
-Future<ListResult> firebaseGetFiles(
-    FirebaseStoreageRepo firebaseStoreageRepo) async {
-  Future<ListResult> futureFiles = firebaseStoreageRepo.getPdfList();
-  return futureFiles;
-}
-

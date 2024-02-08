@@ -1,7 +1,9 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:nsutbazaar/models/ProductModel.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nsutbazaar/repositories/firebase_storage_repo.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/bloc/requests_state.dart';
 import 'package:nsutbazaar/screens/DrawerScreens/my_requests.dart';
 import 'package:nsutbazaar/utils/product_firestore.dart';

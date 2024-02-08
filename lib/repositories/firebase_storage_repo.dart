@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
@@ -5,35 +7,22 @@ import 'package:path_provider/path_provider.dart';
 class FirebaseStoreageRepo {
   final _firebaseStorageInstance = FirebaseStorage.instance;
 
-  Future<ListResult> getPdfList() {
-    Future<ListResult> futureFilesNameList =
-        _firebaseStorageInstance.ref('/resources').listAll();
-
-    return futureFilesNameList;
-  }
-
-  
-
-  Future<List<String>> getPreviewsurl(ListResult refList) async {
-    int n = refList.items.length;
-    List<String> previewsUrl = List.filled(10, "https://wallpapers.com/images/hd/crying-pictures-6gh0n5wvrywal8d6.jpg");
-    var s = refList.items;
-      
+  Future<String?> uploadImageFile(File imageFile) async {
     try {
-      
-      var url; 
-      for (int index = 0; index < n; index++) {
-        url = await s[index].getDownloadURL();
-        previewsUrl[index] = url;
-      }
+      // Create a reference to the location you want to upload to in Firebase Storage
+      final Reference storageRef =
+          _firebaseStorageInstance.ref('/products').child(imageFile.path);
 
-      return previewsUrl;
+      // Upload the file to Firebase Storage
+      await storageRef.putFile(imageFile);
+
+      // Get the download URL for the uploaded file
+      final String downloadURL = await storageRef.getDownloadURL();
+
+      return downloadURL;
     } catch (e) {
-      print(e.toString());
-      return [""];
+      print('Error uploading image: $e');
+      return null;
     }
   }
-
-
-  
 }

@@ -1,4 +1,5 @@
 {
     "cmake.configureOnOpen": true,
-    "bloc.newBlocTemplate.type": "simple"
+    "bloc.newBlocTemplate.type": "simple",
+    "cmake.sourceDirectory": "E:/StudioProjects/nsutbazaar/linux/flutter"
 }
