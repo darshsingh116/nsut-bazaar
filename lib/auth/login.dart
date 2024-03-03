@@ -8,7 +8,7 @@ import 'package:nsutbazaar/auth/bloc/auth_state.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/BottomNavBar.dart';
 import 'package:nsutbazaar/auth/register.dart';
-import 'package:nsutbazaar/widgets/backgroundContainer.dart';
+import 'package:nsutbazaar/widgets/core/backgroundContainer.dart';
 
 
 class LoginScreen extends StatefulWidget {

@@ -1,21 +1,22 @@
-
-class ProductModel {
-  String userid; // Renamed parameter
-
+class RequestProductModel {
+  String rpid; // request pid
+  String userid;
   String productName;
   double price;
   String description;
 
-  ProductModel({
-    required this.userid, // Updated constructor
+  RequestProductModel({
+    required this.rpid, // New field
+    required this.userid,
     required this.productName,
     required this.price,
     required this.description,
   });
 
-  factory ProductModel.fromMap(Map<String, dynamic> map) {
-    return ProductModel(
-      userid: map['userid'] as String, // Updated fromMap method
+  factory RequestProductModel.fromMap(Map<String, dynamic> map) {
+    return RequestProductModel(
+      rpid: map['rpid'] as String, // New field
+      userid: map['userid'] as String,
       productName: map['productName'] as String,
       price: map['price'] as double,
       description: map['description'] as String,
@@ -24,7 +25,8 @@ class ProductModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'userid': userid, // Updated toJson method
+      'rpid': rpid, // New field
+      'userid': userid,
       'productName': productName,
       'price': price,
       'description': description,

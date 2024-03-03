@@ -1,12 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:nsutbazaar/constants/purpleTheme.dart';
+import 'package:nsutbazaar/models/TagItem.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/listings.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/profile_page.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/requests.dart';
-import 'package:nsutbazaar/widgets/backgroundContainer.dart';
-import 'package:nsutbazaar/widgets/nsutbazaar_appBar.dart';
-import 'package:nsutbazaar/widgets/app_bar_drawer.dart';
+import 'package:nsutbazaar/widgets/core/app_bar_drawer.dart';
+import 'package:nsutbazaar/widgets/core/backgroundContainer.dart';
+import 'package:nsutbazaar/widgets/core/nsutbazaar_appBar.dart';
 
 class NavBarScreens extends StatefulWidget {
   const NavBarScreens({super.key});
@@ -35,25 +41,28 @@ class _NavBarScreensState extends State<NavBarScreens> {
       child: Scaffold(
         drawer: AppBarDrawer(context),
         extendBodyBehindAppBar: true,
-        appBar: nsutbazaarAppBar(NavBarItems[index].title, context),
+        appBar: nsutbazaarAppBar(NavBarItems[index], context),
         backgroundColor: Colors.transparent,
         body: screensList[index],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: index,
           elevation: 0,
-          backgroundColor: const Color.fromARGB(
-              255, 29, 29, 37), // Dark blue background color
+          showUnselectedLabels: true,
+          backgroundColor:
+              Color.fromARGB(255, 0, 0, 0), // Dark blue background color
           type: BottomNavigationBarType.shifting,
           selectedIconTheme: IconThemeData(
-              color: Color.fromARGB(
-                  255, 205, 255, 68)), // Set the color for selected icons
+              color: Colors.white), // Set the color for selected icons
           unselectedIconTheme:
-              IconThemeData(color: Color.fromARGB(255, 84, 83, 84)),
-          selectedItemColor: Color.fromARGB(255, 205, 255,
-              68), // Set the color for selected items (icons and text)
-          unselectedItemColor: Color.fromARGB(255, 84, 83,
-              84), // Set the color for unselected items (icons and text)
-          iconSize: 30, // Set the size of the icons
+              IconThemeData(color: PurpleTheme.LightPurpleColor),
+          selectedItemColor:
+              Colors.white, // Set the color for selected items (icons and text)
+          unselectedItemColor: PurpleTheme.LightPurpleColor,
+          unselectedLabelStyle: TextStyle(fontSize: 10.sp),
+          selectedLabelStyle: TextStyle(
+              fontSize:
+                  10.sp), // Set the color for unselected items (icons and text)
+          iconSize: 20.sp, // Set the size of the icons
           items: getBottomTabs(NavBarItems),
           onTap: (value) {
             setState(() {
@@ -66,21 +75,10 @@ class _NavBarScreensState extends State<NavBarScreens> {
   }
 }
 
-class MyTabItem {
-  String appBarTitle;
-  String title;
-  IconData icon;
-  MyTabItem(
-    this.appBarTitle,
-    this.title,
-    this.icon,
-  );
-}
-
 List<MyTabItem> NavBarItems = [
-  MyTabItem('Requests Screen', 'Requests', Icons.request_quote),
-  MyTabItem('Listings Screen', 'Listings', Icons.compass_calibration),
-  MyTabItem('Profile Screen', 'Profile', Icons.person),
+  MyTabItem('Requests Screen', 'Requests', Icons.insert_comment, false),
+  MyTabItem('Listings Screen', 'Discover', Icons.feed_outlined, false),
+  MyTabItem('Profile Screen', 'Profile', Icons.person, true),
 ];
 
 List<BottomNavigationBarItem> getBottomTabs(List<MyTabItem> items) {
@@ -88,6 +86,6 @@ List<BottomNavigationBarItem> getBottomTabs(List<MyTabItem> items) {
     return BottomNavigationBarItem(
         icon: Icon(e.icon),
         label: e.title,
-        backgroundColor: Colors.transparent);
+        backgroundColor: Color.fromARGB(135, 40, 21, 51));
   }).toList();
 }

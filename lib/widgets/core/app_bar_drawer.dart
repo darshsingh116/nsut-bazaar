@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/BottomNavBar.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_bloc.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_event.dart';
@@ -14,13 +16,13 @@ Drawer AppBarDrawer(
   // through the options in the drawer if there isn't enough vertical
   // space to fit everything.
   return Drawer(
-    backgroundColor: Color.fromARGB(255, 255, 255, 255),
+    backgroundColor: PurpleTheme.DarkPurpleNavbarColor,
     child: ListView(
       // Important: Remove any padding from the ListView.
       padding: EdgeInsets.zero,
       children: [
         SizedBox(
-          height: 300,
+          height: 300.h,
           child: DrawerHeader(
             decoration: BoxDecoration(),
             child: Column(
@@ -32,28 +34,33 @@ Drawer AppBarDrawer(
                 //   fit: BoxFit.fill, // Adjust the height as needed
                 // ),
                 SizedBox(
-                  height: 20,
+                  height: 20.h,
                 ),
                 Text(
                   'NB',
                   style: TextStyle(
-                      color: Color.fromARGB(255, 0, 0, 0),
-                      fontSize: 25,
+                      color: Colors.white,
+                      fontSize: 25.sp,
                       fontWeight: FontWeight.bold),
                 ),
-                Text('Contact Us : uwu@gmail.com'),
+                Text(
+                  'Contact Us : uwu@gmail.com',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.bold),
+                ),
               ],
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
           child: Container(
             child: ListTile(
-              title: const Text(
+              title: Text(
                 'Home',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0), fontSize: 17),
+                style: TextStyle(color: Colors.white, fontSize: 17.sp),
               ),
               onTap: () {
                 Navigator.pop(context);
@@ -64,13 +71,12 @@ Drawer AppBarDrawer(
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
           child: Container(
             child: ListTile(
-              title: const Text(
+              title: Text(
                 'My Listings',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0), fontSize: 17),
+                style: TextStyle(color: Colors.white, fontSize: 17.sp),
               ),
               onTap: () {
                 Navigator.pop(context);
@@ -78,19 +84,17 @@ Drawer AppBarDrawer(
                   context,
                   MaterialPageRoute(builder: (context) => MyListings()),
                 );
-                
               },
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
           child: Container(
             child: ListTile(
-              title: const Text(
+              title: Text(
                 'My Requests',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0), fontSize: 17),
+                style: TextStyle(color: Colors.white, fontSize: 17.sp),
               ),
               onTap: () {
                 Navigator.pop(context);
@@ -103,13 +107,12 @@ Drawer AppBarDrawer(
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
           child: Container(
             child: ListTile(
-              title: const Text(
+              title: Text(
                 'Shops',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0), fontSize: 17),
+                style: TextStyle(color: Colors.white, fontSize: 17.sp),
               ),
               onTap: () {
                 // Update the state of the app
@@ -121,13 +124,12 @@ Drawer AppBarDrawer(
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
           child: Container(
             child: ListTile(
-              title: const Text(
+              title: Text(
                 'About Us',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0), fontSize: 17),
+                style: TextStyle(color: Colors.white, fontSize: 17.sp),
               ),
               onTap: () {
                 // Update the state of the app
@@ -139,13 +141,12 @@ Drawer AppBarDrawer(
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
           child: Container(
             child: ListTile(
-              title: const Text(
+              title: Text(
                 'Report Bug',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0), fontSize: 17),
+                style: TextStyle(color: Colors.white, fontSize: 17.sp),
               ),
               onTap: () {
                 // Update the state of the app

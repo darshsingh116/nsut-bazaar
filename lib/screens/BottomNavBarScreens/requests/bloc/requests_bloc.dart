@@ -23,7 +23,9 @@ class RequestsBloc extends Bloc<RequestsEvent, RequestsState> {
       final productList = await productFirestore.getAllRequestProducts();
 
       final filteredProducts = productList.where((product) =>
-        product.description.toLowerCase().contains(searchParameter.toLowerCase())).toList();
+    product.description.toLowerCase().contains(searchParameter.toLowerCase()) ||
+    product.productName.toLowerCase().contains(searchParameter.toLowerCase())
+).toList();
 
       emit(RequestsStateGotList(productList: filteredProducts));
     });

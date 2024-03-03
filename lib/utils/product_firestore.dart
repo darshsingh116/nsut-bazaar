@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:nsutbazaar/models/ProductModel.dart';
+import 'package:nsutbazaar/models/SellProductModel.dart';
+import 'package:nsutbazaar/models/RequestProductModel.dart';
 
 class ProductFirestore {
   final FirebaseFirestore _firestore;
 
   ProductFirestore(this._firestore);
 
-  Future<void> addSellProduct(ProductModel product) async {
+  Future<void> addSellProduct(SellProductModel product) async {
     try {
       await _firestore.collection('sellProducts').add(product.toJson());
     } catch (e) {
@@ -15,15 +16,16 @@ class ProductFirestore {
     }
   }
 
-  Future<List<ProductModel>> getAllSellProducts() async {
+  Future<List<SellProductModel>> getAllSellProducts() async {
+    print("getsellprod");
     try {
       QuerySnapshot querySnapshot =
           await _firestore.collection('sellProducts').get();
 
-      // Convert each document in the query snapshot to a ProductModel object
-      List<ProductModel> products = querySnapshot.docs.map((doc) {
+      // Convert each document in the query snapshot to a SellProductModel object
+      List<SellProductModel> products = querySnapshot.docs.map((doc) {
         // Explicitly cast doc.data() to Map<String, dynamic>
-        return ProductModel.fromMap(doc.data() as Map<String, dynamic>);
+        return SellProductModel.fromMap(doc.data() as Map<String, dynamic>);
       }).toList();
       return products;
     } catch (e) {
@@ -33,17 +35,18 @@ class ProductFirestore {
     }
   }
 
-  Future<List<ProductModel>> getAllSellProductsByUserId(String userId) async {
+  Future<List<SellProductModel>> getAllSellProductsByUserId(
+      String userId) async {
     try {
       QuerySnapshot querySnapshot = await _firestore
           .collection('sellProducts')
           .where('userid', isEqualTo: userId)
           .get();
 
-      // Convert each document in the query snapshot to a ProductModel object
-      List<ProductModel> products = querySnapshot.docs.map((doc) {
+      // Convert each document in the query snapshot to a SellProductModel object
+      List<SellProductModel> products = querySnapshot.docs.map((doc) {
         // Explicitly cast doc.data() to Map<String, dynamic>
-        return ProductModel.fromMap(doc.data() as Map<String, dynamic>);
+        return SellProductModel.fromMap(doc.data() as Map<String, dynamic>);
       }).toList();
       return products;
     } catch (e) {
@@ -53,7 +56,7 @@ class ProductFirestore {
     }
   }
 
-  Future<void> addRequestProduct(ProductModel product) async {
+  Future<void> addRequestProduct(RequestProductModel product) async {
     try {
       await _firestore.collection('requestProduct').add(product.toJson());
     } catch (e) {
@@ -62,15 +65,15 @@ class ProductFirestore {
     }
   }
 
-  Future<List<ProductModel>> getAllRequestProducts() async {
+  Future<List<RequestProductModel>> getAllRequestProducts() async {
     try {
       QuerySnapshot querySnapshot =
           await _firestore.collection('requestProduct').get();
 
-      // Convert each document in the query snapshot to a ProductModel object
-      List<ProductModel> products = querySnapshot.docs.map((doc) {
+      // Convert each document in the query snapshot to a RequestProductModel object
+      List<RequestProductModel> products = querySnapshot.docs.map((doc) {
         // Explicitly cast doc.data() to Map<String, dynamic>
-        return ProductModel.fromMap(doc.data() as Map<String, dynamic>);
+        return RequestProductModel.fromMap(doc.data() as Map<String, dynamic>);
       }).toList();
       return products;
     } catch (e) {
@@ -80,7 +83,7 @@ class ProductFirestore {
     }
   }
 
-  Future<List<ProductModel>> getAllRequestProductsByUserId(
+  Future<List<RequestProductModel>> getAllRequestProductsByUserId(
       String userId) async {
     try {
       QuerySnapshot querySnapshot = await _firestore
@@ -88,10 +91,10 @@ class ProductFirestore {
           .where('userid', isEqualTo: userId)
           .get();
 
-      // Convert each document in the query snapshot to a ProductModel object
-      List<ProductModel> products = querySnapshot.docs.map((doc) {
+      // Convert each document in the query snapshot to a RequestProductModel object
+      List<RequestProductModel> products = querySnapshot.docs.map((doc) {
         // Explicitly cast doc.data() to Map<String, dynamic>
-        return ProductModel.fromMap(doc.data() as Map<String, dynamic>);
+        return RequestProductModel.fromMap(doc.data() as Map<String, dynamic>);
       }).toList();
       return products;
     } catch (e) {

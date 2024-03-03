@@ -1,8 +1,13 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nsutbazaar/auth/bloc/auth_bloc.dart';
 import 'package:nsutbazaar/auth/bloc/auth_event.dart';
 import 'package:nsutbazaar/auth/bloc/auth_state.dart';
+import 'package:nsutbazaar/constants/purpleTheme.dart';
+import 'package:nsutbazaar/extensions/strings.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:nsutbazaar/auth/login.dart';
 import 'dart:ui';
@@ -18,7 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final authRepository = context.read<FirebaseRepository>();
-    
+
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthStateLoggedOut) {
@@ -31,161 +36,167 @@ class _ProfilePageState extends State<ProfilePage> {
         body: SingleChildScrollView(
           child: SafeArea(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.03,
-                ),
-                Center(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width *
-                        0.3, // Adjust the width as needed
-                    height: MediaQuery.of(context).size.width *
-                        0.3, // Adjust the height as needed
-                    margin: EdgeInsets.all(2), // Add a margin for the gap
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Color.fromARGB(255, 206, 255, 68),
-                        width: 1, // Adjust the border width as needed
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/paimon.jpeg', // Replace with your image URL
-                          fit: BoxFit.cover, // Adjust the fit as needed
+                  height: 320.h,
+                  width: double.infinity,
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: 64.r,
+                          backgroundImage: AssetImage(
+                              'assets/paimon.jpeg'), // Replace with your local asset image path
                         ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.04,
-                  width: double.infinity,
-                  child: Center(
-                    child: Text(
-                      authRepository.userModel.username,
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 206, 255, 68),
-                          fontSize: 32),
-                    ),
-                  ),
-                ),
-                Container(
-                  //height: MediaQuery.of(context).size.height * 0.01,
-                  width: double.infinity,
-                  child: Center(
-                    child: Text(
-                      "username",
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 15),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                Container(
-                  height: 2,
-                  width: MediaQuery.of(context).size.width * 0.80,
-                  color: Colors.black,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.60,
-                    child: Text(
-                      "uwu",
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 164, 161, 161),
-                          fontSize: 15),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 2,
-                  width: MediaQuery.of(context).size.width * 0.80,
-                  color: Colors.black,
-                ),
-                SizedBox(height: 50),
-                
-                
-                Center(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    height: MediaQuery.of(context).size.height * 0.055,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        
-                      },
-                      style: ButtonStyle(
-                        side: MaterialStateProperty.all<BorderSide>(
-                          BorderSide(
-                            color: Color.fromARGB(
-                                255, 206, 255, 68), // Define the border color
-                            width: 1.0, // Define the border width
+                        SizedBox(
+                          height: 16.h,
+                        ),
+                        Text(
+                          authRepository.userModel.fullname.toTitleCase(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22.sp,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '@${authRepository.userModel.username}',
+                          style: TextStyle(
+                            color: PurpleTheme.LightPurpleColor,
+                            fontSize: 16.sp,
                           ),
                         ),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(
-                              155, 41, 41, 41), // Define the background color
+                        Text(
+                          authRepository.userModel.email,
+                          style: TextStyle(
+                            color: PurpleTheme.LightPurpleColor,
+                            fontSize: 16.sp,
+                          ),
                         ),
-                      ),
-                      child: Text(
-                        'Edit Profile',
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 206, 255, 68),
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.019),
-                      ),
+                        SizedBox(
+                          height: 32.h,
+                        ),
+                        SizedBox(
+                            height: 40.h,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 173.w,
+                                  height: 40.h,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      // Add your functionality for Edit Profile button here
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          PurpleTheme.ButtonDarkPurpleColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.r),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'Edit Profile',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 12.0), // Space between buttons
+                                SizedBox(
+                                  height: 40.h,
+                                  width: 173.w,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      // Add your functionality for Log Out button here
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: PurpleTheme
+                                          .ButtonLightPurpleColor, // Light purple
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.r),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'Log Out',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )),
+                      ],
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
-                Center(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    height: MediaQuery.of(context).size.height * 0.055,
-                    child: BlocBuilder<AuthBloc, AuthState>(
-                      builder: (context, state) {
-                        if (state is AuthStateIsLoading) {
-                          return CircularProgressIndicator(
-                            color: const Color.fromARGB(255, 255, 255, 255),
-                          );
-                        }
-                        return ElevatedButton(
-                          onPressed: () {
-                            context
-                                .read<AuthBloc>()
-                                .add(LogOut(authRepository));
-                          },
-                          style: ButtonStyle(
-                            side: MaterialStateProperty.all<BorderSide>(
-                              BorderSide(
-                                color: Color.fromARGB(255, 206, 255,
-                                    68), // Define the border color
-                                width: 1.0, // Define the border width
-                              ),
-                            ),
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              Color.fromARGB(155, 41, 41,
-                                  41), // Define the background color
-                            ),
+                SizedBox(
+                  height: 12.h,
+                ),
+                SizedBox(
+                  height: 56.h,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Phone Number :",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          authRepository.userModel.phoneNumber.toString(),
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.sp,
                           ),
-                          child: Text('Log Out',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 206, 255, 68),
-                                  fontSize: MediaQuery.of(context).size.height *
-                                      0.019)),
-                        );
-                      },
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 56.h,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Roll Number :",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          authRepository.userModel.rollNumber.toString(),
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.sp,
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 )
