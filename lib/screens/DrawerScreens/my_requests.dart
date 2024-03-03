@@ -1,9 +1,13 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/models/RequestProductModel.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/bloc/requests_bloc.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/bloc/requests_event.dart';
 import 'package:nsutbazaar/screens/DrawerScreens/add_request.dart';
 import 'package:nsutbazaar/utils/product_firestore.dart';
 import 'package:nsutbazaar/widgets/core/backgroundContainer.dart';
@@ -34,11 +38,23 @@ class _MyRequestsState extends State<MyRequests> {
         .getAllRequestProductsByUserId(firebaseRepository.userModel.uid);
   }
 
+  void updateData() {
+    final firebaseRepository = context.read<FirebaseRepository>();
+    final productFirestore =
+        ProductFirestore(firebaseRepository.firebaseFirestore);
+
+    setState(() {
+      _productsFuture = productFirestore
+          .getAllRequestProductsByUserId(firebaseRepository.userModel.uid);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final firebaseRepository = context.read<FirebaseRepository>();
     final productFirestore =
         ProductFirestore(firebaseRepository.firebaseFirestore);
+    final requestsBloc = context.read<RequestsBloc>();
 
     return backgroundContainer(
       child: Scaffold(
@@ -81,6 +97,9 @@ class _MyRequestsState extends State<MyRequests> {
 
                     return MyRequestCard(
                       requestProductModel: product,
+                      updateData: updateData,
+                      productFirestore: productFirestore,
+                      requestsBloc: requestsBloc,
                     );
                   },
                 );
@@ -95,9 +114,17 @@ class _MyRequestsState extends State<MyRequests> {
 
 class MyRequestCard extends StatefulWidget {
   final RequestProductModel requestProductModel;
+  Function updateData;
+  ProductFirestore productFirestore;
+  RequestsBloc requestsBloc;
 
-  const MyRequestCard({Key? key, required this.requestProductModel})
-      : super(key: key);
+  MyRequestCard({
+    Key? key,
+    required this.requestProductModel,
+    required this.updateData,
+    required this.productFirestore,
+    required this.requestsBloc,
+  }) : super(key: key);
 
   @override
   _MyRequestCardState createState() => _MyRequestCardState();
@@ -106,6 +133,8 @@ class MyRequestCard extends StatefulWidget {
 class _MyRequestCardState extends State<MyRequestCard> {
   @override
   Widget build(BuildContext context) {
+    final firebaseRepository = context.read<FirebaseRepository>();
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
       child: Container(
@@ -168,8 +197,12 @@ class _MyRequestCardState extends State<MyRequestCard> {
                     color: PurpleTheme.ButtonDarkPurpleColor,
                   ),
                   child: TextButton(
-                    onPressed: () {
-                      // Remove button action
+                    onPressed: () async {
+                      await widget.productFirestore.deleteRequestProduct(
+                          widget.requestProductModel.rpid);
+                      widget.requestsBloc.add(RequestsEventInitialize(
+                          firebaseRepository: firebaseRepository));
+                      widget.updateData();
                     },
                     child: Text(
                       'Remove',

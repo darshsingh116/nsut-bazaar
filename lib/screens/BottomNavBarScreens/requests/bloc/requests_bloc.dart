@@ -15,6 +15,10 @@ class RequestsBloc extends Bloc<RequestsEvent, RequestsState> {
       emit(RequestsStateGotList(productList: productList));
     });
 
+    on<RequestsEventInitialize>((event, emit) async {
+      emit(RequestsStateInitial());
+    });
+
     on<RequestsEventGetSearchedList>((event, emit) async {
       final searchParameter = event.searchParameter;
       emit(RequestsStateLoading());

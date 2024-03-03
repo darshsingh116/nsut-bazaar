@@ -16,6 +16,13 @@ class ListingsBloc extends Bloc<ListingsEvent, ListingsState> {
       emit(ListingsStateGotList(productList: productList));
     });
 
+
+    on<ListingsEventInitialize>((event, emit) async {
+      emit(ListingsStateInitial());
+    });
+
+    
+
     on<ListingsEventGetSearchedList>((event, emit) async {
       final searchParameter = event.searchParameter;
       emit(ListingsStateLoading());

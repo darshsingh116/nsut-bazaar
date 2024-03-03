@@ -9,6 +9,10 @@ class RequestsEventGetAllList extends RequestsEvent {
   RequestsEventGetAllList({required super.firebaseRepository});
 }
 
+class RequestsEventInitialize extends RequestsEvent {
+  RequestsEventInitialize({required super.firebaseRepository});
+}
+
 class RequestsEventGetSearchedList extends RequestsEvent {
   final String searchParameter;
 

@@ -9,6 +9,10 @@ class ListingsEventGetAllList extends ListingsEvent {
   ListingsEventGetAllList({required super.firebaseRepository});
 }
 
+class ListingsEventInitialize extends ListingsEvent {
+  ListingsEventInitialize({required super.firebaseRepository});
+}
+
 class ListingsEventGetSearchedList extends ListingsEvent {
   final String searchParameter;
 

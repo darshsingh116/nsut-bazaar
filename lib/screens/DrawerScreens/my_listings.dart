@@ -2,10 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nsutbazaar/constants/purpleTheme.dart';
 
+import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/models/SellProductModel.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_bloc.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_event.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_state.dart';
 import 'package:nsutbazaar/screens/DrawerScreens/add_listing.dart';
 import 'package:nsutbazaar/utils/product_firestore.dart';
 import 'package:nsutbazaar/widgets/core/backgroundContainer.dart';
@@ -44,11 +47,23 @@ class _MyListingsState extends State<MyListings> {
     _fetchProducts();
   }
 
+  void updateData() {
+    final firebaseRepository = context.read<FirebaseRepository>();
+    final productFirestore =
+        ProductFirestore(firebaseRepository.firebaseFirestore);
+
+    setState(() {
+      _productsFuture = productFirestore
+          .getAllSellProductsByUserId(firebaseRepository.userModel.uid);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final firebaseRepository = context.read<FirebaseRepository>();
     final productFirestore =
         new ProductFirestore(firebaseRepository.firebaseFirestore);
+    final listingsBloc = context.read<ListingsBloc>();
 
     return backgroundContainer(
       child: Scaffold(
@@ -98,6 +113,9 @@ class _MyListingsState extends State<MyListings> {
 
                     return MyListingCard(
                       sellProductModel: product,
+                      productFirestore: productFirestore,
+                      listingsBloc: listingsBloc,
+                      updateData: updateData,
                     );
 
                     // return Card(
@@ -129,10 +147,16 @@ class _MyListingsState extends State<MyListings> {
 }
 
 class MyListingCard extends StatefulWidget {
+  Function updateData;
   SellProductModel sellProductModel;
+  ProductFirestore productFirestore;
+  ListingsBloc listingsBloc;
   MyListingCard({
     Key? key,
+    required this.updateData,
     required this.sellProductModel,
+    required this.productFirestore,
+    required this.listingsBloc,
   }) : super(key: key);
   @override
   State<MyListingCard> createState() => _MyListingCardState();
@@ -141,6 +165,8 @@ class MyListingCard extends StatefulWidget {
 class _MyListingCardState extends State<MyListingCard> {
   @override
   Widget build(BuildContext context) {
+    final firebaseRepository = context.read<FirebaseRepository>();
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
       child: Container(
@@ -217,8 +243,12 @@ class _MyListingCardState extends State<MyListingCard> {
                     color: PurpleTheme.ButtonDarkPurpleColor,
                   ),
                   child: TextButton(
-                    onPressed: () {
-                      // Remove button action
+                    onPressed: () async {
+                      await widget.productFirestore
+                          .deleteSellProduct(widget.sellProductModel.spid);
+                      widget.listingsBloc.add(ListingsEventInitialize(
+                          firebaseRepository: firebaseRepository));
+                      widget.updateData();
                     },
                     child: Text(
                       'Remove',

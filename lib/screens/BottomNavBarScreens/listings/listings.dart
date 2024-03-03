@@ -35,6 +35,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
       listener: (context, state) {},
       builder: (context, state) {
         if (state is ListingsStateInitial) {
+          print("here");
           listingsBloc.add(
               ListingsEventGetAllList(firebaseRepository: firebaseRepository));
         }
@@ -105,7 +106,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                       return CircularProgressIndicator();
                     } else if (state is ListingsStateGotList) {
                       if (state.productList.isEmpty) {
-                        return Text('No products available');
+                        return Text('No products available',style: TextStyle(color: Colors.white),);
                       } else {
                         return Expanded(
                           child: Padding(

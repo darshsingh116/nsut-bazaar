@@ -20,14 +20,14 @@ class RequestsScreen extends StatefulWidget {
 class _RequestsScreenState extends State<RequestsScreen> {
   @override
   Widget build(BuildContext context) {
-    final listingsBloc = context.read<RequestsBloc>();
+    final requestsBloc = context.read<RequestsBloc>();
     final firebaseRepository = context.read<FirebaseRepository>();
 
     return BlocConsumer<RequestsBloc, RequestsState>(
       listener: (context, state) {},
       builder: (context, state) {
         if (state is RequestsStateInitial) {
-          listingsBloc.add(
+          requestsBloc.add(
               RequestsEventGetAllList(firebaseRepository: firebaseRepository));
         }
         return Scaffold(
@@ -52,12 +52,12 @@ class _RequestsScreenState extends State<RequestsScreen> {
                       padding: MaterialStatePropertyAll<EdgeInsets>(
                           EdgeInsets.symmetric(horizontal: 16.0.sp)),
                       onChanged: (searchParameter) {
-                        listingsBloc.add(RequestsEventGetSearchedList(
+                        requestsBloc.add(RequestsEventGetSearchedList(
                             firebaseRepository: firebaseRepository,
                             searchParameter: searchParameter));
                       },
                       onSubmitted: (searchParameter) {
-                        listingsBloc.add(RequestsEventGetSearchedList(
+                        requestsBloc.add(RequestsEventGetSearchedList(
                             firebaseRepository: firebaseRepository,
                             searchParameter: searchParameter));
                       },

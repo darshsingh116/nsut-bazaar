@@ -103,4 +103,38 @@ class ProductFirestore {
       return []; // Return an empty list in case of error
     }
   }
+
+  Future<void> deleteSellProduct(String spid) async {
+    try {
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('sellProducts')
+          .where('spid', isEqualTo: spid)
+          .get();
+
+      querySnapshot.docs.forEach((doc) async {
+        await doc.reference.delete();
+        print('Product with SPID: $spid deleted successfully');
+      });
+    } catch (e) {
+      print('Error deleting product: $e');
+      // Handle the error as needed
+    }
+  }
+
+  Future<void> deleteRequestProduct(String rpid) async {
+    try {
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('requestProduct')
+          .where('rpid', isEqualTo: rpid)
+          .get();
+
+      querySnapshot.docs.forEach((doc) async {
+        await doc.reference.delete();
+        print('Product with RPID: $rpid deleted successfully');
+      });
+    } catch (e) {
+      print('Error deleting product: $e');
+      // Handle the error as needed
+    }
+  }
 }
