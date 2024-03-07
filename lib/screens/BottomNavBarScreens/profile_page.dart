@@ -12,6 +12,8 @@ import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:nsutbazaar/auth/login.dart';
 import 'dart:ui';
 
+import 'package:nsutbazaar/screens/edit_profile_page.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -20,6 +22,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+    void updateProfile() {
+    setState(() {});
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final authRepository = context.read<FirebaseRepository>();
@@ -89,7 +97,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   height: 40.h,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      // Add your functionality for Edit Profile button here
+                                      Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditProfilePage(onUpdateProfile: updateProfile)));
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor:
@@ -115,7 +126,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   width: 173.w,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      // Add your functionality for Log Out button here
+                                      context
+                                    .read<AuthBloc>()
+                                    .add(LogOut(authRepository));
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: PurpleTheme

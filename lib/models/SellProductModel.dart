@@ -6,6 +6,11 @@ class SellProductModel {
   String description;
   String imageUrl;
   int contactNumber; // New field
+  bool isBooks;
+  bool isSports;
+  bool isAcademicTool;
+  bool isOthers;
+  String timestamp; // New field
 
   SellProductModel({
     required this.spid, // New field
@@ -15,10 +20,14 @@ class SellProductModel {
     required this.description,
     required this.imageUrl,
     required this.contactNumber,
+    required this.isBooks,
+    required this.isSports,
+    required this.isAcademicTool,
+    required this.isOthers,
+    required this.timestamp, // New field
   });
 
   factory SellProductModel.fromMap(Map<String, dynamic> map) {
-    print(map["spid"]);
     return SellProductModel(
       spid: map['spid'] as String, // New field
       userid: map['userid'] as String,
@@ -27,6 +36,11 @@ class SellProductModel {
       description: map['description'] as String,
       imageUrl: map['imageUrl'] as String,
       contactNumber: map['contactNumber'] as int, // New field
+      isBooks: map['isBooks'] != null ? map['isBooks'] as bool : false,
+      isSports: map['isSports'] != null ? map['isSports'] as bool : false,
+      isAcademicTool: map['isAcademicTool'] != null ? map['isAcademicTool'] as bool : false,
+      isOthers: map['isOthers'] != null ? map['isOthers'] as bool : false,
+      timestamp: map['timestamp'] as String, // New field
     );
   }
 
@@ -39,6 +53,11 @@ class SellProductModel {
       'description': description,
       'imageUrl': imageUrl,
       'contactNumber': contactNumber, // New field
+      'isBooks': isBooks,
+      'isSports': isSports,
+      'isAcademicTool': isAcademicTool,
+      'isOthers': isOthers,
+      'timestamp': timestamp, // New field
     };
   }
 }

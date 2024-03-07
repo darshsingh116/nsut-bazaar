@@ -1,11 +1,10 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:nsutbazaar/models/User.dart';
 import 'package:path_provider/path_provider.dart';
 
-class FirebaseStoreageRepo {
+class FirebaseStorageRepo {
   final _firebaseStorageInstance = FirebaseStorage.instance;
 
   Future<String?> uploadImageFile(File imageFile, UserModel userModel) async {
@@ -26,6 +25,21 @@ class FirebaseStoreageRepo {
     } catch (e) {
       print('Error uploading image: $e');
       return null;
+    }
+  }
+
+  // Function to delete an image file
+  Future<void> deleteImageFile(String downloadURL) async {
+    print("in img delete func");
+    try {
+      Reference imageRef = _firebaseStorageInstance.refFromURL(downloadURL);
+      print(imageRef);
+
+      // Delete the image file
+      await imageRef.delete();
+      print('Image deleted successfully');
+    } catch (e) {
+      print('Error deleting image: $e');
     }
   }
 }

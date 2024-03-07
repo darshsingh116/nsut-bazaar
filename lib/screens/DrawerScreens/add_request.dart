@@ -49,185 +49,192 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
 
             return true;
           },
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Text(
-                        'Product Name',
-                        style: TextStyle(color: Colors.white, fontSize: 16.sp),
-                      ),
-                      SizedBox(height: 10.h),
-                      Container(
-                        height: 50.h,
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 36, 28, 41),
-                          borderRadius: BorderRadius.circular(12.r),
-                          border: Border.all(
-                            color: Color.fromARGB(255, 74, 56, 87),
-                          ),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 20.h,
                         ),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            hintText: 'Ex: Gaming Mouse',
-                            hintStyle: TextStyle(
-                              color: Color.fromARGB(255, 176, 153, 189),
-                              fontSize: 16.sp,
-                            ),
-                            border: InputBorder.none,
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 16.0),
-                          ),
-                          style: TextStyle(color: Colors.white),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter product name';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            _productName = value!;
-                          },
+                        Text(
+                          'Product Name',
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 16.sp),
                         ),
-                      ),
-                      SizedBox(height: 20.h),
-                      Text(
-                        'Price',
-                        style: TextStyle(color: Colors.white, fontSize: 16.sp),
-                      ),
-                      SizedBox(height: 10.h),
-                      Container(
-                        height: 50.h,
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 36, 28, 41),
-                          borderRadius: BorderRadius.circular(12.r),
-                          border: Border.all(
-                            color: Color.fromARGB(255, 74, 56, 87),
-                          ),
-                        ),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            hintText: 'Enter Price',
-                            hintStyle: TextStyle(
-                              color: Color.fromARGB(255, 176, 153, 189),
-                              fontSize: 16.sp,
-                            ),
-                            border: InputBorder.none,
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 16.0),
-                          ),
-                          keyboardType: TextInputType.number,
-                          style: TextStyle(color: Colors.white),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter price';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            _price = double.parse(value!);
-                          },
-                        ),
-                      ),
-                      SizedBox(height: 20.h),
-                      Text(
-                        'Description',
-                        style: TextStyle(color: Colors.white, fontSize: 16.sp),
-                      ),
-                      SizedBox(height: 10.h),
-                      Container(
-                        height: 110.h, // Increase height for description field
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 36, 28, 41),
-                          borderRadius: BorderRadius.circular(12.r),
-                          border: Border.all(
-                            color: Color.fromARGB(255, 74, 56, 87),
-                          ),
-                        ),
-                        child: TextFormField(
-                          maxLines: 3,
-                          decoration: InputDecoration(
-                            hintText: 'Enter Description',
-                            hintStyle: TextStyle(
-                              color: Color.fromARGB(255, 176, 153, 189),
-                              fontSize: 16.sp,
-                            ),
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 16.0, vertical: 12.0),
-                          ),
-                          style: TextStyle(color: Colors.white),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter description';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            _description = value!;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 50.h),
-                    child: SizedBox(
-                      height: 48.h,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
-
-                            DateTime now = DateTime.now();
-                            int timestamp = now.millisecondsSinceEpoch;
-
-                            RequestProductModel product = RequestProductModel(
-                              rpid: authRepository.userModel.uid +
-                                  timestamp.toString(),
-                              userid: authRepository.userModel.uid,
-                              productName: _productName,
-                              price: _price,
-                              description: _description,
-                            );
-
-                            productFirestore.addRequestProduct(product);
-                          }
-
-                          Navigator.pop(context);
-                          context
-                              .read<RequestsBloc>()
-                              .emit(RequestsStateInitial());
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: PurpleTheme.ButtonLightPurpleColor,
-                          shape: RoundedRectangleBorder(
+                        SizedBox(height: 10.h),
+                        Container(
+                          height: 50.h,
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 36, 28, 41),
                             borderRadius: BorderRadius.circular(12.r),
+                            border: Border.all(
+                              color: Color.fromARGB(255, 74, 56, 87),
+                            ),
+                          ),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: 'Ex: Gaming Mouse',
+                              hintStyle: TextStyle(
+                                color: Color.fromARGB(255, 176, 153, 189),
+                                fontSize: 16.sp,
+                              ),
+                              border: InputBorder.none,
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 16.0),
+                            ),
+                            style: TextStyle(color: Colors.white),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter product name';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _productName = value!;
+                            },
                           ),
                         ),
-                        child: Text(
-                          'Submit',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.bold,
+                        SizedBox(height: 20.h),
+                        Text(
+                          'Price',
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 16.sp),
+                        ),
+                        SizedBox(height: 10.h),
+                        Container(
+                          height: 50.h,
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 36, 28, 41),
+                            borderRadius: BorderRadius.circular(12.r),
+                            border: Border.all(
+                              color: Color.fromARGB(255, 74, 56, 87),
+                            ),
+                          ),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: 'Enter Price',
+                              hintStyle: TextStyle(
+                                color: Color.fromARGB(255, 176, 153, 189),
+                                fontSize: 16.sp,
+                              ),
+                              border: InputBorder.none,
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 16.0),
+                            ),
+                            keyboardType: TextInputType.number,
+                            style: TextStyle(color: Colors.white),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter price';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _price = double.parse(value!);
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        Text(
+                          'Description',
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 16.sp),
+                        ),
+                        SizedBox(height: 10.h),
+                        Container(
+                          height:
+                              110.h, // Increase height for description field
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 36, 28, 41),
+                            borderRadius: BorderRadius.circular(12.r),
+                            border: Border.all(
+                              color: Color.fromARGB(255, 74, 56, 87),
+                            ),
+                          ),
+                          child: TextFormField(
+                            maxLines: 3,
+                            decoration: InputDecoration(
+                              hintText: 'Enter Description',
+                              hintStyle: TextStyle(
+                                color: Color.fromARGB(255, 176, 153, 189),
+                                fontSize: 16.sp,
+                              ),
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 12.0),
+                            ),
+                            style: TextStyle(color: Colors.white),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter description';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _description = value!;
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 50.h),
+                      child: SizedBox(
+                        height: 48.h,
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+
+                              DateTime now = DateTime.now();
+                              int timestamp = now.millisecondsSinceEpoch;
+
+                              RequestProductModel product = RequestProductModel(
+                                rpid: authRepository.userModel.uid +
+                                    timestamp.toString(),
+                                userid: authRepository.userModel.uid,
+                                productName: _productName,
+                                price: _price,
+                                description: _description,
+                                timestamp: timestamp.toString()
+                              );
+
+                              productFirestore.addRequestProduct(product);
+                            }
+
+                            Navigator.pop(context);
+                            context
+                                .read<RequestsBloc>()
+                                .emit(RequestsStateInitial());
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: PurpleTheme.ButtonLightPurpleColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                          ),
+                          child: Text(
+                            'Submit',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

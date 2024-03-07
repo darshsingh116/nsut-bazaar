@@ -11,6 +11,7 @@ import 'package:nsutbazaar/auth/login.dart';
 import 'package:nsutbazaar/repositories/local_data.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_bloc.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/bloc/requests_bloc.dart';
+import 'package:nsutbazaar/screens/splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,8 +32,8 @@ class MyApp extends StatelessWidget {
       providers: [
         RepositoryProvider<FirebaseRepository>(
             create: (context) => FirebaseRepository()),
-        RepositoryProvider<FirebaseStoreageRepo>(
-            create: (context) => FirebaseStoreageRepo()),
+        RepositoryProvider<FirebaseStorageRepo>(
+            create: (context) => FirebaseStorageRepo()),
         RepositoryProvider<LocalData>(create: (context) => LocalData()),
       ],
       child: MultiBlocProvider(
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
         child: ScreenUtilInit(
           builder: (_, child) => MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: LoginScreen(),
+            home: SplashScreen(),//LoginScreen(),
             theme: ThemeData(
               fontFamily: 'Manrope',
               appBarTheme: AppBarTheme(

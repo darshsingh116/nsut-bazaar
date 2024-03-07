@@ -11,3 +11,10 @@ class ListingsStateGotList extends ListingsState {
 
   ListingsStateGotList({required this.productList});
 }
+
+class ListingsStateGotSearchedList extends ListingsState {
+  final List<SellProductModel> productList;
+
+  ListingsStateGotSearchedList({required this.productList});
+}
+

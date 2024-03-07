@@ -2,10 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/models/SellProductModel.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
+import 'package:nsutbazaar/repositories/firebase_storage_repo.dart';
+import 'package:nsutbazaar/repositories/local_data.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_bloc.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_event.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_state.dart';
@@ -32,6 +33,7 @@ class _MyListingsState extends State<MyListings> {
   // Function to fetch products
   void _fetchProducts() {
     final firebaseRepository = context.read<FirebaseRepository>();
+
     final productFirestore =
         ProductFirestore(firebaseRepository.firebaseFirestore);
 
@@ -166,7 +168,8 @@ class _MyListingCardState extends State<MyListingCard> {
   @override
   Widget build(BuildContext context) {
     final firebaseRepository = context.read<FirebaseRepository>();
-
+    final firebaseStoreageRepo = context.read<FirebaseStorageRepo>();
+    final localData = context.read<LocalData>();
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
       child: Container(
@@ -244,8 +247,8 @@ class _MyListingCardState extends State<MyListingCard> {
                   ),
                   child: TextButton(
                     onPressed: () async {
-                      await widget.productFirestore
-                          .deleteSellProduct(widget.sellProductModel.spid);
+                      await widget.productFirestore.deleteSellProduct(
+                          widget.sellProductModel, firebaseStoreageRepo);
                       widget.listingsBloc.add(ListingsEventInitialize(
                           firebaseRepository: firebaseRepository));
                       widget.updateData();

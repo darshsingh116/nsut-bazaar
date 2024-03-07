@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:nsutbazaar/models/SellProductModel.dart';
 import 'package:nsutbazaar/models/RequestProductModel.dart';
+import 'package:nsutbazaar/repositories/firebase_storage_repo.dart';
 
 class ProductFirestore {
   final FirebaseFirestore _firestore;
@@ -17,21 +19,20 @@ class ProductFirestore {
   }
 
   Future<List<SellProductModel>> getAllSellProducts() async {
-    print("getsellprod");
     try {
-      QuerySnapshot querySnapshot =
-          await _firestore.collection('sellProducts').get();
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('sellProducts')
+          .orderBy('timestamp',
+              descending: true) // Sort by timestamp in descending order
+          .get();
 
-      // Convert each document in the query snapshot to a SellProductModel object
       List<SellProductModel> products = querySnapshot.docs.map((doc) {
-        // Explicitly cast doc.data() to Map<String, dynamic>
         return SellProductModel.fromMap(doc.data() as Map<String, dynamic>);
       }).toList();
       return products;
     } catch (e) {
-      print('Error getting products: $e');
-      // Handle the error as needed
-      return []; // Return an empty list in case of error
+      print('Error getting sell products: $e');
+      return [];
     }
   }
 
@@ -41,18 +42,17 @@ class ProductFirestore {
       QuerySnapshot querySnapshot = await _firestore
           .collection('sellProducts')
           .where('userid', isEqualTo: userId)
+          .orderBy('timestamp',
+              descending: true) // Sort by timestamp in descending order
           .get();
 
-      // Convert each document in the query snapshot to a SellProductModel object
       List<SellProductModel> products = querySnapshot.docs.map((doc) {
-        // Explicitly cast doc.data() to Map<String, dynamic>
         return SellProductModel.fromMap(doc.data() as Map<String, dynamic>);
       }).toList();
       return products;
     } catch (e) {
-      print('Error getting products by user ID: $e');
-      // Handle the error as needed
-      return []; // Return an empty list in case of error
+      print('Error getting sell products by user ID: $e');
+      return [];
     }
   }
 
@@ -89,31 +89,40 @@ class ProductFirestore {
       QuerySnapshot querySnapshot = await _firestore
           .collection('requestProduct')
           .where('userid', isEqualTo: userId)
+          .orderBy('timestamp',
+              descending: true) // Sort by timestamp in descending order
           .get();
 
-      // Convert each document in the query snapshot to a RequestProductModel object
       List<RequestProductModel> products = querySnapshot.docs.map((doc) {
-        // Explicitly cast doc.data() to Map<String, dynamic>
         return RequestProductModel.fromMap(doc.data() as Map<String, dynamic>);
       }).toList();
       return products;
     } catch (e) {
       print('Error getting request products by user ID: $e');
-      // Handle the error as needed
-      return []; // Return an empty list in case of error
+      return [];
     }
   }
 
-  Future<void> deleteSellProduct(String spid) async {
+  Future<void> deleteSellProduct(SellProductModel sellProductModel,
+      FirebaseStorageRepo firebaseStorageRepo, ) async {
     try {
       QuerySnapshot querySnapshot = await _firestore
           .collection('sellProducts')
-          .where('spid', isEqualTo: spid)
+          .where('spid', isEqualTo: sellProductModel.spid)
           .get();
 
       querySnapshot.docs.forEach((doc) async {
+        // Get the image URL from the document data
+        //String imageURL = doc.data()[sellProductModel.imageUrl];
+
+        // Delete the image from Firebase Storage
+
+        // Delete the document from Firestore
         await doc.reference.delete();
-        print('Product with SPID: $spid deleted successfully');
+        await firebaseStorageRepo.deleteImageFile(sellProductModel.imageUrl);
+
+        print(
+            'Product with SPID: ${sellProductModel.spid} deleted successfully');
       });
     } catch (e) {
       print('Error deleting product: $e');

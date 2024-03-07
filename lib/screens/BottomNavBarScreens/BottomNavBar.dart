@@ -1,13 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/models/TagItem.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/feedback.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/listings.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/printout.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/profile_page.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/requests.dart';
 import 'package:nsutbazaar/widgets/core/app_bar_drawer.dart';
@@ -28,10 +26,12 @@ class _NavBarScreensState extends State<NavBarScreens> {
     super.initState();
   }
 
-  int index = 1;
+  int index = 2;
   List<Widget> screensList = [
+    FeedbackScreen(),
     RequestsScreen(),
     ListingsScreen(),
+    PrintOutScreen(),
     ProfilePage()
   ];
 
@@ -49,20 +49,23 @@ class _NavBarScreensState extends State<NavBarScreens> {
           elevation: 0,
           showUnselectedLabels: true,
           backgroundColor:
-              Color.fromARGB(255, 0, 0, 0), // Dark blue background color
-          type: BottomNavigationBarType.shifting,
+              Color.fromARGB(135, 40, 21, 51), // Dark blue background color
+          type: BottomNavigationBarType.fixed,
           selectedIconTheme: IconThemeData(
-              color: Colors.white), // Set the color for selected icons
+              color: Colors.white,
+              size: 24.sp), // Set the color for selected icons
           unselectedIconTheme:
-              IconThemeData(color: PurpleTheme.LightPurpleColor),
+              IconThemeData(color: PurpleTheme.LightPurpleColor, size: 20.sp),
           selectedItemColor:
               Colors.white, // Set the color for selected items (icons and text)
           unselectedItemColor: PurpleTheme.LightPurpleColor,
           unselectedLabelStyle: TextStyle(fontSize: 10.sp),
+
           selectedLabelStyle: TextStyle(
               fontSize:
-                  10.sp), // Set the color for unselected items (icons and text)
-          iconSize: 20.sp, // Set the size of the icons
+                  12.sp), // Set the color for unselected items (icons and text)
+
+          // Set the size of the icons
           items: getBottomTabs(NavBarItems),
           onTap: (value) {
             setState(() {
@@ -76,15 +79,22 @@ class _NavBarScreensState extends State<NavBarScreens> {
 }
 
 List<MyTabItem> NavBarItems = [
+  MyTabItem('Feedback Screen', 'Feedback', Icons.feedback, false),
   MyTabItem('Requests Screen', 'Requests', Icons.insert_comment, false),
   MyTabItem('Listings Screen', 'Discover', Icons.feed_outlined, false),
+  MyTabItem('PrintOut Screen', 'Print Out', Icons.print_outlined, false),
   MyTabItem('Profile Screen', 'Profile', Icons.person, true),
 ];
 
 List<BottomNavigationBarItem> getBottomTabs(List<MyTabItem> items) {
   return items.map((e) {
     return BottomNavigationBarItem(
-        icon: Icon(e.icon),
+        icon: Padding(
+          padding: EdgeInsets.symmetric(vertical: 5.h),
+          child: Icon(
+            e.icon,
+          ),
+        ),
         label: e.title,
         backgroundColor: Color.fromARGB(135, 40, 21, 51));
   }).toList();

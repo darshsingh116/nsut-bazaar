@@ -4,7 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:nsutbazaar/repositories/firebase_storage_repo.dart';
 
 abstract class FirebaseStorageEvent {
-  FirebaseStoreageRepo firebaseStorageRepo;
+  FirebaseStorageRepo firebaseStorageRepo;
   FirebaseStorageEvent({
     required this.firebaseStorageRepo,
   });
@@ -14,14 +14,13 @@ abstract class FirebaseStorageEvent {
 
 class FirebaseStorageGetFilesListEvent extends FirebaseStorageEvent {
   FirebaseStorageGetFilesListEvent({required super.firebaseStorageRepo});
-
 }
 
 class FirebaseStorageDownloadFilesEvent extends FirebaseStorageEvent {
   Reference ref;
 
   FirebaseStorageDownloadFilesEvent({
-    required this.ref, required super.firebaseStorageRepo,
+    required this.ref,
+    required super.firebaseStorageRepo,
   });
-  
 }

@@ -16,19 +16,7 @@ class SellListCardHorizontal extends StatefulWidget {
 }
 
 class _SellListCardHorizontalState extends State<SellListCardHorizontal> {
-  bool _isLiked = false;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    setState(() {
-      print(widget.localData.likedSellProductModelList
-          .any((item) => item.imageUrl == widget.sellProductModel.imageUrl));
-      _isLiked = widget.localData.likedSellProductModelList
-          .any((item) => item.imageUrl == widget.sellProductModel.imageUrl);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -146,35 +134,7 @@ class _SellListCardHorizontalState extends State<SellListCardHorizontal> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                                      child: IconButton(
-                                        padding:
-                                            EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                        icon: Icon(
-                                          _isLiked
-                                              ? Icons.favorite
-                                              : Icons.favorite_border,
-                                          color: _isLiked
-                                              ? Colors.red
-                                              : Colors.red,
-                                          size: 30,
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            _isLiked = !_isLiked;
-                                            if (_isLiked) {
-                                              widget.localData.addData(
-                                                  widget.sellProductModel);
-                                            } else {
-                                              widget.localData.removeData(
-                                                  widget.sellProductModel);
-                                            }
-                                          });
-                                        },
-                                      ),
-                                    ),
+                                   
                                     Padding(
                                       padding:
                                           const EdgeInsets.fromLTRB(0, 0, 0, 5),

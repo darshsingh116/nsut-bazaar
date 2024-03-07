@@ -5,6 +5,7 @@ import 'package:nsutbazaar/models/SellProductModel.dart';
 class LocalData {
   final FlutterSecureStorage _storage = FlutterSecureStorage();
   List<SellProductModel> likedSellProductModelList = [];
+  List<SellProductModel> allSellProductModelList = [];
 
   LocalData() {
     // Call initialize function when an instance of LocalData is created
@@ -21,8 +22,14 @@ class LocalData {
       likedSellProductModelList = List<SellProductModel>.from(
           parsedJson.map((model) => SellProductModel.fromMap(model)));
     }
+    // Check if all liked list models are present in allSellProductModelList
+    
   }
 
+  Future<void> updateList()async{
+    likedSellProductModelList.removeWhere((likedModel) =>
+        !allSellProductModelList.any((allModel) => allModel.spid == likedModel.spid));
+  }
   // Future<void> updateData() async {
   //   // Convert SellProductModelList to JSON
   //   String jsonData = jsonEncode(sellProductModelList);

@@ -1,280 +1,260 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:nsutbazaar/auth/bloc/auth_bloc.dart';
 import 'package:nsutbazaar/auth/bloc/auth_event.dart';
 import 'package:nsutbazaar/auth/bloc/auth_state.dart';
+import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/BottomNavBar.dart';
 import 'package:nsutbazaar/auth/register.dart';
 import 'package:nsutbazaar/widgets/core/backgroundContainer.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    
     final authRepository = context.read<FirebaseRepository>();
-    //context.read<AuthBloc>().emit(AuthStateLoggedOut());
 
-    
-
-    return Container(
-      child: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {
-          // TODO: implement listener
-          if (state is AuthStateIsInRegistrationView) {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => RegisterScreen()));
-          } else if (state is AuthStateLoggedIn) {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => NavBarScreens()));
-          }
-        },
-        builder: (context, state) {
-          if (state is AuthStateInitial) {
-            print("initializing....");
-            context
-                .read<AuthBloc>()
-                .add(AuthEventInitialize(authRepository: authRepository));
-            return Container();
-          } else if (state is AuthStateLoggedOut ||
-              state is AuthStateIsLoading) {
-            return SafeArea(
-              child: Scaffold(
-                backgroundColor: Color.fromARGB(255, 35, 38, 45),
-                body: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 60, 20, 60),
-                    child: Container(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Center(
-                              child: Container(
-                                child: SizedBox(
-                                  height: 60,
-                                  child: Text(
-                                    "Welcome Back!",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 45,
-                                    ),
+    return backgroundContainer(
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SingleChildScrollView(
+            child: BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state is AuthStateIsInRegistrationView) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => RegisterScreen()),
+                  );
+                } else if (state is AuthStateLoggedIn) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => NavBarScreens()),
+                  );
+                }
+              },
+              builder: (context, state) {
+                if (state is AuthStateInitial) {
+                  context.read<AuthBloc>().add(
+                        AuthEventInitialize(authRepository: authRepository),
+                      );
+                  return Container();
+                } else if (state is AuthStateLoggedOut ||
+                    state is AuthStateIsLoading) {
+                  return Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10.h),
+                            child: Text(
+                              "NSUT Bazaar",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.sp,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 60.h,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10.h),
+                            child: Text(
+                              "Welcome Back",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 28.sp,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                          Container(
+                            height: 50.h,
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 36, 28, 41),
+                              borderRadius: BorderRadius.circular(12.r),
+                              border: Border.all(
+                                color: Color.fromARGB(255, 74, 56, 87),
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 16.w),
+                                  child: Icon(
+                                    Icons.email,
+                                    color: Colors.white,
                                   ),
                                 ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(30, 80, 30, 5),
-                              child: Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // Padding(
-                                    //   padding: const EdgeInsets.all(10.0),
-                                    //   child: Text(
-                                    //     "Email",
-                                    //     style: TextStyle(
-                                    //       color: Colors.white,
-                                    //       fontSize: 15,
-                                    //       fontWeight: FontWeight.bold,
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    TextField(
-                                      controller: emailController,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
+                                Expanded(
+                                  child: TextField(
+                                    controller: emailController,
+                                    decoration: InputDecoration(
+                                      hintText: 'Email',
+                                      hintStyle: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 176, 153, 189),
+                                        fontSize: 16.sp,
                                       ),
-                                      decoration: InputDecoration(
-                                        prefixIcon: Icon(
-                                          Icons.email,
-                                          color: Colors.white,
-                                        ),
-                                        fillColor: Colors.black,
-                                        filled: true,
-                                        hintText: 'Email',
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                      ),
+                                      border: InputBorder.none,
+                                      contentPadding:
+                                          EdgeInsets.symmetric(horizontal: 0.0),
                                     ),
-                                  ],
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                          Container(
+                            height: 50.h,
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 36, 28, 41),
+                              borderRadius: BorderRadius.circular(12.r),
+                              border: Border.all(
+                                color: Color.fromARGB(255, 74, 56, 87),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(30, 5, 30, 0),
-                              child: Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // Padding(
-                                    //   padding: const EdgeInsets.all(10.0),
-                                    //   child: Text(
-                                    //     "Password",
-                                    //     style: TextStyle(
-                                    //       color: Colors.white,
-                                    //       fontSize: 15,
-                                    //       fontWeight: FontWeight.bold,
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    TextField(
-                                      controller: passwordController,
-                                      obscureText: true,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 16.w),
+                                  child: Icon(
+                                    Icons.lock,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: TextField(
+                                    controller: passwordController,
+                                    obscureText: true,
+                                    decoration: InputDecoration(
+                                      hintText: 'Password',
+                                      hintStyle: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 176, 153, 189),
+                                        fontSize: 16.sp,
                                       ),
-                                      decoration: InputDecoration(
-                                        prefixIcon: Icon(
-                                          Icons.lock,
-                                          color: Colors.white,
-                                        ),
-                                        fillColor: Colors.black,
-                                        filled: true,
-                                        hintText: 'Password',
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                      ),
+                                      border: InputBorder.none,
+                                      contentPadding:
+                                          EdgeInsets.symmetric(horizontal: 0.0),
                                     ),
-                                  ],
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            BlocBuilder<AuthBloc, AuthState>(
-                              builder: (context, state) {
-                                if (state is AuthStateIsLoading) {
-                                  return CircularProgressIndicator(
-                                    color: const Color.fromARGB(
-                                        255, 255, 255, 255),
-                                  );
-                                }
-                                return Container(
-                                  padding: EdgeInsets.all(10),
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      final email = emailController.text;
-                                      final password = passwordController.text;
-                                      context.read<AuthBloc>().add(LogIn(
+                          ),
+                          SizedBox(height: 20.h),
+                          if (state is AuthStateIsLoading)
+                            CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          else
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 0.w),
+                              child: SizedBox(
+                                height: 45.h,
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  child: Text(
+                                    'Log In',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    final email = emailController.text;
+                                    final password = passwordController.text;
+                                    context.read<AuthBloc>().add(
+                                          LogIn(
                                             email: email,
                                             password: password,
                                             authRepository: authRepository,
-                                          ));
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      padding: EdgeInsets.all(0),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                    ),
-                                    child: Container(
-                                      height:
-                                          MediaQuery.of(context).size.width *
-                                              0.13,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.6,
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          colors: [
-                                          ],
-                                          begin: Alignment.bottomLeft,
-                                          end: Alignment.topRight,
-                                        ),
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "Login",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold,
                                           ),
-                                        ),
-                                      ),
+                                        );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: PurpleTheme
+                                        .ButtonLightPurpleColor, // Light purple
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12.r),
                                     ),
                                   ),
-                                );
-                              },
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              child: GestureDetector(
-                                onTap: () {
-                                  context
-                                      .read<AuthBloc>()
-                                      .add(AuthEventGoToRegistration());
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Dont have an account?  ",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                        )),
-                                    Text("Create Account",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                            decoration:
-                                                TextDecoration.underline)),
-                                  ],
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          SizedBox(height: 40.h),
+                          GestureDetector(
+                            onTap: () {
+                              context
+                                  .read<AuthBloc>()
+                                  .add(AuthEventGoToRegistration());
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Don't have an account? ",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.sp,
+                                  ),
+                                ),
+                                Text(
+                                  "Create Account",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.sp,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ),
-              ),
-            );
-          } else {
-            return Container();
-          }
-        },
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
+          ),
+        ),
       ),
     );
   }
 
-@override
+  @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
   }
 }
-  
-
-
-// final email = emailController.text;
-// final password = passwordController.text;
-// authBloc.add(LogIn(email: email, password: password));

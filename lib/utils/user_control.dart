@@ -2,7 +2,7 @@ import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:nsutbazaar/repositories/firebase_storage_repo.dart';
 
 class UserControl {
-  final FirebaseStoreageRepo _firebaseStoreageRepo;
+  final FirebaseStorageRepo _firebaseStoreageRepo;
   final FirebaseRepository _authRepository;
 
   UserControl(
@@ -10,10 +10,21 @@ class UserControl {
     this._authRepository,
   );
 
+  void editUserInfo(
+      String fullname, String username, int phoneNumber, String rollNumber) {
+    if (fullname != "") {
+      _authRepository.userModel.fullname = fullname;
+    }
+    if (username != "") {
+      _authRepository.userModel.username = username;
+    }
 
-  void editUserInfo(String username, String phone) {
-    if(username !=""){_authRepository.userModel.username = username;}
-    if(phone != ""){_authRepository.userModel.phoneNumber = phone as int;}
+    if (phoneNumber != 0) {
+      _authRepository.userModel.phoneNumber = phoneNumber;
+    }
+    if (rollNumber != "") {
+      _authRepository.userModel.rollNumber = rollNumber;
+    }
     _authRepository.updateUserModel();
   }
 }

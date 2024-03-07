@@ -1,4 +1,5 @@
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
+import 'package:nsutbazaar/repositories/local_data.dart';
 
 abstract class ListingsEvent {
   final FirebaseRepository firebaseRepository;
@@ -6,7 +7,8 @@ abstract class ListingsEvent {
 }
 
 class ListingsEventGetAllList extends ListingsEvent {
-  ListingsEventGetAllList({required super.firebaseRepository});
+  final LocalData localData;
+  ListingsEventGetAllList({required this.localData,required super.firebaseRepository});
 }
 
 class ListingsEventInitialize extends ListingsEvent {
@@ -16,5 +18,13 @@ class ListingsEventInitialize extends ListingsEvent {
 class ListingsEventGetSearchedList extends ListingsEvent {
   final String searchParameter;
 
-  ListingsEventGetSearchedList({required this.searchParameter, required super.firebaseRepository});
+  ListingsEventGetSearchedList(
+      {required this.searchParameter, required super.firebaseRepository});
+}
+
+class ListingsEventGetCategorySearchedList extends ListingsEvent {
+  final String category;
+
+  ListingsEventGetCategorySearchedList(
+      {required this.category, required super.firebaseRepository});
 }

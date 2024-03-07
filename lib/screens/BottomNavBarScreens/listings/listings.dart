@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -12,8 +11,9 @@ import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_bl
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_event.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_state.dart';
 import 'package:nsutbazaar/screens/Product/product_details.dart';
+import 'package:nsutbazaar/widgets/cards/latest_post_card.dart';
 import 'package:nsutbazaar/widgets/cards/sell_listing_card.dart';
-import 'package:nsutbazaar/widgets/cards/sell_listing_card_horizontal.dart';
+import 'package:nsutbazaar/widgets/tagButton.dart';
 
 class ListingsScreen extends StatefulWidget {
   const ListingsScreen({Key? key}) : super(key: key);
@@ -23,13 +23,98 @@ class ListingsScreen extends StatefulWidget {
 }
 
 class _ListingsScreenState extends State<ListingsScreen> {
+  late ScrollController _parentScrollController;
+  late ScrollController _childScrollController;
+
+  bool _isParentScrollingEnabled = true;
+
+  Map<String, bool> TagButtonsIsSelected = {
+    'All': true,
+    'Books': false,
+    'Others': false,
+    'Sports': false,
+    'Academic tools': false,
+  };
+
+  List<SellProductModel> LatestPostList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _parentScrollController = ScrollController();
+    _childScrollController = ScrollController();
+    _parentScrollController.addListener(_onParentScroll);
+    _childScrollController.addListener(_onChildScroll);
+  }
+
+  @override
+  void dispose() {
+    _parentScrollController.dispose();
+    _childScrollController.dispose();
+    super.dispose();
+  }
+
+  void _onParentScroll() {
+    if (_parentScrollController.offset >=
+        _parentScrollController.position.maxScrollExtent) {
+      setState(() {
+        _isParentScrollingEnabled = false;
+      });
+    } else if (_childScrollController.position.pixels <=
+        _childScrollController.position.minScrollExtent) {
+      setState(() {
+        _isParentScrollingEnabled = true;
+      });
+    }
+  }
+
+  void _onChildScroll() {
+    if (_childScrollController.position.pixels <=
+        _childScrollController.position.minScrollExtent) {
+      setState(() {
+        _isParentScrollingEnabled = true;
+      });
+    }
+  }
+
+  void updateSelectedTag(String title) {
+    setState(() {
+      TagButtonsIsSelected.forEach((key, value) {
+        TagButtonsIsSelected[key] = (key == title);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final listingsBloc = context.read<ListingsBloc>();
     final firebaseRepository = context.read<FirebaseRepository>();
     final localData = context.read<LocalData>();
     double containerWidth = 175.w;
-    double containerHeight = 280.h;
+    double containerHeight = 240.h;
+
+    final List<Widget> tagButtonsList = [
+      TagButtons(
+          title: "All",
+          isSelected: TagButtonsIsSelected['All']!,
+          updateSelectedTag: updateSelectedTag),
+      TagButtons(
+          title: "Books",
+          isSelected: TagButtonsIsSelected['Books']!,
+          updateSelectedTag: updateSelectedTag),
+      TagButtons(
+          title: "Sports",
+          isSelected: TagButtonsIsSelected['Sports']!,
+          updateSelectedTag: updateSelectedTag),
+      TagButtons(
+          title: "Academic tools",
+          isSelected: TagButtonsIsSelected['Academic tools']!,
+          updateSelectedTag: updateSelectedTag),
+      TagButtons(
+          title: "Others",
+          isSelected: TagButtonsIsSelected['Others']!,
+          updateSelectedTag: updateSelectedTag),
+    ];
 
     return BlocConsumer<ListingsBloc, ListingsState>(
       listener: (context, state) {},
@@ -37,7 +122,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
         if (state is ListingsStateInitial) {
           print("here");
           listingsBloc.add(
-              ListingsEventGetAllList(firebaseRepository: firebaseRepository));
+              ListingsEventGetAllList(firebaseRepository: firebaseRepository,localData:localData));
         }
         return Scaffold(
           backgroundColor: Colors.transparent,
@@ -47,7 +132,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                 //SizedBox(height: 30),
                 Padding(
                   padding:
-                      EdgeInsets.symmetric(vertical: 12.sp, horizontal: 30.sp),
+                      EdgeInsets.symmetric(vertical: 12.h, horizontal: 30.w),
                   child: SearchAnchor(builder:
                       (BuildContext context, SearchController controller) {
                     return SearchBar(
@@ -83,74 +168,210 @@ class _ListingsScreenState extends State<ListingsScreen> {
                     ]; // This will ensure no suggestion bar is shown
                   }),
                 ),
-                Container(
-                  height: 58.h,
-                  child: Expanded(
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: tagButtonsList
-                            .length, // Adjust this according to your data
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: EdgeInsets.fromLTRB(10.w, 0, 0, 0),
-                            child: tagButtonsList[index],
-                          );
-                        }),
-                  ),
-                ),
-
-                BlocBuilder<ListingsBloc, ListingsState>(
-                  builder: (context, state) {
-                    if (state is ListingsStateLoading ||
-                        state is ListingsStateInitial) {
-                      return CircularProgressIndicator();
-                    } else if (state is ListingsStateGotList) {
-                      if (state.productList.isEmpty) {
-                        return Text('No products available',style: TextStyle(color: Colors.white),);
-                      } else {
-                        return Expanded(
-                          child: Padding(
-                            padding:
-                                EdgeInsets.fromLTRB(10.sp, 10.sp, 10.sp, 0),
-                            child: GridView.builder(
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio:
-                                    containerWidth / containerHeight,
-                                crossAxisSpacing: 10.0.w,
-                                mainAxisSpacing: 0.0,
-                              ),
-                              itemCount: state.productList.length,
-                              itemBuilder: (context, index) {
-                                SellProductModel product =
-                                    state.productList[index];
-
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ProductDetails(
-                                                product: product,
-                                                localData: localData,
-                                              )),
-                                    );
-                                  },
-                                  child: SellListCard(
-                                    sellProductModel: product,
-                                    localData: localData,
+                Expanded(
+                  child: SingleChildScrollView(
+                    // this is parent
+                    controller: _parentScrollController,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 840.h,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10.h, horizontal: 10.w),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    "Latest Post :",
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                );
-                              },
-                            ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                child: Container(
+                                  height: 180.h,
+                                  child:
+                                      BlocBuilder<ListingsBloc, ListingsState>(
+                                    builder: (context, state) {
+                                      if (state is ListingsStateLoading ||
+                                          state is ListingsStateInitial) {
+                                        return Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      } else if (state
+                                              is ListingsStateGotList ||
+                                          state
+                                              is ListingsStateGotSearchedList) {
+                                        if (state is ListingsStateGotList) {
+                                          LatestPostList = state.productList;
+                                        }
+                                        if (LatestPostList.isEmpty) {
+                                          return Center(
+                                            child: Text(
+                                              'No products available',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          );
+                                        } else {
+                                          return SizedBox(
+                                            // Adjust the height as per your requirement
+                                            child: ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount:
+                                                  (LatestPostList.length <= 5)
+                                                      ? LatestPostList.length
+                                                      : 5,
+                                              itemBuilder: (context, index) {
+                                                SellProductModel product =
+                                                    LatestPostList[index];
+
+                                                return Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 10.w),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ProductDetails(
+                                                            product: product,
+                                                            localData:
+                                                                localData,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: LatestPostCards(
+                                                      sellProductModel: product,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        }
+                                      }
+                                      return Text("Error Out of States");
+                                    },
+                                  ),
+                                ),
+                              ),
+                              // Padding(
+                              //   padding: EdgeInsets.symmetric(
+                              //       vertical: 10.h, horizontal: 10.w),
+                              //   child: SizedBox(
+                              //     width: double.infinity,
+                              //     child: Text(
+                              //       "All Post :",
+                              //       style: TextStyle(
+                              //         fontSize: 22.sp,
+                              //         fontWeight: FontWeight.bold,
+                              //         color: Colors.white,
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                              Container(
+                                height: 58.h,
+                                child: Expanded(
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: tagButtonsList
+                                          .length, // Adjust this according to your data
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              10.w, 0, 0, 0),
+                                          child: tagButtonsList[index],
+                                        );
+                                      }),
+                                ),
+                              ),
+                              BlocBuilder<ListingsBloc, ListingsState>(
+                                builder: (context, state) {
+                                  if (state is ListingsStateLoading ||
+                                      state is ListingsStateInitial) {
+                                    return CircularProgressIndicator();
+                                  } else if (state is ListingsStateGotList ||
+                                      state is ListingsStateGotSearchedList) {
+                                    List<SellProductModel> list = [];
+                                    if (state is ListingsStateGotList) {
+                                      list = state.productList;
+                                    } else if (state
+                                        is ListingsStateGotSearchedList) {
+                                      list = state.productList;
+                                    }
+                                    if (list.isEmpty) {
+                                      return Text(
+                                        'No products available',
+                                        style: TextStyle(color: Colors.white),
+                                      );
+                                    } else {
+                                      return Expanded(
+                                        child: Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              10.w, 10.h, 10.w, 0),
+                                          child: GridView.builder(
+                                            controller: _childScrollController,
+                                            physics: _isParentScrollingEnabled
+                                                ? NeverScrollableScrollPhysics()
+                                                : AlwaysScrollableScrollPhysics(),
+                                            gridDelegate:
+                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 2,
+                                              childAspectRatio: containerWidth /
+                                                  containerHeight,
+                                              crossAxisSpacing: 10.0.w,
+                                              mainAxisSpacing: 0.0,
+                                            ),
+                                            itemCount: list.length,
+                                            itemBuilder: (context, index) {
+                                              SellProductModel product =
+                                                  list[index];
+
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ProductDetails(
+                                                              product: product,
+                                                              localData:
+                                                                  localData,
+                                                            )),
+                                                  );
+                                                },
+                                                child: SellListCard(
+                                                  sellProductModel: product,
+                                                  localData: localData,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  }
+                                  return Text("Error Out of States");
+                                },
+                              ),
+                            ],
                           ),
-                        );
-                      }
-                    }
-                    return Text("Error Out of States");
-                  },
-                ),
+                        )
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -177,71 +398,6 @@ class CustomBanner extends StatelessWidget {
   }
 }
 
-class TagButtons extends StatefulWidget {
-  String title;
-  bool isSelected;
-  TagButtons({
-    Key? key,
-    required this.title,
-    required this.isSelected,
-  }) : super(key: key);
-  @override
-  State<TagButtons> createState() => _TagButtonsState();
-}
 
-class _TagButtonsState extends State<TagButtons> {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: GestureDetector(
-        onDoubleTap: () {
-          //ontap here
-        },
-        child: Container(
-          height: 32.0,
-          // Adjust this according to your text size
-          decoration: BoxDecoration(
-            color: widget.isSelected
-                ? PurpleTheme.LightPurpleColor
-                : PurpleTheme.PurpleColor,
-            borderRadius: BorderRadius.circular(16.0.r),
-          ),
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15.sp),
-              child: Text(
-                widget.title,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
 
-final List<Widget> tagButtonsList = [
-  TagButtons(
-    title: "All",
-    isSelected: true,
-  ),
-  TagButtons(
-    title: "Books",
-    isSelected: false,
-  ),
-  TagButtons(
-    title: "Sports",
-    isSelected: false,
-  ),
-  TagButtons(
-    title: "Academic tools",
-    isSelected: false,
-  ),
-  TagButtons(
-    title: "Others",
-    isSelected: false,
-  ),
-];
+//height: MediaQuery.of(context).size.height *1.1,

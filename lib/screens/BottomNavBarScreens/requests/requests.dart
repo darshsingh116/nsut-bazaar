@@ -8,6 +8,7 @@ import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/bloc/requests_bl
 import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/bloc/requests_event.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/bloc/requests_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nsutbazaar/screens/Product/request_details.dart';
 import 'package:nsutbazaar/widgets/cards/request_listing_card.dart';
 
 class RequestsScreen extends StatefulWidget {
@@ -93,8 +94,19 @@ class _RequestsScreenState extends State<RequestsScreen> {
                                   state.productList[index];
                               return Padding(
                                 padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: RequestListCard(
-                                    requestProductModel: product),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            RequestDetailsPage(product: product)
+                                                      ),
+                                                    );
+                                  },
+                                  child: RequestListCard(
+                                      requestProductModel: product),
+                                ),
                               );
                             },
                           ),

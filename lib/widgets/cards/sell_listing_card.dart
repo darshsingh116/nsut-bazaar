@@ -33,10 +33,7 @@ class _SellListCardState extends State<SellListCard> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    //double screenHeight = MediaQuery.of(context).size.height;
     double containerWidth = 175.w;
-    //double containerHeight = screenHeight / 6;
 
     return Container(
         width: containerWidth,
@@ -55,7 +52,7 @@ class _SellListCardState extends State<SellListCard> {
             children: [
               Container(
                 color: Colors.transparent,
-                height: 216.h,
+                height: 165.h,
                 width: containerWidth,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12.r),
