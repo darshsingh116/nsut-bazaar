@@ -126,7 +126,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         icon: Icon(
                           _isLiked ? Icons.favorite : Icons.favorite_border,
                           color: _isLiked
-                              ? Colors.red
+                              ? PurpleTheme.LightPurpleColor
                               : const Color.fromARGB(255, 255, 255, 255),
                           size: 24.sp,
                         ),

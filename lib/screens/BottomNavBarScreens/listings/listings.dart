@@ -42,7 +42,6 @@ class _ListingsScreenState extends State<ListingsScreen> {
   };
 
   List<SellProductModel> LatestPostList = [];
-
   @override
   void initState() {
     super.initState();
@@ -288,84 +287,86 @@ class _ListingsScreenState extends State<ListingsScreen> {
                                         ),
                                       );
                                     } else {
-//                                      List<Widget> getCarouselItems(List<SellProductModel> sellProductModels, BuildContext context, dynamic localData) {
-//   List<Widget> carouselItems = [];
+                                      print("HAAAAAAAAI");
+                                     List<Widget> getCarouselItems(List<SellProductModel> sellProductModels, BuildContext context, dynamic localData) {
+  List<Widget> carouselItems = [];
 
-//   for (int i = 0; i < min(5, sellProductModels.length); i++) {
-//     carouselItems.add(
-//       Padding(
-//         padding: EdgeInsets.symmetric(horizontal: 10.w),
-//         child: GestureDetector(
-//           onTap: () {
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute(
-//                 builder: (context) => ProductDetails(
-//                   product: sellProductModels[i],
-//                   localData: localData,
-//                 ),
-//               ),
-//             );
-//           },
-//           child: LatestPostCards(
-//             sellProductModel: sellProductModels[i],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
+  for (int i = 0; i < min(5, sellProductModels.length); i++) {
+    carouselItems.add(
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10.w),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductDetails(
+                  product: sellProductModels[i],
+                  localData: localData,
+                ),
+              ),
+            );
+          },
+          child: LatestPostCards(
+            sellProductModel: sellProductModels[i],
+          ),
+        ),
+      ),
+    );
+  }
 
-//   return carouselItems;
-// }
+  return carouselItems;
+}
 
-// List<Widget> carouselItems = getCarouselItems(LatestPostList, context, localData);
+List<Widget> carouselItems = getCarouselItems(LatestPostList, context, localData);
 
-// CarouselSlider(
-//   options: CarouselOptions(
-//     autoPlay: true,
-//     aspectRatio: 2.0,
-//     enlargeCenterPage: true,
-//     enlargeStrategy: CenterPageEnlargeStrategy.height,
-//   ),
-//   items: carouselItems,
-// );
-
-                                      return SizedBox(
-                                        // Adjust the height as per your requirement
-                                        child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount:
-                                              (LatestPostList.length <= 5)
-                                                  ? LatestPostList.length
-                                                  : 5,
-                                          itemBuilder: (context, index) {
-                                            SellProductModel product =
-                                                LatestPostList[index];
-
-                                            return Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 10.w),
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ProductDetails(
-                                                        product: product,
-                                                        localData: localData,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                                child: LatestPostCards(
-                                                  sellProductModel: product,
-                                                ),
-                                              ),
-                                            );
-                                          },
+                                      return CarouselSlider(
+                                        options: CarouselOptions(
+                                          autoPlay: true,
+                                          //aspectRatio: 2.0,
+                                          enlargeCenterPage: true,
+                                          enlargeStrategy:
+                                              CenterPageEnlargeStrategy.height,
                                         ),
+                                        items: carouselItems,
                                       );
+
+                                      // return SizedBox(
+                                      //   // Adjust the height as per your requirement
+                                      //   child: ListView.builder(
+                                      //     scrollDirection: Axis.horizontal,
+                                      //     itemCount:
+                                      //         (LatestPostList.length <= 5)
+                                      //             ? LatestPostList.length
+                                      //             : 5,
+                                      //     itemBuilder: (context, index) {
+                                      //       SellProductModel product =
+                                      //           LatestPostList[index];
+
+                                      //       return Padding(
+                                      //         padding: EdgeInsets.symmetric(
+                                      //             horizontal: 10.w),
+                                      //         child: GestureDetector(
+                                      //           onTap: () {
+                                      //             Navigator.push(
+                                      //               context,
+                                      //               MaterialPageRoute(
+                                      //                 builder: (context) =>
+                                      //                     ProductDetails(
+                                      //                   product: product,
+                                      //                   localData: localData,
+                                      //                 ),
+                                      //               ),
+                                      //             );
+                                      //           },
+                                      //           child: LatestPostCards(
+                                      //             sellProductModel: product,
+                                      //           ),
+                                      //         ),
+                                      //       );
+                                      //     },
+                                      //   ),
+                                      // );
                                     }
                                   }
                                   return Text("Error Out of States");
