@@ -10,6 +10,7 @@ import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/bloc/requests_st
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nsutbazaar/screens/Product/request_details.dart';
 import 'package:nsutbazaar/widgets/cards/request_listing_card.dart';
+import 'package:nsutbazaar/widgets/cards/request_listing_card_skeleton_loading.dart';
 
 class RequestsScreen extends StatefulWidget {
   const RequestsScreen({Key? key}) : super(key: key);
@@ -81,7 +82,25 @@ class _RequestsScreenState extends State<RequestsScreen> {
                   builder: (context, state) {
                     if (state is RequestsStateLoading ||
                         state is RequestsStateInitial) {
-                      return CircularProgressIndicator();
+                      return Expanded(
+                          child: ListView(
+                            children: [
+                              RequestListCardSkeletonLoading(),
+                              RequestListCardSkeletonLoading(),
+                              RequestListCardSkeletonLoading(),
+                              RequestListCardSkeletonLoading(),
+                              RequestListCardSkeletonLoading(),
+                              RequestListCardSkeletonLoading(),
+                              RequestListCardSkeletonLoading(),
+                              RequestListCardSkeletonLoading(),
+                              RequestListCardSkeletonLoading(),
+                              RequestListCardSkeletonLoading(),
+                              RequestListCardSkeletonLoading(),
+                              RequestListCardSkeletonLoading(),
+                              RequestListCardSkeletonLoading(),
+                            ],
+                          ),
+                        );
                     } else if (state is RequestsStateGotList) {
                       if (state.productList.isEmpty) {
                         return Text('No products available');

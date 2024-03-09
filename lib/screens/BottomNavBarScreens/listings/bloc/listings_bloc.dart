@@ -7,14 +7,17 @@ class ListingsBloc extends Bloc<ListingsEvent, ListingsState> {
   ListingsBloc() : super(ListingsStateInitial()) {
     on<ListingsEventGetAllList>((event, emit) async {
       emit(ListingsStateLoading());
-      print("inside listing bloc get event all list1");
-      final productFirestore =
-          ProductFirestore(event.firebaseRepository.firebaseFirestore);
-      print("inside listing bloc get event all list2");
-      final productList = await productFirestore.getAllSellProducts();
-      print("inside listing bloc get event all list3");
-      event.localData.allSellProductModelList = productList;
-      emit(ListingsStateGotList(productList: productList));
+      try {
+        final productFirestore =
+            ProductFirestore(event.firebaseRepository.firebaseFirestore);
+        final productList = await productFirestore.getAllSellProducts();
+        event.localData.allSellProductModelList = productList;
+        print("done gettingggg");
+        print(productList[0].imageUrl);
+        emit(ListingsStateGotList(productList: productList));
+      } catch (e) {
+        print("THIS IS DEV CAUGHT ERROR : ${e}");
+      }
     });
 
     on<ListingsEventInitialize>((event, emit) async {

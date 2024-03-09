@@ -5,6 +5,7 @@ import 'package:nsutbazaar/extensions/strings.dart';
 import 'package:nsutbazaar/models/SellProductModel.dart';
 import 'package:nsutbazaar/repositories/local_data.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:loading_skeleton_niu/loading_skeleton.dart';
 
 class SellListCard extends StatefulWidget {
   final SellProductModel sellProductModel;
@@ -51,17 +52,23 @@ class _SellListCardState extends State<SellListCard> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12.r),
                   child: CachedNetworkImage(
-  placeholder: (context, url) => Image.asset(
-    'assets/loading.gif', // Placeholder image asset
-    fit: BoxFit.fill,
-    width: 10.w, // Specify the width of the placeholder
-    height: 10.h, // Specify the height of the placeholder
-  ),
-  imageUrl: widget.sellProductModel.imageUrl,
-  fit: BoxFit.fill,
-  fadeInDuration: Duration(milliseconds: 200), // Duration for fade-in animation
-)
-,
+                    placeholder: (context, url) => LoadingSkeleton(
+                      width: double.infinity,
+                      height: double.infinity,
+                      colors: PurpleTheme.greyLoadingShadesColors,
+                      animationDuration: 2000,
+                    ),
+                    errorWidget : (context, url, error) => LoadingSkeleton(
+                      width: double.infinity,
+                      height: double.infinity,
+                      colors: PurpleTheme.greyLoadingShadesColors,
+                      animationDuration: 2000,
+                    ),
+                    imageUrl: widget.sellProductModel.imageUrl,
+                    fit: BoxFit.fill,
+                    fadeInDuration: Duration(
+                        milliseconds: 200), // Duration for fade-in animation
+                  ),
                 ),
               ),
               SizedBox(

@@ -1,8 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/models/SellProductModel.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
@@ -12,8 +12,12 @@ import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_ev
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_state.dart';
 import 'package:nsutbazaar/screens/Product/product_details.dart';
 import 'package:nsutbazaar/widgets/cards/latest_post_card.dart';
+import 'package:nsutbazaar/widgets/cards/latest_post_card_skeleton_loading.dart';
 import 'package:nsutbazaar/widgets/cards/sell_listing_card.dart';
+import 'package:nsutbazaar/widgets/cards/sell_listing_card_skeleton_loading.dart';
 import 'package:nsutbazaar/widgets/tagButton.dart';
+import 'package:flutter_sticky_widgets/flutter_sticky_widgets.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class ListingsScreen extends StatefulWidget {
   const ListingsScreen({Key? key}) : super(key: key);
@@ -24,10 +28,10 @@ class ListingsScreen extends StatefulWidget {
 
 class _ListingsScreenState extends State<ListingsScreen> {
   late ScrollController _parentScrollController;
-  late ScrollController _childScrollController;
+  // late ScrollController _childScrollController;
 
-  bool _isParentScrollingEnabled = true;
-  bool _isChildScrollingEnabled = false;
+  // bool _isParentScrollingEnabled = true;
+  // bool _isChildScrollingEnabled = false;
 
   Map<String, bool> TagButtonsIsSelected = {
     'All': true,
@@ -43,44 +47,40 @@ class _ListingsScreenState extends State<ListingsScreen> {
   void initState() {
     super.initState();
     _parentScrollController = ScrollController();
-    _childScrollController = ScrollController();
-    _parentScrollController.addListener(_onParentScroll);
-    _childScrollController.addListener(_onChildScroll);
+    //   _childScrollController = ScrollController();
+    //   _parentScrollController.addListener(_onParentScroll);
+    //   _childScrollController.addListener(_onChildScroll);
   }
 
   @override
   void dispose() {
     _parentScrollController.dispose();
-    _childScrollController.dispose();
+    //_childScrollController.dispose();
     super.dispose();
   }
 
-  void _onParentScroll() {
-    print(
-        "_parentScrollController.offset:${_parentScrollController.offset} ,_parentScrollController.position.maxScrollExtent : ${_parentScrollController.position.maxScrollExtent}");
-    print(
-        "_childScrollController.position.pixels:${_childScrollController.position.pixels} , _childScrollController.position.minScrollExtent : ${_childScrollController.position.minScrollExtent}");
-    if (_parentScrollController.offset >=
-        _parentScrollController.position.maxScrollExtent) {
-      setState(() {
-        //_isParentScrollingEnabled = false;
-        _isChildScrollingEnabled = true;
-      });
-    }
-  }
+  // void _onParentScroll() {
+  //   if (_parentScrollController.offset >=
+  //       _parentScrollController.position.maxScrollExtent) {
+  //     setState(() {
+  //       _isChildScrollingEnabled = true;
+  //       _childScrollController.jumpTo(_childScrollController.offset + 0.01);
+  //       //_childScrollController = _parentScrollController;
+  //     });
+  //   }
+  // }
 
-  void _onChildScroll() {
-    print(
-        "_childScrollController.position.pixels:${_childScrollController.position.pixels} , _childScrollController.position.minScrollExtent : ${_childScrollController.position.minScrollExtent}");
-    print(_childScrollController.position.userScrollDirection);
-    if (_childScrollController.position.pixels <=
-        _childScrollController.position.minScrollExtent) {
-      setState(() {
-        _isParentScrollingEnabled = true;
-        _isChildScrollingEnabled = false;
-      });
-    }
-  }
+  // void _onChildScroll() {
+  //   if (_childScrollController.position.pixels <=
+  //       _childScrollController.position.minScrollExtent) {
+  //     setState(() {
+  //       _isParentScrollingEnabled = true;
+  //       _parentScrollController.jumpTo(_parentScrollController.offset -
+  //           0.01); // Push the parent up by 10 pixels
+  //       _isChildScrollingEnabled = false;
+  //     });
+  //   }
+  // }
 
   void updateSelectedTag(String title) {
     setState(() {
@@ -126,6 +126,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
       builder: (context, state) {
         if (state is ListingsStateInitial) {
           print("here");
+          //print(localData.)
           listingsBloc.add(ListingsEventGetAllList(
               firebaseRepository: firebaseRepository, localData: localData));
         }
@@ -134,10 +135,9 @@ class _ListingsScreenState extends State<ListingsScreen> {
           body: SafeArea(
             child: Column(
               children: [
-                //SizedBox(height: 30),
                 Padding(
                   padding:
-                      EdgeInsets.symmetric(vertical: 12.h, horizontal: 30.w),
+                      EdgeInsets.symmetric(vertical: 12.h, horizontal: 20.w),
                   child: SearchAnchor(builder:
                       (BuildContext context, SearchController controller) {
                     return SearchBar(
@@ -174,196 +174,196 @@ class _ListingsScreenState extends State<ListingsScreen> {
                   }),
                 ),
                 Expanded(
-                  child: SingleChildScrollView(
-                    physics: _isParentScrollingEnabled
-                        ? AlwaysScrollableScrollPhysics()
-                        : NeverScrollableScrollPhysics(),
-                    // this is parent
-                    controller: _parentScrollController,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 840.h,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10.h, horizontal: 10.w),
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  child: Text(
-                                    "Latest Post :",
-                                    style: TextStyle(
-                                      fontSize: 16.sp,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                child: Container(
-                                  height: 180.h,
-                                  child:
-                                      BlocBuilder<ListingsBloc, ListingsState>(
-                                    builder: (context, state) {
-                                      if (state is ListingsStateLoading ||
-                                          state is ListingsStateInitial) {
-                                        return Center(
-                                          child: CircularProgressIndicator(),
-                                        );
-                                      } else if (state
-                                              is ListingsStateGotList ||
-                                          state
-                                              is ListingsStateGotSearchedList) {
-                                        if (state is ListingsStateGotList) {
-                                          LatestPostList = state.productList;
-                                        }
-                                        if (LatestPostList.isEmpty) {
-                                          return Center(
-                                            child: Text(
-                                              'No products available',
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          );
-                                        } else {
-                                          return SizedBox(
-                                            // Adjust the height as per your requirement
-                                            child: ListView.builder(
-                                              scrollDirection: Axis.horizontal,
-                                              itemCount:
-                                                  (LatestPostList.length <= 5)
-                                                      ? LatestPostList.length
-                                                      : 5,
-                                              itemBuilder: (context, index) {
-                                                SellProductModel product =
-                                                    LatestPostList[index];
-
-                                                return Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 10.w),
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ProductDetails(
-                                                            product: product,
-                                                            localData:
-                                                                localData,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                    child: LatestPostCards(
-                                                      sellProductModel: product,
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          );
-                                        }
-                                      }
-                                      return Text("Error Out of States");
-                                    },
-                                  ),
-                                ),
-                              ),
-                              // Padding(
-                              //   padding: EdgeInsets.symmetric(
-                              //       vertical: 10.h, horizontal: 10.w),
-                              //   child: SizedBox(
-                              //     width: double.infinity,
-                              //     child: Text(
-                              //       "All Post :",
-                              //       style: TextStyle(
-                              //         fontSize: 22.sp,
-                              //         fontWeight: FontWeight.bold,
-                              //         color: Colors.white,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                              Container(
-                                height: 58.h,
-                                child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: tagButtonsList
-                                        .length, // Adjust this according to your data
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(10.w, 0, 0, 0),
-                                        child: tagButtonsList[index],
-                                      );
-                                    }),
-                              ),
-                              BlocBuilder<ListingsBloc, ListingsState>(
+                  child: StickyContainer(
+                    displayOverFlowContent: true,
+                    stickyChildren: [
+                      // StickyWidget(
+                      //   initialPosition: StickyPosition(top: 0.h, left: 20.w),
+                      //   finalPosition: StickyPosition(top: 0.h, left: 20.w),
+                      //   controller: _parentScrollController,
+                      //   child: SizedBox(
+                      //     width: 350.w,
+                      //     height: 75.h,
+                      //     child: Padding(
+                      //       padding:
+                      //           EdgeInsets.symmetric(vertical: 12.h, horizontal: 0.w),
+                      //       child: SearchAnchor(builder:
+                      //           (BuildContext context, SearchController controller) {
+                      //         return SearchBar(
+                      //           backgroundColor: MaterialStateProperty.all(
+                      //               PurpleTheme.PurpleColor),
+                      //           hintText: "Search",
+                      //           hintStyle: MaterialStateProperty.all(
+                      //               TextStyle(color: PurpleTheme.LightPurpleColor)),
+                      //           textStyle: MaterialStateProperty.all(
+                      //               TextStyle(color: Colors.white)),
+                      //           controller: controller,
+                      //           padding: MaterialStatePropertyAll<EdgeInsets>(
+                      //               EdgeInsets.symmetric(horizontal: 16.0.sp)),
+                      //           onChanged: (searchParameter) {
+                      //             listingsBloc.add(ListingsEventGetSearchedList(
+                      //                 firebaseRepository: firebaseRepository,
+                      //                 searchParameter: searchParameter));
+                      //           },
+                      //           onSubmitted: (searchParameter) {
+                      //             listingsBloc.add(ListingsEventGetSearchedList(
+                      //                 firebaseRepository: firebaseRepository,
+                      //                 searchParameter: searchParameter));
+                      //           },
+                      //           leading: const Icon(
+                      //             Icons.search,
+                      //             color: PurpleTheme.LightPurpleColor,
+                      //           ),
+                      //         );
+                      //       }, suggestionsBuilder:
+                      //           (BuildContext context, SearchController controller) {
+                      //         return [
+                      //           SizedBox.shrink()
+                      //         ]; // This will ensure no suggestion bar is shown
+                      //       }),
+                      //     ),
+                      //   ),
+                      // )
+                      StickyWidget(
+                        initialPosition: StickyPosition(top: 190.h, left: 0),
+                        finalPosition: StickyPosition(top: -1.h, left: 0),
+                        controller: _parentScrollController,
+                        child: Container(
+                          height: 58.h,
+                          width: MediaQuery.of(context).size.width,
+                          color: PurpleTheme.DarkPurpleBackgroundColor,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: tagButtonsList
+                                  .length, // Adjust this according to your data
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                  padding: EdgeInsets.fromLTRB(10.w, 0, 0, 0),
+                                  child: tagButtonsList[index],
+                                );
+                              }),
+                        ),
+                      )
+                    ],
+                    child: SingleChildScrollView(
+                      controller: _parentScrollController,
+                      child: Column(
+                        children: [
+                          SizedBox(height: 20.h),
+                          // Padding(
+                          //   padding: EdgeInsets.symmetric(
+                          //       vertical: 10.h, horizontal: 10.w),
+                          //   child: SizedBox(
+                          //     width: double.infinity,
+                          //     child: Text(
+                          //       "Latest Post :",
+                          //       style: TextStyle(
+                          //         fontSize: 16.sp,
+                          //         color: Colors.white,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10.w),
+                            child: Container(
+                              height: 180.h,
+                              child: BlocBuilder<ListingsBloc, ListingsState>(
                                 builder: (context, state) {
                                   if (state is ListingsStateLoading ||
                                       state is ListingsStateInitial) {
-                                    return CircularProgressIndicator();
+                                    return Center(
+                                      child: LatestPostCardsSkeletonLoading(),
+                                    );
                                   } else if (state is ListingsStateGotList ||
                                       state is ListingsStateGotSearchedList) {
-                                    List<SellProductModel> list = [];
                                     if (state is ListingsStateGotList) {
-                                      list = state.productList;
-                                    } else if (state
-                                        is ListingsStateGotSearchedList) {
-                                      list = state.productList;
+                                      LatestPostList = state.productList;
                                     }
-                                    if (list.isEmpty) {
-                                      return Text(
-                                        'No products available',
-                                        style: TextStyle(color: Colors.white),
+                                    if (LatestPostList.isEmpty) {
+                                      return Center(
+                                        child: Text(
+                                          'No products available',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
                                       );
                                     } else {
-                                      return Expanded(
-                                        child: Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              10.w, 10.h, 10.w, 0),
-                                          child: GridView.builder(
-                                            controller: _childScrollController,
-                                            physics: _isChildScrollingEnabled
-                                                ? AlwaysScrollableScrollPhysics()
-                                                : NeverScrollableScrollPhysics(),
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              childAspectRatio: containerWidth /
-                                                  containerHeight,
-                                              crossAxisSpacing: 10.0.w,
-                                              mainAxisSpacing: 0.0,
-                                            ),
-                                            itemCount: list.length,
-                                            itemBuilder: (context, index) {
-                                              SellProductModel product =
-                                                  list[index];
+//                                      List<Widget> getCarouselItems(List<SellProductModel> sellProductModels, BuildContext context, dynamic localData) {
+//   List<Widget> carouselItems = [];
 
-                                              return GestureDetector(
+//   for (int i = 0; i < min(5, sellProductModels.length); i++) {
+//     carouselItems.add(
+//       Padding(
+//         padding: EdgeInsets.symmetric(horizontal: 10.w),
+//         child: GestureDetector(
+//           onTap: () {
+//             Navigator.push(
+//               context,
+//               MaterialPageRoute(
+//                 builder: (context) => ProductDetails(
+//                   product: sellProductModels[i],
+//                   localData: localData,
+//                 ),
+//               ),
+//             );
+//           },
+//           child: LatestPostCards(
+//             sellProductModel: sellProductModels[i],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   return carouselItems;
+// }
+
+// List<Widget> carouselItems = getCarouselItems(LatestPostList, context, localData);
+
+// CarouselSlider(
+//   options: CarouselOptions(
+//     autoPlay: true,
+//     aspectRatio: 2.0,
+//     enlargeCenterPage: true,
+//     enlargeStrategy: CenterPageEnlargeStrategy.height,
+//   ),
+//   items: carouselItems,
+// );
+
+                                      return SizedBox(
+                                        // Adjust the height as per your requirement
+                                        child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount:
+                                              (LatestPostList.length <= 5)
+                                                  ? LatestPostList.length
+                                                  : 5,
+                                          itemBuilder: (context, index) {
+                                            SellProductModel product =
+                                                LatestPostList[index];
+
+                                            return Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10.w),
+                                              child: GestureDetector(
                                                 onTap: () {
                                                   Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ProductDetails(
-                                                              product: product,
-                                                              localData:
-                                                                  localData,
-                                                            )),
+                                                      builder: (context) =>
+                                                          ProductDetails(
+                                                        product: product,
+                                                        localData: localData,
+                                                      ),
+                                                    ),
                                                   );
                                                 },
-                                                child: SellListCard(
+                                                child: LatestPostCards(
                                                   sellProductModel: product,
-                                                  localData: localData,
                                                 ),
-                                              );
-                                            },
-                                          ),
+                                              ),
+                                            );
+                                          },
                                         ),
                                       );
                                     }
@@ -371,13 +371,116 @@ class _ListingsScreenState extends State<ListingsScreen> {
                                   return Text("Error Out of States");
                                 },
                               ),
-                            ],
+                            ),
                           ),
-                        )
-                      ],
+                          // Container(
+                          //   height: 58.h,
+                          //   child: ListView.builder(
+                          //       scrollDirection: Axis.horizontal,
+                          //       itemCount: tagButtonsList
+                          //           .length, // Adjust this according to your data
+                          //       itemBuilder: (BuildContext context, int index) {
+                          //         return Padding(
+                          //           padding: EdgeInsets.fromLTRB(10.w, 0, 0, 0),
+                          //           child: tagButtonsList[index],
+                          //         );
+                          //       }),
+                          // ),
+                          Container(
+                            height: 58.h,
+                          ),
+
+                          BlocBuilder<ListingsBloc, ListingsState>(
+                            builder: (context, state) {
+                              if (state is ListingsStateLoading ||
+                                  state is ListingsStateInitial) {
+                                return Padding(
+                                  padding:
+                                      EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 0),
+                                  child: GridView(
+                                    //controller: _parentScrollController,
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      childAspectRatio:
+                                          containerWidth / containerHeight,
+                                      crossAxisSpacing: 10.0.w,
+                                      mainAxisSpacing: 0.0,
+                                    ),
+                                    children: [
+                                      SellListCardSkeletonLoading(),
+                                      SellListCardSkeletonLoading(),
+                                      SellListCardSkeletonLoading(),
+                                      SellListCardSkeletonLoading(),
+                                    ],
+                                  ),
+                                );
+                              } else if (state is ListingsStateGotList ||
+                                  state is ListingsStateGotSearchedList) {
+                                List<SellProductModel> list = [];
+                                if (state is ListingsStateGotList) {
+                                  list = state.productList;
+                                } else if (state
+                                    is ListingsStateGotSearchedList) {
+                                  list = state.productList;
+                                }
+                                if (list.isEmpty) {
+                                  return Text(
+                                    'No products available',
+                                    style: TextStyle(color: Colors.white),
+                                  );
+                                } else {
+                                  return Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        10.w, 10.h, 10.w, 0),
+                                    child: GridView.builder(
+                                      //controller: _parentScrollController,
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio:
+                                            containerWidth / containerHeight,
+                                        crossAxisSpacing: 10.0.w,
+                                        mainAxisSpacing: 0.0,
+                                      ),
+                                      itemCount: list.length,
+                                      itemBuilder: (context, index) {
+                                        SellProductModel product = list[index];
+
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ProductDetails(
+                                                        product: product,
+                                                        localData: localData,
+                                                      )),
+                                            );
+                                          },
+                                          child: SellListCard(
+                                            sellProductModel: product,
+                                            localData: localData,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                }
+                              }
+                              return Text("Error Out of States");
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -406,4 +509,62 @@ class CustomBanner extends StatelessWidget {
 
 
 
-//height: MediaQuery.of(context).size.height *1.1,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Padding(
+//                   padding:
+//                       EdgeInsets.symmetric(vertical: 12.h, horizontal: 30.w),
+//                   child: SearchAnchor(builder:
+//                       (BuildContext context, SearchController controller) {
+//                     return SearchBar(
+//                       backgroundColor:
+//                           MaterialStateProperty.all(PurpleTheme.PurpleColor),
+//                       hintText: "Search",
+//                       hintStyle: MaterialStateProperty.all(
+//                           TextStyle(color: PurpleTheme.LightPurpleColor)),
+//                       textStyle: MaterialStateProperty.all(
+//                           TextStyle(color: Colors.white)),
+//                       controller: controller,
+//                       padding: MaterialStatePropertyAll<EdgeInsets>(
+//                           EdgeInsets.symmetric(horizontal: 16.0.sp)),
+//                       onChanged: (searchParameter) {
+//                         listingsBloc.add(ListingsEventGetSearchedList(
+//                             firebaseRepository: firebaseRepository,
+//                             searchParameter: searchParameter));
+//                       },
+//                       onSubmitted: (searchParameter) {
+//                         listingsBloc.add(ListingsEventGetSearchedList(
+//                             firebaseRepository: firebaseRepository,
+//                             searchParameter: searchParameter));
+//                       },
+//                       leading: const Icon(
+//                         Icons.search,
+//                         color: PurpleTheme.LightPurpleColor,
+//                       ),
+//                     );
+//                   }, suggestionsBuilder:
+//                       (BuildContext context, SearchController controller) {
+//                     return [
+//                       SizedBox.shrink()
+//                     ]; // This will ensure no suggestion bar is shown
+//                   }),
+//                 ),
