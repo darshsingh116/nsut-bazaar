@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nsutbazaar/extensions/strings.dart';
@@ -17,8 +18,14 @@ class LatestPostCards extends StatelessWidget {
           ClipRRect(
             borderRadius:
                 BorderRadius.circular(10.0), // Adjust the radius as needed
-            child: Image.network(
-              sellProductModel.imageUrl,
+            child: CachedNetworkImage(
+              placeholder: (context, url) => Image.asset(
+                'assets/loading.gif', // Placeholder image asset
+                fit: BoxFit.contain,
+                width: 50.w, // Specify the width of the placeholder
+                height: 10.h, // Specify the height of the placeholder
+              ),
+              imageUrl: sellProductModel.imageUrl,
               width: 300.w,
               height: 150.h,
               fit: BoxFit.cover,

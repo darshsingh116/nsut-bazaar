@@ -27,6 +27,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
   late ScrollController _childScrollController;
 
   bool _isParentScrollingEnabled = true;
+  bool _isChildScrollingEnabled = false;
 
   Map<String, bool> TagButtonsIsSelected = {
     'All': true,
@@ -55,24 +56,28 @@ class _ListingsScreenState extends State<ListingsScreen> {
   }
 
   void _onParentScroll() {
+    print(
+        "_parentScrollController.offset:${_parentScrollController.offset} ,_parentScrollController.position.maxScrollExtent : ${_parentScrollController.position.maxScrollExtent}");
+    print(
+        "_childScrollController.position.pixels:${_childScrollController.position.pixels} , _childScrollController.position.minScrollExtent : ${_childScrollController.position.minScrollExtent}");
     if (_parentScrollController.offset >=
         _parentScrollController.position.maxScrollExtent) {
       setState(() {
-        _isParentScrollingEnabled = false;
-      });
-    } else if (_childScrollController.position.pixels <=
-        _childScrollController.position.minScrollExtent) {
-      setState(() {
-        _isParentScrollingEnabled = true;
+        //_isParentScrollingEnabled = false;
+        _isChildScrollingEnabled = true;
       });
     }
   }
 
   void _onChildScroll() {
+    print(
+        "_childScrollController.position.pixels:${_childScrollController.position.pixels} , _childScrollController.position.minScrollExtent : ${_childScrollController.position.minScrollExtent}");
+    print(_childScrollController.position.userScrollDirection);
     if (_childScrollController.position.pixels <=
         _childScrollController.position.minScrollExtent) {
       setState(() {
         _isParentScrollingEnabled = true;
+        _isChildScrollingEnabled = false;
       });
     }
   }
@@ -121,8 +126,8 @@ class _ListingsScreenState extends State<ListingsScreen> {
       builder: (context, state) {
         if (state is ListingsStateInitial) {
           print("here");
-          listingsBloc.add(
-              ListingsEventGetAllList(firebaseRepository: firebaseRepository,localData:localData));
+          listingsBloc.add(ListingsEventGetAllList(
+              firebaseRepository: firebaseRepository, localData: localData));
         }
         return Scaffold(
           backgroundColor: Colors.transparent,
@@ -170,6 +175,9 @@ class _ListingsScreenState extends State<ListingsScreen> {
                 ),
                 Expanded(
                   child: SingleChildScrollView(
+                    physics: _isParentScrollingEnabled
+                        ? AlwaysScrollableScrollPhysics()
+                        : NeverScrollableScrollPhysics(),
                     // this is parent
                     controller: _parentScrollController,
                     child: Column(
@@ -281,20 +289,18 @@ class _ListingsScreenState extends State<ListingsScreen> {
                               // ),
                               Container(
                                 height: 58.h,
-                                child: Expanded(
-                                  child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: tagButtonsList
-                                          .length, // Adjust this according to your data
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              10.w, 0, 0, 0),
-                                          child: tagButtonsList[index],
-                                        );
-                                      }),
-                                ),
+                                child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: tagButtonsList
+                                        .length, // Adjust this according to your data
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Padding(
+                                        padding:
+                                            EdgeInsets.fromLTRB(10.w, 0, 0, 0),
+                                        child: tagButtonsList[index],
+                                      );
+                                    }),
                               ),
                               BlocBuilder<ListingsBloc, ListingsState>(
                                 builder: (context, state) {
@@ -322,9 +328,9 @@ class _ListingsScreenState extends State<ListingsScreen> {
                                               10.w, 10.h, 10.w, 0),
                                           child: GridView.builder(
                                             controller: _childScrollController,
-                                            physics: _isParentScrollingEnabled
-                                                ? NeverScrollableScrollPhysics()
-                                                : AlwaysScrollableScrollPhysics(),
+                                            physics: _isChildScrollingEnabled
+                                                ? AlwaysScrollableScrollPhysics()
+                                                : NeverScrollableScrollPhysics(),
                                             gridDelegate:
                                                 SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 2,

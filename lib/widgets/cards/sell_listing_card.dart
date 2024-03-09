@@ -4,6 +4,7 @@ import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/extensions/strings.dart';
 import 'package:nsutbazaar/models/SellProductModel.dart';
 import 'package:nsutbazaar/repositories/local_data.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class SellListCard extends StatefulWidget {
   final SellProductModel sellProductModel;
@@ -21,7 +22,6 @@ class _SellListCardState extends State<SellListCard> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       print(widget.localData.likedSellProductModelList
@@ -39,12 +39,6 @@ class _SellListCardState extends State<SellListCard> {
         width: containerWidth,
         decoration: BoxDecoration(
           color: Colors.transparent,
-          // borderRadius: BorderRadius.only(
-          //   topLeft: Radius.circular(5),
-          //   topRight: Radius.circular(5),
-          //   bottomLeft: Radius.circular(5),
-          //   bottomRight: Radius.circular(5),
-          // ),
         ),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -56,16 +50,18 @@ class _SellListCardState extends State<SellListCard> {
                 width: containerWidth,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12.r),
-                  child: FadeInImage.assetNetwork(
-                    placeholder:
-                        'assets/loading.gif', // Placeholder image asset
-                    image: widget.sellProductModel.imageUrl,
-                    fit: BoxFit.fill,
-                    fadeInDuration: Duration(
-                        milliseconds: 200), // Duration for fade-in animation
-                    width: 10.w, // Specify the width of the placeholder
-                    height: 10.h, // Specify the height of the placeholder
-                  ),
+                  child: CachedNetworkImage(
+  placeholder: (context, url) => Image.asset(
+    'assets/loading.gif', // Placeholder image asset
+    fit: BoxFit.fill,
+    width: 10.w, // Specify the width of the placeholder
+    height: 10.h, // Specify the height of the placeholder
+  ),
+  imageUrl: widget.sellProductModel.imageUrl,
+  fit: BoxFit.fill,
+  fadeInDuration: Duration(milliseconds: 200), // Duration for fade-in animation
+)
+,
                 ),
               ),
               SizedBox(
