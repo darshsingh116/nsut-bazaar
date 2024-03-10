@@ -263,115 +263,126 @@ class _ListingsScreenState extends State<ListingsScreen> {
                           //     ),
                           //   ),
                           // ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            child: Container(
-                              height: 180.h,
-                              child: BlocBuilder<ListingsBloc, ListingsState>(
-                                builder: (context, state) {
-                                  if (state is ListingsStateLoading ||
-                                      state is ListingsStateInitial) {
-                                    return Center(
-                                      child: LatestPostCardsSkeletonLoading(),
-                                    );
-                                  } else if (state is ListingsStateGotList ||
-                                      state is ListingsStateGotSearchedList) {
-                                    if (state is ListingsStateGotList) {
-                                      LatestPostList = state.productList;
-                                    }
-                                    if (LatestPostList.isEmpty) {
-                                      return Center(
-                                        child: Text(
-                                          'No products available',
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      );
-                                    } else {
-                                      print("HAAAAAAAAI");
-                                     List<Widget> getCarouselItems(List<SellProductModel> sellProductModels, BuildContext context, dynamic localData) {
-  List<Widget> carouselItems = [];
 
-  for (int i = 0; i < min(5, sellProductModels.length); i++) {
-    carouselItems.add(
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10.w),
-        child: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProductDetails(
-                  product: sellProductModels[i],
-                  localData: localData,
-                ),
-              ),
-            );
-          },
-          child: LatestPostCards(
-            sellProductModel: sellProductModels[i],
-          ),
-        ),
-      ),
-    );
-  }
-
-  return carouselItems;
-}
-
-List<Widget> carouselItems = getCarouselItems(LatestPostList, context, localData);
-
-                                      return CarouselSlider(
-                                        options: CarouselOptions(
-                                          autoPlay: true,
-                                          //aspectRatio: 2.0,
-                                          enlargeCenterPage: true,
-                                          enlargeStrategy:
-                                              CenterPageEnlargeStrategy.height,
-                                        ),
-                                        items: carouselItems,
-                                      );
-
-                                      // return SizedBox(
-                                      //   // Adjust the height as per your requirement
-                                      //   child: ListView.builder(
-                                      //     scrollDirection: Axis.horizontal,
-                                      //     itemCount:
-                                      //         (LatestPostList.length <= 5)
-                                      //             ? LatestPostList.length
-                                      //             : 5,
-                                      //     itemBuilder: (context, index) {
-                                      //       SellProductModel product =
-                                      //           LatestPostList[index];
-
-                                      //       return Padding(
-                                      //         padding: EdgeInsets.symmetric(
-                                      //             horizontal: 10.w),
-                                      //         child: GestureDetector(
-                                      //           onTap: () {
-                                      //             Navigator.push(
-                                      //               context,
-                                      //               MaterialPageRoute(
-                                      //                 builder: (context) =>
-                                      //                     ProductDetails(
-                                      //                   product: product,
-                                      //                   localData: localData,
-                                      //                 ),
-                                      //               ),
-                                      //             );
-                                      //           },
-                                      //           child: LatestPostCards(
-                                      //             sellProductModel: product,
-                                      //           ),
-                                      //         ),
-                                      //       );
-                                      //     },
-                                      //   ),
-                                      // );
-                                    }
+                          Container(
+                            height: 180.h,
+                            width: double.infinity,
+                            child: BlocBuilder<ListingsBloc, ListingsState>(
+                              builder: (context, state) {
+                                if (state is ListingsStateLoading ||
+                                    state is ListingsStateInitial) {
+                                  return Center(
+                                    child: LatestPostCardsSkeletonLoading(),
+                                  );
+                                } else if (state is ListingsStateGotList ||
+                                    state is ListingsStateGotSearchedList) {
+                                  if (state is ListingsStateGotList) {
+                                    LatestPostList = state.productList;
                                   }
-                                  return Text("Error Out of States");
-                                },
-                              ),
+                                  if (LatestPostList.isEmpty) {
+                                    return Center(
+                                      child: Text(
+                                        'No products available',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    );
+                                  } else {
+                                    print("HAAAAAAAAI");
+                                    List<Widget> getCarouselItems(
+                                        List<SellProductModel>
+                                            sellProductModels,
+                                        BuildContext context,
+                                        dynamic localData) {
+                                      List<Widget> carouselItems = [];
+
+                                      for (int i = 0;
+                                          i < min(5, sellProductModels.length);
+                                          i++) {
+                                        carouselItems.add(
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 10.w),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ProductDetails(
+                                                      product:
+                                                          sellProductModels[i],
+                                                      localData: localData,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              child: LatestPostCards(
+                                                sellProductModel:
+                                                    sellProductModels[i],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }
+
+                                      return carouselItems;
+                                    }
+
+                                    List<Widget> carouselItems =
+                                        getCarouselItems(
+                                            LatestPostList, context, localData);
+
+                                    return CarouselSlider(
+                                      options: CarouselOptions(
+                                        autoPlay: true,
+                                        //aspectRatio: 2.0,
+                                        enlargeCenterPage: true,
+                                        enlargeStrategy:
+                                            CenterPageEnlargeStrategy.height,
+                                      ),
+                                      items: carouselItems,
+                                    );
+
+                                    // return SizedBox(
+                                    //   // Adjust the height as per your requirement
+                                    //   child: ListView.builder(
+                                    //     scrollDirection: Axis.horizontal,
+                                    //     itemCount:
+                                    //         (LatestPostList.length <= 5)
+                                    //             ? LatestPostList.length
+                                    //             : 5,
+                                    //     itemBuilder: (context, index) {
+                                    //       SellProductModel product =
+                                    //           LatestPostList[index];
+
+                                    //       return Padding(
+                                    //         padding: EdgeInsets.symmetric(
+                                    //             horizontal: 10.w),
+                                    //         child: GestureDetector(
+                                    //           onTap: () {
+                                    //             Navigator.push(
+                                    //               context,
+                                    //               MaterialPageRoute(
+                                    //                 builder: (context) =>
+                                    //                     ProductDetails(
+                                    //                   product: product,
+                                    //                   localData: localData,
+                                    //                 ),
+                                    //               ),
+                                    //             );
+                                    //           },
+                                    //           child: LatestPostCards(
+                                    //             sellProductModel: product,
+                                    //           ),
+                                    //         ),
+                                    //       );
+                                    //     },
+                                    //   ),
+                                    // );
+                                  }
+                                }
+                                return Text("Error Out of States");
+                              },
                             ),
                           ),
                           // Container(
@@ -433,6 +444,7 @@ List<Widget> carouselItems = getCarouselItems(LatestPostList, context, localData
                                     style: TextStyle(color: Colors.white),
                                   );
                                 } else {
+                                  list.shuffle();
                                   return Padding(
                                     padding: EdgeInsets.fromLTRB(
                                         10.w, 10.h, 10.w, 0),

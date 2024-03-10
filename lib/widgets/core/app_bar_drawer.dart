@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/BottomNavBar.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_bloc.dart';
@@ -36,8 +37,13 @@ Drawer AppBarDrawer(
                 SizedBox(
                   height: 20.h,
                 ),
+                SvgPicture.asset(
+                  'assets/nsut_bazaar_logo_no_bg.svg',
+                  semanticsLabel: 'An SVG image',
+                  height: 100.h,
+                ),
                 Text(
-                  'NB',
+                  'NSUT Bazaar',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 25.sp,

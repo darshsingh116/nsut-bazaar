@@ -5,6 +5,7 @@ class RequestProductModel {
   double price;
   String description;
   String timestamp; // New field
+  int contact; // Updated field
 
   RequestProductModel({
     required this.rpid, // New field
@@ -13,6 +14,7 @@ class RequestProductModel {
     required this.price,
     required this.description,
     required this.timestamp, // New field
+    required this.contact, // Updated field
   });
 
   factory RequestProductModel.fromMap(Map<String, dynamic> map) {
@@ -23,11 +25,11 @@ class RequestProductModel {
       price: map['price'] as double,
       description: map['description'] as String,
       timestamp: map['timestamp'] as String, // New field
+      contact: map['contact'] as int, // Updated field
     );
   }
 
   Map<String, dynamic> toJson() {
-    
     return {
       'rpid': rpid, // New field
       'userid': userid,
@@ -35,6 +37,7 @@ class RequestProductModel {
       'price': price,
       'description': description,
       'timestamp': timestamp, // New field
+      'contact': contact, // Updated field
     };
   }
 }

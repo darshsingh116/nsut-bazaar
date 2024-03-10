@@ -10,6 +10,7 @@ import 'package:nsutbazaar/auth/login.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/BottomNavBar.dart';
 import 'package:nsutbazaar/widgets/core/backgroundContainer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -68,7 +69,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 30.h,
+                            height: 20.h,
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 10.h),
@@ -81,6 +82,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontSize: 28.sp,
                               ),
                             ),
+                          ),
+                          SvgPicture.asset(
+                            'assets/signup.svg',
+                            semanticsLabel: 'An SVG image',
+                            width: 320.w,
+                            height: 140.h,
                           ),
                           SizedBox(height: 20.h),
                           Container(
@@ -121,7 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 20.h),
+                          SizedBox(height: 10.h),
                           Container(
                             height: 50.h,
                             padding: EdgeInsets.symmetric(
@@ -160,7 +167,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 20.h),
+                          SizedBox(height: 10.h),
                           Container(
                             height: 50.h,
                             padding: EdgeInsets.symmetric(
@@ -199,7 +206,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 20.h),
+                          SizedBox(height: 10.h),
                           Container(
                             height: 50.h,
                             padding: EdgeInsets.symmetric(
@@ -238,7 +245,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 20.h),
+                          SizedBox(height: 10.h),
                           Container(
                             height: 50.h,
                             padding: EdgeInsets.symmetric(
@@ -277,7 +284,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 20.h),
+                          SizedBox(height: 10.h),
                           Container(
                             height: 50.h,
                             padding: EdgeInsets.symmetric(

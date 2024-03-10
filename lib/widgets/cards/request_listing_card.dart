@@ -3,12 +3,38 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/extensions/strings.dart';
 import 'package:nsutbazaar/models/RequestProductModel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RequestListCard extends StatelessWidget {
   final RequestProductModel requestProductModel;
 
   const RequestListCard({Key? key, required this.requestProductModel})
       : super(key: key);
+
+
+  void launchWhatsApp(String phone) async {// Convert the URL string to a Uri object
+    try {
+      String url = 'whatsapp://send?phone=$phone';
+      Uri uri = Uri.parse(url);
+      launchUrl(uri);
+    } catch (e) {
+      print(e);
+      try {
+        String url = 'whatsapp://send?phone=+$phone';
+        Uri uri = Uri.parse(url);
+        launchUrl(uri);
+      } catch (e) {
+        print(e);
+        try {
+          String url = 'whatsapp://send?phone=+91$phone';
+          Uri uri = Uri.parse(url);
+          launchUrl(uri);
+        } catch (e) {
+          print(e);
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +91,15 @@ class RequestListCard extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(
-              Icons.arrow_circle_left_outlined,
-              color: Colors.white,
-              size: 24.sp,
+            GestureDetector(
+              onTap: () {
+                launchWhatsApp(requestProductModel.contact.toString());
+              },
+              child: Icon(
+                Icons.sms,
+                color: Colors.white,
+                size: 24.sp,
+              ),
             ),
           ],
         ),

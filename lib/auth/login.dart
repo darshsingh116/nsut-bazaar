@@ -9,6 +9,7 @@ import 'package:nsutbazaar/screens/BottomNavBarScreens/BottomNavBar.dart';
 import 'package:nsutbazaar/auth/register.dart';
 import 'package:nsutbazaar/widgets/core/backgroundContainer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -72,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 60.h,
+                            height: 20.h,
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 10.h),
@@ -86,7 +87,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 20.h),
+                          SvgPicture.asset(
+                            'assets/login.svg',
+                            semanticsLabel: 'An SVG image',
+                            width: 300.w,
+                            height: 210.h,
+                          ),
+                          SizedBox(height: 30.h),
                           Container(
                             height: 50.h,
                             decoration: BoxDecoration(

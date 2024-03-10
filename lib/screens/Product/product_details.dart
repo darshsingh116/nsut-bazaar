@@ -147,7 +147,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
                   child: Text(
-                    '\$${widget.product.price.toStringAsFixed(2)}',
+                    '\₹${widget.product.price.toStringAsFixed(2)}',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16.sp,

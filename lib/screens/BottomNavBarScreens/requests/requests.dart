@@ -83,24 +83,24 @@ class _RequestsScreenState extends State<RequestsScreen> {
                     if (state is RequestsStateLoading ||
                         state is RequestsStateInitial) {
                       return Expanded(
-                          child: ListView(
-                            children: [
-                              RequestListCardSkeletonLoading(),
-                              RequestListCardSkeletonLoading(),
-                              RequestListCardSkeletonLoading(),
-                              RequestListCardSkeletonLoading(),
-                              RequestListCardSkeletonLoading(),
-                              RequestListCardSkeletonLoading(),
-                              RequestListCardSkeletonLoading(),
-                              RequestListCardSkeletonLoading(),
-                              RequestListCardSkeletonLoading(),
-                              RequestListCardSkeletonLoading(),
-                              RequestListCardSkeletonLoading(),
-                              RequestListCardSkeletonLoading(),
-                              RequestListCardSkeletonLoading(),
-                            ],
-                          ),
-                        );
+                        child: ListView(
+                          children: [
+                            RequestListCardSkeletonLoading(),
+                            RequestListCardSkeletonLoading(),
+                            RequestListCardSkeletonLoading(),
+                            RequestListCardSkeletonLoading(),
+                            RequestListCardSkeletonLoading(),
+                            RequestListCardSkeletonLoading(),
+                            RequestListCardSkeletonLoading(),
+                            RequestListCardSkeletonLoading(),
+                            RequestListCardSkeletonLoading(),
+                            RequestListCardSkeletonLoading(),
+                            RequestListCardSkeletonLoading(),
+                            RequestListCardSkeletonLoading(),
+                            RequestListCardSkeletonLoading(),
+                          ],
+                        ),
+                      );
                     } else if (state is RequestsStateGotList) {
                       if (state.productList.isEmpty) {
                         return Text('No products available');
@@ -111,21 +111,18 @@ class _RequestsScreenState extends State<RequestsScreen> {
                             itemBuilder: (context, index) {
                               RequestProductModel product =
                                   state.productList[index];
-                              return Padding(
-                                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            RequestDetailsPage(product: product)
-                                                      ),
-                                                    );
-                                  },
-                                  child: RequestListCard(
-                                      requestProductModel: product),
-                                ),
+                              return GestureDetector(
+                                onTap: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) =>
+                                  //           RequestDetailsPage(
+                                  //               product: product)),
+                                  // );
+                                },
+                                child: RequestListCard(
+                                    requestProductModel: product),
                               );
                             },
                           ),
