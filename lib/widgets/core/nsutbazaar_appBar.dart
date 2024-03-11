@@ -81,7 +81,7 @@ PreferredSize nsutbazaarAppBar(MyTabItem myTabItem, BuildContext context) {
                                     )));
                       }))
                   : Container(),
-              GestureDetector(
+              (myTabItem.title == "Discover" || myTabItem.title == "Requests")?GestureDetector(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(10.w, 0, 15.w, 0),
                     child: Icon(
@@ -97,7 +97,7 @@ PreferredSize nsutbazaarAppBar(MyTabItem myTabItem, BuildContext context) {
                       : Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AddRequestScreen()))),
+                              builder: (context) => AddRequestScreen()))):Container(),
             ]),
     ),
   );

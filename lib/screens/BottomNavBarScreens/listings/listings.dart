@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/models/SellProductModel.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
@@ -248,143 +249,180 @@ class _ListingsScreenState extends State<ListingsScreen> {
                       controller: _parentScrollController,
                       child: Column(
                         children: [
-                          SizedBox(height: 20.h),
-                          // Padding(
-                          //   padding: EdgeInsets.symmetric(
-                          //       vertical: 10.h, horizontal: 10.w),
-                          //   child: SizedBox(
+                          SizedBox(height: 10.h),
+                          
+                          // Container(
+                          //     height: 180.h,
                           //     width: double.infinity,
-                          //     child: Text(
-                          //       "Latest Post :",
-                          //       style: TextStyle(
-                          //         fontSize: 16.sp,
-                          //         color: Colors.white,
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
+                          //     child: Image.asset(
+                          //       'assets/printout_coming.png',
+                          //       //semanticsLabel: 'An SVG image',
+                          //       fit: BoxFit.contain,
+                          //     )
 
-                          Container(
-                            height: 180.h,
-                            width: double.infinity,
-                            child: BlocBuilder<ListingsBloc, ListingsState>(
-                              builder: (context, state) {
-                                if (state is ListingsStateLoading ||
-                                    state is ListingsStateInitial) {
-                                  return Center(
-                                    child: LatestPostCardsSkeletonLoading(),
-                                  );
-                                } else if (state is ListingsStateGotList ||
-                                    state is ListingsStateGotSearchedList) {
-                                  if (state is ListingsStateGotList) {
-                                    LatestPostList = state.productList;
-                                  }
-                                  if (LatestPostList.isEmpty) {
-                                    return Center(
-                                      child: Text(
-                                        'No products available',
-                                        style: TextStyle(color: Colors.white),
+                              Container(
+                                height: 180.h,
+                                width: double.infinity,
+                                child: CarouselSlider(
+                                  options: CarouselOptions(
+                                    autoPlayInterval:const Duration(seconds: 4),
+                                    
+                                    autoPlay: true,
+                                    viewportFraction: 1,
+                                    //aspectRatio: 2.0,
+                                    enlargeCenterPage: true,
+                                    enlargeStrategy:
+                                        CenterPageEnlargeStrategy.height,
+                                        
+                                  ),
+                                  items: [
+                                    SizedBox(
+                                      width: 350.w,
+                                      height: 180.h,
+                                      child: Image.asset(
+                                        'assets/printout_coming.png',
+                                        //semanticsLabel: 'An SVG image',
+                                        fit: BoxFit.contain,
                                       ),
-                                    );
-                                  } else {
-                                    print("HAAAAAAAAI");
-                                    List<Widget> getCarouselItems(
-                                        List<SellProductModel>
-                                            sellProductModels,
-                                        BuildContext context,
-                                        dynamic localData) {
-                                      List<Widget> carouselItems = [];
-
-                                      for (int i = 0;
-                                          i < min(5, sellProductModels.length);
-                                          i++) {
-                                        carouselItems.add(
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 10.w),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ProductDetails(
-                                                      product:
-                                                          sellProductModels[i],
-                                                      localData: localData,
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                              child: LatestPostCards(
-                                                sellProductModel:
-                                                    sellProductModels[i],
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      }
-
-                                      return carouselItems;
-                                    }
-
-                                    List<Widget> carouselItems =
-                                        getCarouselItems(
-                                            LatestPostList, context, localData);
-
-                                    return CarouselSlider(
-                                      options: CarouselOptions(
-                                        autoPlay: true,
-                                        //aspectRatio: 2.0,
-                                        enlargeCenterPage: true,
-                                        enlargeStrategy:
-                                            CenterPageEnlargeStrategy.height,
+                                    ),
+                                    SizedBox(
+                                      width: 350.w,
+                                      height: 180.h,
+                                      child: Image.asset(
+                                        'assets/sell_banner.png',
+                                        //semanticsLabel: 'An SVG image',
+                                        fit: BoxFit.contain,
                                       ),
-                                      items: carouselItems,
-                                    );
+                                    ),
+                                    SizedBox(
+                                      width: 350.w,
+                                      height: 180.h,
+                                      child: Image.asset(
+                                        'assets/request_banner.png',
+                                        //semanticsLabel: 'An SVG image',
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              // child: BlocBuilder<ListingsBloc, ListingsState>(
+                              //   builder: (context, state) {
+                              //     if (state is ListingsStateLoading ||
+                              //         state is ListingsStateInitial) {
+                              //       return Center(
+                              //         child: LatestPostCardsSkeletonLoading(),
+                              //       );
+                              //     } else if (state is ListingsStateGotList ||
+                              //         state is ListingsStateGotSearchedList) {
+                              //       if (state is ListingsStateGotList) {
+                              //         LatestPostList = state.productList;
+                              //       }
+                              //       if (LatestPostList.isEmpty) {
+                              //         return Center(
+                              //           child: Text(
+                              //             'No products available',
+                              //             style: TextStyle(color: Colors.white),
+                              //           ),
+                              //         );
+                              //       } else {
+                              //         print("HAAAAAAAAI");
+                              //         List<Widget> getCarouselItems(
+                              //             List<SellProductModel>
+                              //                 sellProductModels,
+                              //             BuildContext context,
+                              //             dynamic localData) {
+                              //           List<Widget> carouselItems = [];
 
-                                    // return SizedBox(
-                                    //   // Adjust the height as per your requirement
-                                    //   child: ListView.builder(
-                                    //     scrollDirection: Axis.horizontal,
-                                    //     itemCount:
-                                    //         (LatestPostList.length <= 5)
-                                    //             ? LatestPostList.length
-                                    //             : 5,
-                                    //     itemBuilder: (context, index) {
-                                    //       SellProductModel product =
-                                    //           LatestPostList[index];
+                              //           for (int i = 0;
+                              //               i < min(5, sellProductModels.length);
+                              //               i++) {
+                              //             carouselItems.add(
+                              //               Padding(
+                              //                 padding: EdgeInsets.symmetric(
+                              //                     horizontal: 10.w),
+                              //                 child: GestureDetector(
+                              //                   onTap: () {
+                              //                     Navigator.push(
+                              //                       context,
+                              //                       MaterialPageRoute(
+                              //                         builder: (context) =>
+                              //                             ProductDetails(
+                              //                           product:
+                              //                               sellProductModels[i],
+                              //                           localData: localData,
+                              //                         ),
+                              //                       ),
+                              //                     );
+                              //                   },
+                              //                   child: LatestPostCards(
+                              //                     sellProductModel:
+                              //                         sellProductModels[i],
+                              //                   ),
+                              //                 ),
+                              //               ),
+                              //             );
+                              //           }
 
-                                    //       return Padding(
-                                    //         padding: EdgeInsets.symmetric(
-                                    //             horizontal: 10.w),
-                                    //         child: GestureDetector(
-                                    //           onTap: () {
-                                    //             Navigator.push(
-                                    //               context,
-                                    //               MaterialPageRoute(
-                                    //                 builder: (context) =>
-                                    //                     ProductDetails(
-                                    //                   product: product,
-                                    //                   localData: localData,
-                                    //                 ),
-                                    //               ),
-                                    //             );
-                                    //           },
-                                    //           child: LatestPostCards(
-                                    //             sellProductModel: product,
-                                    //           ),
-                                    //         ),
-                                    //       );
-                                    //     },
-                                    //   ),
-                                    // );
-                                  }
-                                }
-                                return Text("Error Out of States");
-                              },
-                            ),
-                          ),
+                              //           return carouselItems;
+                              //         }
+
+                              //         List<Widget> carouselItems =
+                              //             getCarouselItems(
+                              //                 LatestPostList, context, localData);
+
+                              //         return CarouselSlider(
+                              //           options: CarouselOptions(
+                              //             autoPlay: true,
+                              //             //aspectRatio: 2.0,
+                              //             enlargeCenterPage: true,
+                              //             enlargeStrategy:
+                              //                 CenterPageEnlargeStrategy.height,
+                              //           ),
+                              //           items: carouselItems,
+                              //         );
+
+                              //         // return SizedBox(
+                              //         //   // Adjust the height as per your requirement
+                              //         //   child: ListView.builder(
+                              //         //     scrollDirection: Axis.horizontal,
+                              //         //     itemCount:
+                              //         //         (LatestPostList.length <= 5)
+                              //         //             ? LatestPostList.length
+                              //         //             : 5,
+                              //         //     itemBuilder: (context, index) {
+                              //         //       SellProductModel product =
+                              //         //           LatestPostList[index];
+
+                              //         //       return Padding(
+                              //         //         padding: EdgeInsets.symmetric(
+                              //         //             horizontal: 10.w),
+                              //         //         child: GestureDetector(
+                              //         //           onTap: () {
+                              //         //             Navigator.push(
+                              //         //               context,
+                              //         //               MaterialPageRoute(
+                              //         //                 builder: (context) =>
+                              //         //                     ProductDetails(
+                              //         //                   product: product,
+                              //         //                   localData: localData,
+                              //         //                 ),
+                              //         //               ),
+                              //         //             );
+                              //         //           },
+                              //         //           child: LatestPostCards(
+                              //         //             sellProductModel: product,
+                              //         //           ),
+                              //         //         ),
+                              //         //       );
+                              //         //     },
+                              //         //   ),
+                              //         // );
+                              //       }
+                              //     }
+                              //     return Text("Error Out of States");
+                              //   },
+                              // ),
+                              ),
                           // Container(
                           //   height: 58.h,
                           //   child: ListView.builder(

@@ -77,6 +77,17 @@ class _AddListingScreenState extends State<AddListingScreen> {
 
   String? selectedCategory;
 
+  late TextEditingController contactNumberController;
+ 
+   @override
+  void initState() {
+    super.initState();
+    final authRepository = context.read<FirebaseRepository>();
+    contactNumberController = TextEditingController(
+      text: authRepository.userModel.phoneNumber.toString(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final authRepository = context.read<FirebaseRepository>();
@@ -85,8 +96,8 @@ class _AddListingScreenState extends State<AddListingScreen> {
 
     final firebaseStoreageRepo = context.read<FirebaseStorageRepo>();
 
-    final TextEditingController contactNumberController = TextEditingController(
-        text: authRepository.userModel.phoneNumber.toString());
+
+
 
     return backgroundContainer(
       child: Scaffold(

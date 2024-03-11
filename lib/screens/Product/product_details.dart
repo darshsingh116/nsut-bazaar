@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_skeleton_niu/loading_skeleton.dart';
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/extensions/strings.dart';
 import 'package:nsutbazaar/models/SellProductModel.dart';
@@ -100,9 +102,23 @@ class _ProductDetailsState extends State<ProductDetails> {
                 Container(
                   height: 300.h,
                   width: double.infinity,
-                  child: Image.network(
-                    widget.product.imageUrl,
+                  child: CachedNetworkImage(
+                    placeholder: (context, url) => LoadingSkeleton(
+                      width: double.infinity,
+                      height: double.infinity,
+                      colors: PurpleTheme.greyLoadingShadesColors,
+                      animationDuration: 2000,
+                    ),
+                    errorWidget : (context, url, error) => LoadingSkeleton(
+                      width: double.infinity,
+                      height: double.infinity,
+                      colors: PurpleTheme.greyLoadingShadesColors,
+                      animationDuration: 2000,
+                    ),
+                    imageUrl: widget.product.imageUrl,
                     fit: BoxFit.fill,
+                    fadeInDuration: Duration(
+                        milliseconds: 200), // Duration for fade-in animation
                   ),
                 ),
                 SizedBox(
