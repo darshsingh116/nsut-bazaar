@@ -128,6 +128,17 @@ class FirebaseRepository {
   //   }
   // }
 
+    
+  Future<void> resetPassword(String email) async {
+    try {
+      await firebaseAuth.sendPasswordResetEmail(email: email);
+      print('Password reset email sent successfully to $email');
+    } catch (e) {
+      print('Error sending password reset email: $e');
+      // Handle the error as needed
+    }
+  }
+
   Future<void> logOut() async {
     await firebaseAuth.signOut();
   }

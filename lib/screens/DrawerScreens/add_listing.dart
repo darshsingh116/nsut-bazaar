@@ -78,8 +78,8 @@ class _AddListingScreenState extends State<AddListingScreen> {
   String? selectedCategory;
 
   late TextEditingController contactNumberController;
- 
-   @override
+
+  @override
   void initState() {
     super.initState();
     final authRepository = context.read<FirebaseRepository>();
@@ -95,9 +95,6 @@ class _AddListingScreenState extends State<AddListingScreen> {
         new ProductFirestore(authRepository.firebaseFirestore);
 
     final firebaseStoreageRepo = context.read<FirebaseStorageRepo>();
-
-
-
 
     return backgroundContainer(
       child: Scaffold(
@@ -175,6 +172,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
                             ),
                           ),
                         ),
+                        SizedBox(height: 20.h),
                         Text(
                           'Price',
                           style:

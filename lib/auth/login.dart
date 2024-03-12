@@ -215,6 +215,38 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                             ),
+                          SizedBox(height: 10.h),
+                          Container(
+                            width: double.infinity,
+                            child: GestureDetector(
+                              onTap: () async {
+                                final email = emailController.text;
+                                 final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    
+                                if (emailRegExp.hasMatch(email)) {
+                                  await authRepository.resetPassword(email);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Reset email sent'),
+        ),
+      );
+
+
+                                }
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                child: Text(
+                                  "Forgot Password?",
+                                  style: TextStyle(
+                                    color: PurpleTheme.LightPurpleColor,
+                                    fontSize: 15.sp,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                           SizedBox(height: 40.h),
                           GestureDetector(
                             onTap: () {
