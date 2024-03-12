@@ -61,7 +61,7 @@ PreferredSize nsutbazaarAppBar(MyTabItem myTabItem, BuildContext context) {
       actions: myTabItem.centerTitle
           ? []
           : (<Widget>[
-              (myTabItem.title == "Discover")
+              (myTabItem.title == "Listings")
                   ? (GestureDetector(
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 10.w, 0),
@@ -81,7 +81,7 @@ PreferredSize nsutbazaarAppBar(MyTabItem myTabItem, BuildContext context) {
                                     )));
                       }))
                   : Container(),
-              (myTabItem.title == "Discover" || myTabItem.title == "Requests")?GestureDetector(
+              (myTabItem.title == "Listings" || myTabItem.title == "Requests")?GestureDetector(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(10.w, 0, 15.w, 0),
                     child: Icon(
@@ -89,7 +89,7 @@ PreferredSize nsutbazaarAppBar(MyTabItem myTabItem, BuildContext context) {
                       size: 24.sp,
                     ),
                   ),
-                  onTap: () => (myTabItem.title == "Discover")
+                  onTap: () => (myTabItem.title == "Listings")
                       ? Navigator.push(
                           context,
                           MaterialPageRoute(

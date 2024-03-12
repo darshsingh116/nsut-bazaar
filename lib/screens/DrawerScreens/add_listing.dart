@@ -31,6 +31,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
   String _description = '';
   int _contactNumber = 0;
   File? file = null;
+  bool isLoading = false;
 
   Future<File?> cropSquareImage(File imageFile) async {
     await ImageCropper().cropImage(
@@ -403,59 +404,74 @@ class _AddListingScreenState extends State<AddListingScreen> {
                           height: 48.h,
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () async {
-                              String? imgUrl = null;
-                              print(
-                                  "~~~~~~~~~~~~~~~~~~~1~~~~~~~~~~~~~~~~~~${selectedCategory}");
-                              if (file != null) {
-                                imgUrl =
-                                    await firebaseStoreageRepo.uploadImageFile(
-                                        file!, authRepository.userModel);
-                                if (_formKey.currentState!.validate()) {
-                                  _formKey.currentState!.save();
+                            onPressed: isLoading
+                                ? null
+                                : () async {
+                                    setState(() {
+                                      isLoading = true;
+                                    });
+                                    String? imgUrl = null;
+                                    print(
+                                        "~~~~~~~~~~~~~~~~~~~1~~~~~~~~~~~~~~~~~~${selectedCategory}");
+                                    if (file != null) {
+                                      imgUrl = await firebaseStoreageRepo
+                                          .uploadImageFile(
+                                              file!, authRepository.userModel);
+                                      if (_formKey.currentState!.validate()) {
+                                        _formKey.currentState!.save();
 
-                                  DateTime now = DateTime.now();
-                                  int timestamp = now.millisecondsSinceEpoch;
-                                  bool isBooks = false;
-                                  bool isSports = false;
-                                  bool isAcademicTool = false;
-                                  bool isOthers = false;
-                                  print(
-                                      "~~~~~~~~~~~~~~~~~~~2~~~~~~~~~~~~~~~~~~${selectedCategory}");
+                                        DateTime now = DateTime.now();
+                                        int timestamp =
+                                            now.millisecondsSinceEpoch;
+                                        bool isBooks = false;
+                                        bool isSports = false;
+                                        bool isAcademicTool = false;
+                                        bool isOthers = false;
+                                        print(
+                                            "~~~~~~~~~~~~~~~~~~~2~~~~~~~~~~~~~~~~~~${selectedCategory}");
 
-                                  if (selectedCategory == 'Books') {
-                                    isBooks = true;
-                                  } else if (selectedCategory ==
-                                      'Academic Tool') {
-                                    isAcademicTool = true;
-                                  } else if (selectedCategory == 'Sports') {
-                                    isSports = true;
-                                  } else {
-                                    isOthers = true;
-                                  }
-                                  SellProductModel product = SellProductModel(
-                                      spid: authRepository.userModel.uid +
-                                          timestamp.toString(),
-                                      userid: authRepository.userModel.uid,
-                                      productName: _productName,
-                                      price: _price,
-                                      description: _description,
-                                      imageUrl: imgUrl!,
-                                      contactNumber: _contactNumber,
-                                      isBooks: isBooks,
-                                      isAcademicTool: isAcademicTool,
-                                      isOthers: isOthers,
-                                      isSports: isSports,
-                                      timestamp: timestamp.toString());
+                                        if (selectedCategory == 'Books') {
+                                          isBooks = true;
+                                        } else if (selectedCategory ==
+                                            'Academic Tool') {
+                                          isAcademicTool = true;
+                                        } else if (selectedCategory ==
+                                            'Sports') {
+                                          isSports = true;
+                                        } else {
+                                          isOthers = true;
+                                        }
+                                        SellProductModel product =
+                                            SellProductModel(
+                                                spid: authRepository
+                                                        .userModel.uid +
+                                                    timestamp.toString(),
+                                                userid: authRepository
+                                                    .userModel.uid,
+                                                productName: _productName,
+                                                price: _price,
+                                                description: _description,
+                                                imageUrl: imgUrl!,
+                                                contactNumber: _contactNumber,
+                                                isBooks: isBooks,
+                                                isAcademicTool: isAcademicTool,
+                                                isOthers: isOthers,
+                                                isSports: isSports,
+                                                timestamp:
+                                                    timestamp.toString());
 
-                                  productFirestore.addSellProduct(product);
-                                  Navigator.pop(context);
-                                  context
-                                      .read<ListingsBloc>()
-                                      .emit(ListingsStateInitial());
-                                }
-                              }
-                            },
+                                        productFirestore
+                                            .addSellProduct(product);
+                                        Navigator.pop(context);
+                                        context
+                                            .read<ListingsBloc>()
+                                            .emit(ListingsStateInitial());
+                                      }
+                                    }
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                  },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: PurpleTheme
                                   .ButtonLightPurpleColor, // Set button background color
@@ -464,15 +480,20 @@ class _AddListingScreenState extends State<AddListingScreen> {
                                     12.r), // Set border radius
                               ),
                             ),
-                            child: Text(
-                              'Post',
-                              style: TextStyle(
-                                color: Colors.white, // Set text color to white
-                                fontSize: 16.sp, // Set text size
-                                fontWeight:
-                                    FontWeight.bold, // Set text weight to bold
-                              ),
-                            ),
+                            child: (!isLoading)
+                                ? Text(
+                                    'Post',
+                                    style: TextStyle(
+                                      color: Colors
+                                          .white, // Set text color to white
+                                      fontSize: 16.sp, // Set text size
+                                      fontWeight: FontWeight
+                                          .bold, // Set text weight to bold
+                                    ),
+                                  )
+                                : CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
                           )),
                     )
                   ],
