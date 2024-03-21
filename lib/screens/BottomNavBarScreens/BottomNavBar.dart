@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart'; // Import the google_nav_bar package
+import 'package:nsutbazaar/constants/darkTheme.dart';
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/models/TagItem.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/feedback.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/home_page.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/listings.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/printout.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/profile_page.dart';
@@ -20,10 +22,10 @@ class NavBarScreens extends StatefulWidget {
 }
 
 class _NavBarScreensState extends State<NavBarScreens> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
 
   static List<Widget> _screensList = [
-    //FeedbackScreen(),
+    HomePage(),
     RequestsScreen(),
     ListingsScreen(),
     PrintOutScreen(),
@@ -40,33 +42,32 @@ class _NavBarScreensState extends State<NavBarScreens> {
   Widget build(BuildContext context) {
     return backgroundContainer(
       child: Scaffold(
-        drawer: AppBarDrawer(context),
         extendBodyBehindAppBar: true,
-        appBar: nsutbazaarAppBar(NavBarItems[_selectedIndex], context),
+        appBar: nsutbazaarAppBar(context),
         backgroundColor: Colors.transparent,
         body: IndexedStack(
           index: _selectedIndex,
           children: _screensList,
         ),
         bottomNavigationBar: Container(
-          decoration: BoxDecoration(color: Color.fromARGB(135, 40, 21, 51)),
+          decoration: BoxDecoration(color: Colors.transparent),
           child: SafeArea(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0.w, vertical: 10.h),
               child: GNav(
-                rippleColor: const Color.fromARGB(102, 224, 224, 224),
-                hoverColor: Colors.grey,
-                gap: 3, // Gap between icon and text
-                activeColor: Colors.white, // Selected item color
-                iconSize: 24.sp, // Icon size
-                tabBackgroundColor: PurpleTheme.LightPurpleColor,
-                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                tabs: getBottomTabs(NavBarItems),
-                selectedIndex: _selectedIndex,
-                onTabChange: _onItemTapped,
-                color: PurpleTheme.LightPurpleColor,
-                duration: Duration(milliseconds: 350)
-              ),
+                  rippleColor: Color.fromARGB(102, 0, 0, 0),
+                  hoverColor: const Color.fromARGB(255, 0, 0, 0),
+                  gap: 3, // Gap between icon and text
+                  activeColor: DarkTheme.dtDarkPurple, // Selected item color
+                  iconSize: 24.sp, // Icon size
+                  tabBackgroundColor: Colors.transparent,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                  tabs: getBottomTabs(NavBarItems),
+                  selectedIndex: _selectedIndex,
+                  onTabChange: _onItemTapped,
+                  color: DarkTheme.dtUnselectedNavBar,
+                  duration: Duration(milliseconds: 350)),
             ),
           ),
         ),
@@ -76,7 +77,7 @@ class _NavBarScreensState extends State<NavBarScreens> {
 }
 
 List<MyTabItem> NavBarItems = [
-  //MyTabItem('Feedback', 'Feedback Screen', Icons.feedback, false),
+  MyTabItem('Home', 'Home Screen', Icons.home_filled, false),
   MyTabItem('Requests', 'Requests', Icons.insert_comment, false),
   MyTabItem('Listings', 'Listings', Icons.feed_outlined, false),
   MyTabItem('Print Out', 'PrintOut', Icons.print_outlined, false),
@@ -87,7 +88,7 @@ List<GButton> getBottomTabs(List<MyTabItem> items) {
   return items.map((e) {
     return GButton(
       icon: e.icon,
-      text: e.title,
+      //text: e.title,
     );
   }).toList();
 }

@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
           ),
-          designSize: const Size(390, 844),
+          designSize: const Size(360, 640),
         ),
       ),
     );
