@@ -73,7 +73,7 @@ class RequestListCard extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
                         onTap: () {
-                          
+                          launchWhatsApp(requestProductModel.contact.toString());
                         },
                         child: SizedBox(
                           width: 22.w, // Width based on screen width
