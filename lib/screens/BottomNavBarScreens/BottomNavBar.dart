@@ -10,6 +10,7 @@ import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/listings.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/printout.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/profile_page.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/requests.dart';
+import 'package:nsutbazaar/screens/DrawerScreens/add_listing.dart';
 import 'package:nsutbazaar/widgets/core/app_bar_drawer.dart';
 import 'package:nsutbazaar/widgets/core/backgroundContainer.dart';
 import 'package:nsutbazaar/widgets/core/nsutbazaar_appBar.dart';
@@ -26,17 +27,42 @@ class _NavBarScreensState extends State<NavBarScreens> {
 
   static List<Widget> _screensList = [
     HomePage(),
-    RequestsScreen(),
     ListingsScreen(),
-    PrintOutScreen(),
+    Container(),
+    RequestsScreen(),
     ProfilePage()
   ];
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AddListingScreen()),
+      ).then((value) {
+        setState(() {
+          _selectedIndex =
+              0; // Return to the home screen after navigating back from AddListingScreen
+        });
+      });
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
+
+  List<GButton> getBottomTabs(List<MyTabItem> items) {
+  return items.map((e) {
+    return GButton(
+      icon: e.icon,
+      iconSize: (e.title == "Add") ? 35.sp : 24.sp,
+      onPressed: () {
+        _onItemTapped(items.indexOf(e));
+      },
+    );
+  }).toList();
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +91,7 @@ class _NavBarScreensState extends State<NavBarScreens> {
                       EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
                   tabs: getBottomTabs(NavBarItems),
                   selectedIndex: _selectedIndex,
-                  onTabChange: _onItemTapped,
+                  //onTabChange: _onItemTapped,
                   color: DarkTheme.dtUnselectedNavBar,
                   duration: Duration(milliseconds: 350)),
             ),
@@ -78,17 +104,8 @@ class _NavBarScreensState extends State<NavBarScreens> {
 
 List<MyTabItem> NavBarItems = [
   MyTabItem('Home', 'Home Screen', Icons.home_filled, false),
-  MyTabItem('Requests', 'Requests', Icons.insert_comment, false),
   MyTabItem('Listings', 'Listings', Icons.feed_outlined, false),
-  MyTabItem('Print Out', 'PrintOut', Icons.print_outlined, false),
+  MyTabItem('Add', 'Add', Icons.add, false),
+  MyTabItem('Requests', 'Requests', Icons.insert_comment, false),
   MyTabItem('Profile', 'Profile', Icons.person, true),
 ];
-
-List<GButton> getBottomTabs(List<MyTabItem> items) {
-  return items.map((e) {
-    return GButton(
-      icon: e.icon,
-      //text: e.title,
-    );
-  }).toList();
-}

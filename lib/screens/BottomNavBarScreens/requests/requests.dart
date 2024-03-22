@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nsutbazaar/constants/darkTheme.dart';
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/models/RequestProductModel.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
@@ -44,7 +45,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
                       (BuildContext context, SearchController controller) {
                     return SearchBar(
                       backgroundColor:
-                          MaterialStateProperty.all(PurpleTheme.PurpleColor),
+                          MaterialStateProperty.all(DarkTheme.dtSearchBar),
                       hintText: "Search",
                       hintStyle: MaterialStateProperty.all(
                           TextStyle(color: PurpleTheme.LightPurpleColor)),
@@ -111,16 +112,9 @@ class _RequestsScreenState extends State<RequestsScreen> {
                             itemBuilder: (context, index) {
                               RequestProductModel product =
                                   state.productList[index];
-                              return GestureDetector(
-                                onTap: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //       builder: (context) =>
-                                  //           RequestDetailsPage(
-                                  //               product: product)),
-                                  // );
-                                },
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 2),
                                 child: RequestListCard(
                                     requestProductModel: product),
                               );

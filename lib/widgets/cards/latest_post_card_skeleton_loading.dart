@@ -17,11 +17,11 @@ class LatestPostCardsSkeletonLoading extends StatelessWidget {
             borderRadius:
                 BorderRadius.circular(10.0), // Adjust the radius as needed
             child: LoadingSkeleton(
-                      width: 300.h,
-                      height: 150.h,
-                      colors: PurpleTheme.greyLoadingShadesColors,
-                      animationDuration: 2000,
-                    ),
+              width: 225.w,
+              height: 142.h,
+              colors: PurpleTheme.greyLoadingShadesColors,
+              animationDuration: 2000,
+            ),
           )
         ],
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nsutbazaar/constants/darkTheme.dart';
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_bloc.dart';
@@ -38,17 +39,19 @@ class _TagButtonsState extends State<TagButtons> {
           // Adjust this according to your text size
           decoration: BoxDecoration(
             color: widget.isSelected
-                ? PurpleTheme.LightPurpleColor
-                : PurpleTheme.PurpleColor,
+                ? DarkTheme.dtLightPurple
+                : Colors.transparent,
             borderRadius: BorderRadius.circular(16.0.r),
           ),
           child: Center(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15.sp),
+              padding: EdgeInsets.symmetric(horizontal: 10.sp),
               child: Text(
                 widget.title,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: widget.isSelected
+                      ? Colors.white
+                      : Color.fromARGB(255, 79, 79, 79),
                 ),
               ),
             ),

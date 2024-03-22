@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 15.h), // 15 vertical units of height
+                  SizedBox(height: 5.h), // 15 vertical units of height
                   Container(
                     width: 325.w,
                     height: 150.h,

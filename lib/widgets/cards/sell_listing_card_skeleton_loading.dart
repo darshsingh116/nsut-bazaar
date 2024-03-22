@@ -17,10 +17,13 @@ class _SellListCardState extends State<SellListCardSkeletonLoading> {
 
   @override
   Widget build(BuildContext context) {
-    double containerWidth = 175.w;
+    double containerWidth = 160.w;
+    double containerHeight = 176.h;
+
 
     return Container(
         width: containerWidth,
+        height: containerHeight,
         decoration: BoxDecoration(
           color: Colors.transparent,
         ),
@@ -28,10 +31,30 @@ class _SellListCardState extends State<SellListCardSkeletonLoading> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 10.0.r, // Radius of the circular avatar
+                      backgroundColor: Colors.grey, // Example background color
+                    ),
+                    SizedBox(width: 8.0), // Add spacing between avatar and text
+                    Text(
+                      'Anonymous',
+                      style: TextStyle(
+                        fontSize: 10.0.sp, // Font size of the text
+                        fontWeight: FontWeight.bold, // Bold text
+                        color: Colors.white, // Text color
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 8.h,
+                ),
               Container(
                 color: Colors.transparent,
-                height: 165.h,
-                width: containerWidth,
+                height: 95.h,
+                  width: 150.w,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12.r),
                   child: LoadingSkeleton(

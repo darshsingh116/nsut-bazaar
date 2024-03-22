@@ -34,96 +34,119 @@ class _SellListCardState extends State<SellListCard> {
 
   @override
   Widget build(BuildContext context) {
-    double containerWidth = 175.w;
+    double containerWidth = 160.w;
+    double containerHeight = 176.h;
 
     return Container(
         width: containerWidth,
+        height: containerHeight,
         decoration: BoxDecoration(
-          color: Colors.transparent,
+          color: Color.fromARGB(0, 255, 18, 18),
         ),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                color: Colors.transparent,
-                height: 165.h,
-                width: containerWidth,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12.r),
-                  child: CachedNetworkImage(
-                    placeholder: (context, url) => LoadingSkeleton(
-                      width: double.infinity,
-                      height: double.infinity,
-                      colors: PurpleTheme.greyLoadingShadesColors,
-                      animationDuration: 2000,
-                    ),
-                    errorWidget : (context, url, error) => LoadingSkeleton(
-                      width: double.infinity,
-                      height: double.infinity,
-                      colors: PurpleTheme.greyLoadingShadesColors,
-                      animationDuration: 2000,
-                    ),
-                    imageUrl: widget.sellProductModel.imageUrl,
-                    fit: BoxFit.fill,
-                    fadeInDuration: Duration(
-                        milliseconds: 200), // Duration for fade-in animation
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 12.h,
-              ),
-              Container(
-                width: containerWidth,
-                height: 52.h,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 6.w),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.sellProductModel.productName.toTitleCase(),
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        Text(
-                          '₹${widget.sellProductModel.price.toString()}',
-                          style: TextStyle(
-                              color: PurpleTheme.LightPurpleColor,
-                              fontSize: 14.sp),
-                        ),
-                      ],
+                    CircleAvatar(
+                      radius: 10.0.r, // Radius of the circular avatar
+                      backgroundColor: Colors.blue, // Example background color
                     ),
-                    IconButton(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                      icon: Icon(
-                        _isLiked ? Icons.favorite : Icons.favorite_border,
-                        color: _isLiked
-                            ? PurpleTheme.LightPurpleColor
-                            : Colors.white,
-                        size: 24.sp,
+                    SizedBox(width: 8.0), // Add spacing between avatar and text
+                    Text(
+                      'Anonymous',
+                      style: TextStyle(
+                        fontSize: 10.0.sp, // Font size of the text
+                        fontWeight: FontWeight.bold, // Bold text
+                        color: Colors.white, // Text color
                       ),
-                      onPressed: () {
-                        setState(() {
-                          _isLiked = !_isLiked;
-                          if (_isLiked) {
-                            widget.localData.addData(widget.sellProductModel);
-                          } else {
-                            widget.localData
-                                .removeData(widget.sellProductModel);
-                          }
-                        });
-                      },
                     ),
                   ],
                 ),
-              ),
-            ]));
+                SizedBox(
+                  height: 8.h,
+                ),
+                Container(
+                  color: Colors.transparent,
+                  height: 95.h,
+                  width: 150.w,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12.r),
+                    child: CachedNetworkImage(
+                      placeholder: (context, url) => LoadingSkeleton(
+                        width: double.infinity,
+                        height: double.infinity,
+                        colors: PurpleTheme.greyLoadingShadesColors,
+                        animationDuration: 2000,
+                      ),
+                      errorWidget: (context, url, error) => LoadingSkeleton(
+                        width: double.infinity,
+                        height: double.infinity,
+                        colors: PurpleTheme.greyLoadingShadesColors,
+                        animationDuration: 2000,
+                      ),
+                      imageUrl: widget.sellProductModel.imageUrl,
+                      fit: BoxFit.fill,
+                      fadeInDuration: Duration(
+                          milliseconds: 200), // Duration for fade-in animation
+                    ),
+                  ),
+                ),
+                Container(
+                  width: containerWidth,
+                  height: 52.h,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.sellProductModel.productName.toTitleCase(),
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          Text(
+                            '₹${widget.sellProductModel.price.toString()}',
+                            style: TextStyle(
+                                color: PurpleTheme.LightPurpleColor,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      IconButton(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                        icon: Icon(
+                          _isLiked ? Icons.favorite : Icons.favorite_border,
+                          color: _isLiked
+                              ? PurpleTheme.LightPurpleColor
+                              : Colors.white,
+                          size: 24.sp,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isLiked = !_isLiked;
+                            if (_isLiked) {
+                              widget.localData.addData(widget.sellProductModel);
+                            } else {
+                              widget.localData
+                                  .removeData(widget.sellProductModel);
+                            }
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ]),
+        ));
   }
 }

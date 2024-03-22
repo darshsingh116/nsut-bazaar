@@ -15,7 +15,7 @@ PreferredSize nsutbazaarAppBar(BuildContext context) {
   final localData = context.read<LocalData>();
 
   return PreferredSize(
-    preferredSize: Size.fromHeight(48.h),
+    preferredSize: Size.fromHeight(40.h),
     child: AppBar(
       titleSpacing: 0,
       title: Row(

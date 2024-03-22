@@ -22,37 +22,23 @@ class LatestPostCards extends StatelessWidget {
                 BorderRadius.circular(10.0), // Adjust the radius as needed
             child: CachedNetworkImage(
               placeholder: (context, url) => LoadingSkeleton(
-                      width: double.infinity,
-                      height: double.infinity,
-                      colors: PurpleTheme.greyLoadingShadesColors,
-                      animationDuration: 2000,
-                    ),
-                    errorWidget : (context, url, error) => LoadingSkeleton(
-                      width: double.infinity,
-                      height: double.infinity,
-                      colors: PurpleTheme.greyLoadingShadesColors,
-                      animationDuration: 2000,
-                    ),
+                width: double.infinity,
+                height: double.infinity,
+                colors: PurpleTheme.greyLoadingShadesColors,
+                animationDuration: 2000,
+              ),
+              errorWidget: (context, url, error) => LoadingSkeleton(
+                width: double.infinity,
+                height: double.infinity,
+                colors: PurpleTheme.greyLoadingShadesColors,
+                animationDuration: 2000,
+              ),
               imageUrl: sellProductModel.imageUrl,
-              width: 300.w,
-              height: 150.h,
+              width: 225.w,
+              height: 142.h,
               fit: BoxFit.cover,
             ),
           )
-// ,
-//           SizedBox(
-//             height: 5.h,
-//           ),
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: 5.w),
-          //   child: Text(
-          //     sellProductModel.productName.toTitleCase(),
-          //     style: TextStyle(
-          //         fontSize: 16.sp,
-          //         fontWeight: FontWeight.w500,
-          //         color: Colors.white),
-          //   ),
-          // ),
         ],
       ),
     );
