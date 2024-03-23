@@ -252,7 +252,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                                     return CarouselSlider(
                                       options: CarouselOptions(
                                         autoPlay: true,
-                                        aspectRatio: (225 / 142),
+                                        aspectRatio: 1.5,
                                         enlargeCenterPage: true,
                                         viewportFraction: 0.65,
                                         enlargeStrategy:

@@ -1,5 +1,9 @@
 {
     "cmake.configureOnOpen": true,
     "bloc.newBlocTemplate.type": "simple",
-    "cmake.sourceDirectory": "E:/StudioProjects/nsutbazaar/linux/flutter"
+    "cmake.sourceDirectory": "E:/StudioProjects/nsutbazaar/linux/flutter",
+    "dart.flutterSdkPath": null,
+    "dart.flutterSdkPaths": [
+        "E:\\Flutter_sdks\\flutter_3.16.6\\bin"
+    ]
 }

@@ -49,7 +49,7 @@ class _SellListCardState extends State<SellListCardSkeletonLoading> {
                   ],
                 ),
                 SizedBox(
-                  height: 8.h,
+                  height: 4.h,
                 ),
               Container(
                 color: Colors.transparent,
@@ -81,7 +81,7 @@ class _SellListCardState extends State<SellListCardSkeletonLoading> {
     borderRadius: BorderRadius.circular(10.r), // Adjust the radius as needed
     child: LoadingSkeleton(
       width: double.infinity,
-      height: 20.h,
+      height: 18.h,
       colors: PurpleTheme.greyLoadingShadesColors,
       animationDuration: 2000,
     ),
@@ -93,7 +93,7 @@ Padding(
     borderRadius: BorderRadius.circular(10.r), // Adjust the radius as needed
     child: LoadingSkeleton(
       width: 50.w,
-      height: 20.h,
+      height: 18.h,
       colors: PurpleTheme.greyLoadingShadesColors,
       animationDuration: 2000,
     ),

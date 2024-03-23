@@ -1,3 +1,5 @@
+import 'package:nsutbazaar/utils/random.dart';
+
 class RequestProductModel {
   String rpid; // request pid
   String userid;
@@ -6,6 +8,9 @@ class RequestProductModel {
   String description;
   String timestamp; // New field
   int contact; // Updated field
+  String profileImg; // New field
+  bool isAnonymous; // New field
+  String username; // New field
 
   RequestProductModel({
     required this.rpid, // New field
@@ -14,10 +19,14 @@ class RequestProductModel {
     required this.price,
     required this.description,
     required this.timestamp, // New field
-    required this.contact, // Updated field
+    required this.contact,
+    required this.profileImg, 
+    this.isAnonymous = false,// Updated field
+    required this.username, // New field
   });
 
   factory RequestProductModel.fromMap(Map<String, dynamic> map) {
+    String profileImg = map['profileImg'] ?? RandomUtil.generateRandomImage();
     return RequestProductModel(
       rpid: map['rpid'] as String, // New field
       userid: map['userid'] as String,
@@ -25,7 +34,10 @@ class RequestProductModel {
       price: map['price'] as double,
       description: map['description'] as String,
       timestamp: map['timestamp'] as String, // New field
-      contact: map['contact'] as int, // Updated field
+      contact: map['contact'] as int,
+      profileImg: profileImg, 
+      isAnonymous: map['isAnonymous'] ?? false,// Updated field
+      username: map['username'] != null ? map['username'] as String : "Anonymous" // New field
     );
   }
 
@@ -37,7 +49,10 @@ class RequestProductModel {
       'price': price,
       'description': description,
       'timestamp': timestamp, // New field
-      'contact': contact, // Updated field
+      'contact': contact,
+      'profileImg': profileImg,
+      'isAnonymous': isAnonymous, // Updated field
+      'username': username, // New field
     };
   }
 }

@@ -35,7 +35,7 @@ class LatestPostCards extends StatelessWidget {
               ),
               imageUrl: sellProductModel.imageUrl,
               width: 225.w,
-              height: 142.h,
+              height: 150.h,
               fit: BoxFit.cover,
             ),
           )

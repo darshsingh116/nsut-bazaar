@@ -206,7 +206,9 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                 price: _price,
                                 description: _description,
                                 timestamp: timestamp.toString(),
-                                contact: authRepository.userModel.phoneNumber
+                                contact: authRepository.userModel.phoneNumber,
+                                profileImg: authRepository.userModel.profileImg,
+                                username: authRepository.userModel.username
                               );
 
                               productFirestore.addRequestProduct(product);

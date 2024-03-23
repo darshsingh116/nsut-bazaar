@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/models/TagItem.dart';
+import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:nsutbazaar/repositories/local_data.dart';
 import 'package:nsutbazaar/screens/DrawerScreens/add_listing.dart';
 import 'package:nsutbazaar/screens/DrawerScreens/add_request.dart';
@@ -13,6 +14,7 @@ import 'package:nsutbazaar/screens/Product/liked_sell_products.dart';
 
 PreferredSize nsutbazaarAppBar(BuildContext context) {
   final localData = context.read<LocalData>();
+  final authRepository = context.read<FirebaseRepository>();
 
   return PreferredSize(
     preferredSize: Size.fromHeight(40.h),
@@ -46,9 +48,9 @@ PreferredSize nsutbazaarAppBar(BuildContext context) {
               EdgeInsets.only(right: 18.w, top: 5.h), // Add top padding here
           child: CircleAvatar(
             radius: 15.r,
-            backgroundImage: NetworkImage(
-                "https://garden.spoonflower.com/c/13819748/p/f/m/-SktcU6WmOgCCdF65VFmRkbYWFKIdMcOgNOef0EplNEDFLCWX1jHTF4/Solid%20Light%20Gray%20color%20for%20the%20Botanical%20Boho%20Collection.jpg"),
-          ),
+            backgroundImage: AssetImage(
+                            'assets/${authRepository.userModel.profileImg}'), // Replace with your local asset image path
+                      ),
         ),
       ],
       iconTheme: IconThemeData(color: Colors.white, size: 24.sp),

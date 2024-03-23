@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nsutbazaar/models/User.dart';
+import 'package:nsutbazaar/utils/random.dart';
 
 class FirebaseRepository {
   final firebaseAuth = FirebaseAuth.instance;
@@ -64,6 +67,7 @@ class FirebaseRepository {
           email: email, password: password);
       user = userCredential.user!;
 //data model entry
+ 
       userModel = UserModel(
           uid: user.uid,
           username: username,
@@ -71,7 +75,7 @@ class FirebaseRepository {
           fullname: fullName,
           phoneNumber: phoneNumber,
           rollNumber: rollNumber,
-
+          profileImg: RandomUtil.generateRandomImage()
           );
      
 

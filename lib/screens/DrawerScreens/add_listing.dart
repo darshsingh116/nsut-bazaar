@@ -457,8 +457,11 @@ class _AddListingScreenState extends State<AddListingScreen> {
                                                 isAcademicTool: isAcademicTool,
                                                 isOthers: isOthers,
                                                 isSports: isSports,
-                                                timestamp:
-                                                    timestamp.toString());
+                                                timestamp:timestamp.toString(),
+                                                profileImg: authRepository
+                                                        .userModel.profileImg,
+                                                username: authRepository.userModel.username
+                                                    );
 
                                         productFirestore
                                             .addSellProduct(product);

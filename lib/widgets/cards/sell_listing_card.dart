@@ -53,8 +53,9 @@ class _SellListCardState extends State<SellListCard> {
                   children: [
                     CircleAvatar(
                       radius: 10.0.r, // Radius of the circular avatar
-                      backgroundColor: Colors.blue, // Example background color
-                    ),
+                      backgroundImage: AssetImage(
+                            'assets/${widget.sellProductModel.profileImg}'),
+                      ),
                     SizedBox(width: 8.0), // Add spacing between avatar and text
                     Text(
                       'Anonymous',
@@ -71,7 +72,7 @@ class _SellListCardState extends State<SellListCard> {
                 ),
                 Container(
                   color: Colors.transparent,
-                  height: 95.h,
+                  height: 100.h,
                   width: 150.w,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12.r),

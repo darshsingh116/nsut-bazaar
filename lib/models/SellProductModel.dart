@@ -1,3 +1,5 @@
+import 'package:nsutbazaar/utils/random.dart';
+
 class SellProductModel {
   String spid; // sell pid
   String userid;
@@ -11,6 +13,9 @@ class SellProductModel {
   bool isAcademicTool;
   bool isOthers;
   String timestamp; // New field
+  String profileImg; // New field
+  bool isAnonymous; // New field
+  String username; // New field
 
   SellProductModel({
     required this.spid, // New field
@@ -25,9 +30,13 @@ class SellProductModel {
     required this.isAcademicTool,
     required this.isOthers,
     required this.timestamp, // New field
+    required this.profileImg, // New field
+    this.isAnonymous = false, // Default value
+    required this.username, // New field
   });
 
   factory SellProductModel.fromMap(Map<String, dynamic> map) {
+    String profileImg = map['profileImg'] ?? RandomUtil.generateRandomImage();
     return SellProductModel(
       spid: map['spid'] as String, // New field
       userid: map['userid'] as String,
@@ -41,6 +50,9 @@ class SellProductModel {
       isAcademicTool: map['isAcademicTool'] != null ? map['isAcademicTool'] as bool : false,
       isOthers: map['isOthers'] != null ? map['isOthers'] as bool : false,
       timestamp: map['timestamp'] as String, // New field
+      profileImg: profileImg, // New field
+      isAnonymous: map['isAnonymous'] ?? false, // New field with default value
+      username: map['username'] != null ? map['username'] as String : "Anonymous", // New field
     );
   }
 
@@ -58,6 +70,9 @@ class SellProductModel {
       'isAcademicTool': isAcademicTool,
       'isOthers': isOthers,
       'timestamp': timestamp, // New field
+      'profileImg': profileImg, // New field
+      'isAnonymous': isAnonymous, // New field
+      'username': username, // New field
     };
   }
 }

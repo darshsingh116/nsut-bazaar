@@ -76,8 +76,8 @@ class RequestListCard extends StatelessWidget {
                           launchWhatsApp(requestProductModel.contact.toString());
                         },
                         child: SizedBox(
-                          width: 22.w, // Width based on screen width
-                          height: 22.h, // Height based on screen height
+                          width: 25.w, // Width based on screen width
+                          height: 25.h, // Height based on screen height
                           child: SvgPicture.asset('assets/whatsapp.svg'),
                         ),
                       ),

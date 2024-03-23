@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nsutbazaar/constants/darkTheme.dart';
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:nsutbazaar/repositories/firebase_storage_repo.dart';
@@ -50,11 +51,37 @@ class _EditProfilePageState extends State<EditProfilePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 40.h),
+                SizedBox(height: 20.h),
+                Stack(
+                  children: [
+                   
+                    CircleAvatar(
+                    radius: 80.r,
+                    backgroundImage: AssetImage('assets/paimon.jpeg'), // Replace 'assets/avatar_image.png' with your image asset path
+                  ),
+                   Positioned(
+                      bottom: 0,
+                      right: 10.w,
+                      child: CircleAvatar(
+                    radius: 15.r,
+                    backgroundColor: DarkTheme.dtLightPurple,
+                    child: IconButton(
+                      icon: Icon(Icons.edit, size: 15.sp),
+                      color: Colors.black,
+                      onPressed: () {
+                        // Handle edit avatar action here
+                      },
+                    ),
+                  ),
+                    ),
+                    
+                  ],
+                ),
+              SizedBox(height: 20.h),
                 Container(
-                  height: 50.h,
+                  height: 40.h,
                   padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 7.h),
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 36, 28, 41),
                     borderRadius: BorderRadius.circular(12.r),
@@ -80,7 +107,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             border: InputBorder.none,
                             contentPadding:
-                                EdgeInsets.symmetric(horizontal: 5.w),
+                                EdgeInsets.symmetric(horizontal: 5.w,vertical: 6.h),
                           ),
                           style: TextStyle(color: Colors.white),
                         ),
@@ -89,12 +116,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                 ),
                 SizedBox(
-                  height: 20.h,
+                  height: 5.h,
                 ),
                 Container(
-                  height: 50.h,
+                  height: 40.h,
                   padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 7.h),
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 36, 28, 41),
                     borderRadius: BorderRadius.circular(12.r),
@@ -120,7 +147,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             border: InputBorder.none,
                             contentPadding:
-                                EdgeInsets.symmetric(horizontal: 5.w),
+                                EdgeInsets.symmetric(horizontal: 5.w,vertical: 6.h),
                           ),
                           style: TextStyle(color: Colors.white),
                         ),
@@ -129,13 +156,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                 ),
                 SizedBox(
-                  height: 20.h,
+                  height: 5.h,
                 ),
                 
                 Container(
-                  height: 50.h,
+                  height: 40.h,
                   padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 7.h),
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 36, 28, 41),
                     borderRadius: BorderRadius.circular(12.r),
@@ -161,7 +188,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             border: InputBorder.none,
                             contentPadding:
-                                EdgeInsets.symmetric(horizontal: 5.w),
+                                EdgeInsets.symmetric(horizontal: 5.w,vertical: 6.h),
                           ),
                           style: TextStyle(color: Colors.white),
                         ),
@@ -170,12 +197,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                 ),
                 SizedBox(
-                  height: 20.h,
+                  height: 5.h,
                 ),
                 Container(
-                  height: 50.h,
+                  height: 40.h,
                   padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 7.h),
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 36, 28, 41),
                     borderRadius: BorderRadius.circular(12.r),
@@ -201,7 +228,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             border: InputBorder.none,
                             contentPadding:
-                                EdgeInsets.symmetric(horizontal: 5.w),
+                                EdgeInsets.symmetric(horizontal: 5.w,vertical: 6.h),
                           ),
                           style: TextStyle(color: Colors.white),
                         ),
@@ -221,7 +248,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       int newPhoneNumber =
                           int.tryParse(_phoneNumberController.text) ?? 0;
                       String newRollNumber = _rollNumberController.text;
-
+                
                       // Update user's profile with newFullname, newUsername, newEmail, newPhoneNumber, and newRollNumber
                       userControl.editUserInfo(newFullname, newUsername,
                           newPhoneNumber, newRollNumber);
@@ -245,8 +272,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: 20),
+                )
               ],
             ),
           ),
