@@ -58,7 +58,7 @@ class _SellListCardState extends State<SellListCard> {
                       ),
                     SizedBox(width: 8.0), // Add spacing between avatar and text
                     Text(
-                      'Anonymous',
+                      widget.sellProductModel.isAnonymous?"Anonymous": widget.sellProductModel.username,
                       style: TextStyle(
                         fontSize: 10.0.sp, // Font size of the text
                         fontWeight: FontWeight.bold, // Bold text

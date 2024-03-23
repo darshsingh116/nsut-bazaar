@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nsutbazaar/constants/purpleTheme.dart';
+import 'package:nsutbazaar/repositories/local_data.dart';
+import 'package:nsutbazaar/screens/DrawerScreens/my_listings.dart';
+import 'package:nsutbazaar/screens/DrawerScreens/my_requests.dart';
+import 'package:nsutbazaar/screens/Product/liked_sell_products.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,6 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final localData = context.read<LocalData>();
     return SafeArea(
       child: Scaffold(
           backgroundColor: Colors.transparent,
@@ -48,51 +54,34 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: 90.w,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset('assets/myListing.svg',
-                                  height: 47.h),
-                              SizedBox(
-                                height: 5.h,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MyListings(),
                               ),
-                              Text(
-                                "My Listings",
-                                style: TextStyle(
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: 2,
-                          height: 46.h,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 70.w,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset('assets/likedIcon.svg',
-                                  height: 49.h),
-                              SizedBox(
-                                height: 5.h,
-                              ),
-                              Center(
-                                child: Text(
-                                  "Liked",
+                            );
+                          },
+                          child: SizedBox(
+                            width: 90.w,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset('assets/myListing.svg',
+                                    height: 47.h),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                Text(
+                                  "My Listings",
                                   style: TextStyle(
                                       fontSize: 10.sp,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
                         Container(
@@ -100,24 +89,71 @@ class _HomePageState extends State<HomePage> {
                           height: 46.h,
                           color: Colors.white,
                         ),
-                        SizedBox(
-                          width: 80.w,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset('assets/myRequest.svg',
-                                  height: 43.h),
-                              SizedBox(
-                                height: 5.h,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LikedSellProductScreen(localData: localData,),
                               ),
-                              Text(
-                                "My Requests",
-                                style: TextStyle(
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                              )
-                            ],
+                            );
+                          },
+                          child: SizedBox(
+                            width: 70.w,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset('assets/likedIcon.svg',
+                                    height: 49.h),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                Center(
+                                  child: Text(
+                                    "Liked",
+                                    style: TextStyle(
+                                        fontSize: 10.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 2,
+                          height: 46.h,
+                          color: Colors.white,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MyRequests(),
+                              ),
+                            );
+                          },
+                          child: SizedBox(
+                            width: 80.w,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset('assets/myRequest.svg',
+                                    height: 43.h),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                Text(
+                                  "My Requests",
+                                  style: TextStyle(
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ],

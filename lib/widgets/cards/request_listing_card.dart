@@ -57,11 +57,12 @@ class RequestListCard extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 12.0.r, // Radius of the circular avatar
-                    backgroundColor: Colors.blue, // Example background color
-                  ),
+                    backgroundImage:  AssetImage(
+                            'assets/${requestProductModel.profileImg}'),
+                      ),
                   SizedBox(width: 8.0), // Add spacing between avatar and text
                   Text(
-                    'Anonymous',
+                    requestProductModel.isAnonymous?"Anonymous": requestProductModel.username,
                     style: TextStyle(
                       fontSize: 12.0.sp, // Font size of the text
                       fontWeight: FontWeight.bold, // Bold text

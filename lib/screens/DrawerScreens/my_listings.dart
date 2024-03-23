@@ -73,23 +73,24 @@ class _MyListingsState extends State<MyListings> {
         appBar: AppBar(
           title: Text(
             'My Listings',
-            style: TextStyle(fontSize: 18.sp),
+            style: TextStyle(fontSize: 18.sp ,fontWeight: FontWeight.bold ),
           ),
           backgroundColor: Colors.transparent,
           centerTitle: true,
+          elevation: 0,
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: PurpleTheme.PurpleColor,
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => AddListingScreen()),
-            );
-          },
-          child: Icon(
-            Icons.add,
-          ),
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   backgroundColor: PurpleTheme.PurpleColor,
+        //   onPressed: () {
+        //     Navigator.pushReplacement(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => AddListingScreen()),
+        //     );
+        //   },
+        //   child: Icon(
+        //     Icons.add,
+        //   ),
+        // ),
         body: SafeArea(
           child: FutureBuilder<List<SellProductModel>>(
             future: _productsFuture,
@@ -170,15 +171,17 @@ class _MyListingCardState extends State<MyListingCard> {
     final firebaseRepository = context.read<FirebaseRepository>();
     final firebaseStoreageRepo = context.read<FirebaseStorageRepo>();
     final localData = context.read<LocalData>();
+    final height= 75;
+    final width = height*1.5;
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+      padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.w),
       child: Container(
-        height: 75.h,
+        height: height.h,
         child: Row(
           children: [
             Container(
-              width: 56.w,
-              height: 75.h,
+              width: width.w,
+              height: height.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.r),
                 color: Colors.white, // You can set background color if needed
@@ -218,26 +221,26 @@ class _MyListingCardState extends State<MyListingCard> {
             ),
             SizedBox(width: 10.w),
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 85.w,
-                  height: 35.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.r),
-                    color: PurpleTheme.ButtonLightPurpleColor,
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      // Edit button action
-                    },
-                    child: Text(
-                      'Edit',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 5.h),
+                // Container(
+                //   width: 85.w,
+                //   height: 35.h,
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(8.r),
+                //     color: PurpleTheme.ButtonLightPurpleColor,
+                //   ),
+                //   child: TextButton(
+                //     onPressed: () {
+                //       // Edit button action
+                //     },
+                //     child: Text(
+                //       'Edit',
+                //       style: TextStyle(color: Colors.white),
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(height: 5.h),
                 Container(
                   width: 85.w,
                   height: 35.h,

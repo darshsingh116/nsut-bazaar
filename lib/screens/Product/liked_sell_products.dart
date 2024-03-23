@@ -37,58 +37,68 @@ class _LikedSellProductScreenState extends State<LikedSellProductScreen> {
       child: backgroundContainer(
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: secondaryAppBar("Liked", context),
+          appBar: AppBar(
+          title: Text('Liked',style: TextStyle(fontSize: 18.sp ,fontWeight: FontWeight.bold ),),
+          backgroundColor: Colors.transparent,
+          centerTitle: true,
+          elevation: 0,
+        ),
           body: (widget.localData.likedSellProductModelList.length > 0)
-              ? GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // Two items in a row
-                    childAspectRatio: MediaQuery.of(context).size.width /
-                        (MediaQuery.of(context).size.height /
-                            1.7), // Adjust as needed
+              ? Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // Two items in a row
+                      childAspectRatio: MediaQuery.of(context).size.width /
+                          (MediaQuery.of(context).size.height /
+                              1.7), 
+                      crossAxisSpacing: 0.0.w,
+                    ),
+                    
+                    itemCount: widget.localData.likedSellProductModelList.length,
+              
+                    itemBuilder: (BuildContext context, int index) {
+                      final SellProductModel product =
+                          widget.localData.likedSellProductModelList[index];
+                      return GestureDetector(
+                        onTap: () {
+                           Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ProductDetails(
+                                                          product: product,
+                                                          localData: localData,
+                                                        )),
+                                              );
+                        },
+                        child: SellListCard(
+                          sellProductModel: product,
+                          localData: widget.localData,
+                        ),
+                      );
+                    },
                   ),
-                  itemCount: widget.localData.likedSellProductModelList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final SellProductModel product =
-                        widget.localData.likedSellProductModelList[index];
-                    return GestureDetector(
-                      onTap: () {
-                         Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ProductDetails(
-                                                        product: product,
-                                                        localData: localData,
-                                                      )),
-                                            );
-                      },
-                      child: SellListCard(
-                        sellProductModel: product,
-                        localData: widget.localData,
-                      ),
-                    );
-                  },
-                )
+              )
               : Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: 100.h,
+                        height: 60.h,
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 20.w, 10.h),
+                        padding: EdgeInsets.fromLTRB(0, 0, 20.w, 5.h),
                         child: SvgPicture.asset(
                           'assets/liked.svg',
                           semanticsLabel: 'An SVG image',
-                          width: 400.w,
-                          height: 370.h,
+                          height: 300.h,
                         ),
                       ),
                       Text(
                         "No Liked Items",
-                        style: TextStyle(color: Colors.white, fontSize: 20.sp),
+                        style: TextStyle(color: Colors.white, fontSize: 20.sp,fontWeight: FontWeight.bold),
                       )
                     ],
                   ),

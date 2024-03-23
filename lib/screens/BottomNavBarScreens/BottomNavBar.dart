@@ -59,6 +59,7 @@ class _NavBarScreensState extends State<NavBarScreens> {
       onPressed: () {
         _onItemTapped(items.indexOf(e));
       },
+      padding: EdgeInsets.zero
     );
   }).toList();
 }
@@ -85,7 +86,7 @@ class _NavBarScreensState extends State<NavBarScreens> {
                   hoverColor: const Color.fromARGB(255, 0, 0, 0),
                   gap: 3, // Gap between icon and text
                   activeColor: DarkTheme.dtDarkPurple, // Selected item color
-                  iconSize: 24.sp, // Icon size
+                  //iconSize: 24.sp, // Icon size
                   tabBackgroundColor: Colors.transparent,
                   padding:
                       EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),

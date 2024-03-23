@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:nsutbazaar/constants/purpleTheme.dart';
+import 'package:nsutbazaar/extensions/strings.dart';
 import 'package:nsutbazaar/models/RequestProductModel.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/bloc/requests_bloc.dart';
@@ -60,19 +61,21 @@ class _MyRequestsState extends State<MyRequests> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: const Text('My Listings'),
+          title: Text('My Requests',style: TextStyle(fontSize: 18.sp ,fontWeight: FontWeight.bold ),),
           backgroundColor: Colors.transparent,
+          centerTitle: true,
+          elevation: 0,
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: PurpleTheme.PurpleColor,
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => AddRequestScreen()),
-            );
-          },
-          child: const Icon(Icons.add),
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   backgroundColor: PurpleTheme.PurpleColor,
+        //   onPressed: () {
+        //     Navigator.pushReplacement(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => AddRequestScreen()),
+        //     );
+        //   },
+        //   child: const Icon(Icons.add),
+        // ),
         body: SafeArea(
           child: FutureBuilder<List<RequestProductModel>>(
             future: _productsFuture,
@@ -136,7 +139,7 @@ class _MyRequestCardState extends State<MyRequestCard> {
     final firebaseRepository = context.read<FirebaseRepository>();
 
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+      padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.w),
       child: Container(
         height: 75.h,
         child: Row(
@@ -147,7 +150,7 @@ class _MyRequestCardState extends State<MyRequestCard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    widget.requestProductModel.productName,
+                    widget.requestProductModel.productName.toTitleCase(),
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16.sp,
@@ -169,26 +172,26 @@ class _MyRequestCardState extends State<MyRequestCard> {
             ),
             SizedBox(width: 10.w),
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 85.w,
-                  height: 35.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.r),
-                    color: PurpleTheme.ButtonLightPurpleColor,
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      // Edit button action
-                    },
-                    child: Text(
-                      'Edit',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 5.h),
+                // Container(
+                //   width: 85.w,
+                //   height: 35.h,
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(8.r),
+                //     color: PurpleTheme.ButtonLightPurpleColor,
+                //   ),
+                //   child: TextButton(
+                //     onPressed: () {
+                //       // Edit button action
+                //     },
+                //     child: Text(
+                //       'Edit',
+                //       style: TextStyle(color: Colors.white),
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(height: 5.h),
                 Container(
                   width: 85.w,
                   height: 35.h,

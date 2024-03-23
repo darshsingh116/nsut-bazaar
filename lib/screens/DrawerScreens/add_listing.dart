@@ -103,6 +103,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
         appBar: AppBar(
           title: const Text('Add Listing'),
           backgroundColor: Colors.transparent,
+          elevation: 0,
         ),
         body: WillPopScope(
           onWillPop: () async {
@@ -133,10 +134,10 @@ class _AddListingScreenState extends State<AddListingScreen> {
                               TextStyle(color: Colors.white, fontSize: 16.sp),
                         ),
                         SizedBox(
-                          height: 10.h,
+                          height: 5.h,
                         ),
                         Container(
-                          height: 50.h,
+                          height: 40.h,
                           decoration: BoxDecoration(
                               color: Color.fromARGB(255, 36, 28,
                                   41), // Set background color to gray
@@ -145,7 +146,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
                                   color: Color.fromARGB(
                                       255, 74, 56, 87)) // Set border radius
                               ),
-                          child: Center(
+                          child: Expanded(
                             child: TextFormField(
                               decoration: InputDecoration(
                                 hintText: ' Ex: Gaming Mouse',
@@ -156,7 +157,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
                                 border: InputBorder
                                     .none, // Remove border from input decoration
                                 contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 16.0), // Set content padding
+                                    horizontal: 15.w,vertical: 10.h), // Set content padding
                               ),
                               style: TextStyle(
                                   color:
@@ -173,15 +174,17 @@ class _AddListingScreenState extends State<AddListingScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20.h),
+                        SizedBox(height: 10.h),
                         Text(
                           'Price',
                           style:
                               TextStyle(color: Colors.white, fontSize: 16.sp),
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(
+                          height: 5.h,
+                        ),
                         Container(
-                          height: 50.h,
+                          height: 40.h,
                           decoration: BoxDecoration(
                             color: Color.fromARGB(255, 36, 28, 41),
                             borderRadius: BorderRadius.circular(12.r),
@@ -189,7 +192,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
                               color: Color.fromARGB(255, 74, 56, 87),
                             ),
                           ),
-                          child: Center(
+                          child: Expanded(
                             child: TextFormField(
                               decoration: InputDecoration(
                                 hintText: 'Enter Price',
@@ -199,7 +202,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
                                 ),
                                 border: InputBorder.none,
                                 contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 16.0),
+                                    EdgeInsets.symmetric(horizontal: 15.w,vertical: 10.h),
                               ),
                               keyboardType: TextInputType.number,
                               style: TextStyle(color: Colors.white),
@@ -215,15 +218,17 @@ class _AddListingScreenState extends State<AddListingScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20.h), // Add spacing between fields
+                        SizedBox(height: 10.h), // Add spacing between fields
                         Text(
                           'Contact Number',
                           style:
                               TextStyle(color: Colors.white, fontSize: 16.sp),
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(
+                          height: 5.h,
+                        ),
                         Container(
-                          height: 50.h,
+                          height: 40.h,
                           decoration: BoxDecoration(
                             color: Color.fromARGB(255, 36, 28, 41),
                             borderRadius: BorderRadius.circular(12.r),
@@ -231,7 +236,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
                               color: Color.fromARGB(255, 74, 56, 87),
                             ),
                           ),
-                          child: Center(
+                          child: Expanded(
                             child: TextFormField(
                               controller: contactNumberController,
                               decoration: InputDecoration(
@@ -242,7 +247,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
                                 ),
                                 border: InputBorder.none,
                                 contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 16.0),
+                                    EdgeInsets.symmetric(horizontal: 15.w,vertical: 10.h),
                               ),
                               keyboardType: TextInputType.phone,
                               style: TextStyle(color: Colors.white),
@@ -259,7 +264,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20.h), // Add spacing between fields
+                        SizedBox(height: 10.h), // Add spacing between fields
                         Text(
                           'Description',
                           style:
@@ -268,7 +273,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
                         SizedBox(height: 10.h),
                         Container(
                           height:
-                              110.h, // Increase height for description field
+                              100.h, // Increase height for description field
                           decoration: BoxDecoration(
                             color: Color.fromARGB(255, 36, 28, 41),
                             borderRadius: BorderRadius.circular(12.r),
@@ -302,16 +307,16 @@ class _AddListingScreenState extends State<AddListingScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 10.h,
+                          height: 5.h,
                         ),
                         DropdownButton<String>(
-                          value: selectedCategory,
+                          value: selectedCategory ?? "Books",
                           focusColor: Colors.white,
                           icon:
                               Icon(Icons.arrow_drop_down, color: Colors.white),
                           iconSize: 24,
                           elevation: 16,
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white , fontSize: 13.sp),
                           dropdownColor: Colors.purple,
                           underline: Container(
                             height: 2,
@@ -341,7 +346,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
                         ),
 
                         SizedBox(
-                          height: 10.h,
+                          height: 5.h,
                         ),
                         GestureDetector(
                           child: SizedBox(
@@ -399,7 +404,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 50.h),
+                      padding: EdgeInsets.symmetric(vertical: 20.h),
                       child: SizedBox(
                           height: 48.h,
                           width: double.infinity,
