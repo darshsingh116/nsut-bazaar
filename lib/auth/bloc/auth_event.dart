@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
 
 abstract class AuthEvent {
@@ -27,7 +28,14 @@ class LogOut implements AuthEvent {
   );
 }
 
+class Verify implements AuthEvent{
+  final FirebaseRepository authRepository;
+
+  Verify({required this.authRepository});
+}
+
 class Register implements AuthEvent {
+  final BuildContext context;
   final FirebaseRepository authRepository;
   final String email;
   final String password;
@@ -35,8 +43,9 @@ class Register implements AuthEvent {
   final String username;
   final int phone;
   final String fullName;
-  const Register(
-      {required this.authRepository,
+  const Register( 
+      {required this.context,
+        required this.authRepository,
       required this.email,
       required this.password,
       required this.rollnumber,

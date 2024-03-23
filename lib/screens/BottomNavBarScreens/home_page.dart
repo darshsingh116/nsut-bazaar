@@ -159,90 +159,90 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 5.h), // 15 vertical units of height
-                  Text(
-                    "Categories",
-                    style: TextStyle(
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  SizedBox(height: 0.h), // 15 vertical units of height
-                  Container(
-                    width: 316.w,
-                    height: 83.h,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(Icons.menu_book,
-                                size: 45.w, color: Colors.deepPurple),
-                            SizedBox(
-                                height: 5.h), // 10 vertical units of height
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, 0, 2.w, 0),
-                              child: Text("Books",
-                                  style: TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white)),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(Icons.sports_basketball,
-                                size: 45.w, color: Colors.deepPurple),
-                            SizedBox(
-                                height: 5.h), // 10 vertical units of height
-                            Text("Sports",
-                                style: TextStyle(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white)),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(Icons.school,
-                                size: 45.w, color: Colors.deepPurple),
-                            SizedBox(
-                                height: 5.h), // 10 vertical units of height
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(2.w, 0, 0, 0),
-                              child: Text("Academic",
-                                  style: TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white)),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(Icons.category,
-                                size: 45.w, color: Colors.deepPurple),
-                            SizedBox(
-                                height: 5.h), // 10 vertical units of height
-                            Text("Others",
-                                style: TextStyle(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white)),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                  SizedBox(height: 20.h), // 15 vertical units of height
+                  // Text(
+                  //   "Categories",
+                  //   style: TextStyle(
+                  //       fontSize: 15.sp,
+                  //       fontWeight: FontWeight.bold,
+                  //       color: Colors.white),
+                  // ),
+                  // SizedBox(height: 0.h), // 15 vertical units of height
+                  // Container(
+                  //   width: 316.w,
+                  //   height: 83.h,
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //     children: [
+                  //       Column(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         crossAxisAlignment: CrossAxisAlignment.center,
+                  //         children: [
+                  //           Icon(Icons.menu_book,
+                  //               size: 45.w, color: Colors.deepPurple),
+                  //           SizedBox(
+                  //               height: 5.h), // 10 vertical units of height
+                  //           Padding(
+                  //             padding: EdgeInsets.fromLTRB(0, 0, 2.w, 0),
+                  //             child: Text("Books",
+                  //                 style: TextStyle(
+                  //                     fontSize: 12.sp,
+                  //                     fontWeight: FontWeight.w500,
+                  //                     color: Colors.white)),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       Column(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         crossAxisAlignment: CrossAxisAlignment.center,
+                  //         children: [
+                  //           Icon(Icons.sports_basketball,
+                  //               size: 45.w, color: Colors.deepPurple),
+                  //           SizedBox(
+                  //               height: 5.h), // 10 vertical units of height
+                  //           Text("Sports",
+                  //               style: TextStyle(
+                  //                   fontSize: 12.sp,
+                  //                   fontWeight: FontWeight.w500,
+                  //                   color: Colors.white)),
+                  //         ],
+                  //       ),
+                  //       Column(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         crossAxisAlignment: CrossAxisAlignment.center,
+                  //         children: [
+                  //           Icon(Icons.school,
+                  //               size: 45.w, color: Colors.deepPurple),
+                  //           SizedBox(
+                  //               height: 5.h), // 10 vertical units of height
+                  //           Padding(
+                  //             padding: EdgeInsets.fromLTRB(2.w, 0, 0, 0),
+                  //             child: Text("Academic",
+                  //                 style: TextStyle(
+                  //                     fontSize: 12.sp,
+                  //                     fontWeight: FontWeight.w500,
+                  //                     color: Colors.white)),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       Column(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         crossAxisAlignment: CrossAxisAlignment.center,
+                  //         children: [
+                  //           Icon(Icons.category,
+                  //               size: 45.w, color: Colors.deepPurple),
+                  //           SizedBox(
+                  //               height: 5.h), // 10 vertical units of height
+                  //           Text("Others",
+                  //               style: TextStyle(
+                  //                   fontSize: 12.sp,
+                  //                   fontWeight: FontWeight.w500,
+                  //                   color: Colors.white)),
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Container(
                     width: 318.w,
                     height: 102.h,
@@ -302,7 +302,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
 
-                  SizedBox(height: 5.h),
+                  SizedBox(height: 15.h),
                   SizedBox(
                     width: 318.w,
                     child: Row(
@@ -343,12 +343,15 @@ class _HomePageState extends State<HomePage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          SvgPicture.asset(
-                                            'assets/totalRequest.svg', // Replace 'your_svg_icon.svg' with your SVG icon asset path
-                                            height: 50.h,
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(0, 5.h, 5.w, 0),
+                                            child: SvgPicture.asset(
+                                              'assets/totalRequest.svg', // Replace 'your_svg_icon.svg' with your SVG icon asset path
+                                              height: 40.h,
+                                            ),
                                           ),
                                           Text(
-                                            "30",
+                                            "99",
                                             style: GoogleFonts.saira(
                                                 fontSize: 45.sp,
                                                 fontWeight: FontWeight.normal,
@@ -412,15 +415,19 @@ class _HomePageState extends State<HomePage> {
                                                 fontWeight: FontWeight.normal,
                                                 color: Colors.black),
                                           ),
-                                          SvgPicture.asset(
-                                            'assets/postToday.svg', // Replace 'your_svg_icon.svg' with your SVG icon asset path
-                                            height: 50.h,
+                                          SizedBox(width: 10.w,),
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(0, 5.h, 0, 0),
+                                            child: SvgPicture.asset(
+                                              'assets/postToday.svg', // Replace 'your_svg_icon.svg' with your SVG icon asset path
+                                              height: 40.h,
+                                            ),
                                           ),
                                         ],
                                       ),
                                       SizedBox(height: 5.h),
                                       Text(
-                                        "Total Requests",
+                                        "Posts Today",
                                         style: TextStyle(
                                             fontSize: 15.sp,
                                             fontWeight: FontWeight.bold),

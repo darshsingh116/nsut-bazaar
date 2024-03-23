@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nsutbazaar/auth/bloc/auth_bloc.dart';
 import 'package:nsutbazaar/auth/bloc/auth_event.dart';
 import 'package:nsutbazaar/auth/bloc/auth_state.dart';
+import 'package:nsutbazaar/auth/verify.dart';
+import 'package:nsutbazaar/constants/darkTheme.dart';
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/BottomNavBar.dart';
@@ -42,6 +44,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     MaterialPageRoute(builder: (context) => NavBarScreens()),
                   );
                 }
+                else if (state is AuthStateCheckVerified) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => VerifyScreen()),
+                  );
+                }
               },
               builder: (context, state) {
                 if (state is AuthStateInitial) {
@@ -68,12 +76,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20.sp,
+                                fontSize: 18.sp,
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: 20.h,
+                            height: 10.h,
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 10.h),
@@ -90,12 +98,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           SvgPicture.asset(
                             'assets/login.svg',
                             semanticsLabel: 'An SVG image',
-                            width: 300.w,
-                            height: 210.h,
+                            height: 150.h,
                           ),
-                          SizedBox(height: 30.h),
+                          SizedBox(height: 20.h),
                           Container(
-                            height: 50.h,
+                            height: 40.h,
                             decoration: BoxDecoration(
                               color: Color.fromARGB(255, 36, 28, 41),
                               borderRadius: BorderRadius.circular(12.r),
@@ -107,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 Padding(
                                   padding:
-                                      EdgeInsets.symmetric(horizontal: 16.w),
+                                      EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.h),
                                   child: Icon(
                                     Icons.email,
                                     color: Colors.white,
@@ -133,9 +140,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 20.h),
+                          SizedBox(height: 5.h),
                           Container(
-                            height: 50.h,
+                            height: 40.h,
                             decoration: BoxDecoration(
                               color: Color.fromARGB(255, 36, 28, 41),
                               borderRadius: BorderRadius.circular(12.r),
@@ -147,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 Padding(
                                   padding:
-                                      EdgeInsets.symmetric(horizontal: 16.w),
+                                      EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.h),
                                   child: Icon(
                                     Icons.lock,
                                     color: Colors.white,
@@ -183,14 +190,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 0.w),
                               child: SizedBox(
-                                height: 45.h,
+                                height: 40.h,
                                 width: double.infinity,
                                 child: ElevatedButton(
                                   child: Text(
                                     'Log In',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 14.0,
+                                      fontSize: 15.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -248,6 +255,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           SizedBox(height: 40.h),
+                          Text(
+                                  "Only university email are allowed",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.sp,
+                                  ),
+                                ),
+                          SizedBox(height: 5.h),
                           GestureDetector(
                             onTap: () {
                               context
@@ -267,7 +282,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Text(
                                   "Create Account",
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: DarkTheme.dtLightPurple,
                                     fontSize: 15.sp,
                                     decoration: TextDecoration.underline,
                                   ),

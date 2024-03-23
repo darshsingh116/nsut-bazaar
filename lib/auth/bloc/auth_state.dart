@@ -12,3 +12,5 @@ class AuthStateLoggedOut extends AuthState {}
 class AuthStateIsInRegistrationView extends AuthState {}
 
 class AuthStateIsLoading extends AuthState{}
+
+class AuthStateCheckVerified extends AuthState{}

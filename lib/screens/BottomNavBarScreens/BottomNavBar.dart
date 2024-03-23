@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_nav_bar/google_nav_bar.dart'; // Import the google_nav_bar package
 import 'package:nsutbazaar/constants/darkTheme.dart';
-import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/models/TagItem.dart';
-import 'package:nsutbazaar/screens/BottomNavBarScreens/feedback.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/home_page.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/listings.dart';
-import 'package:nsutbazaar/screens/BottomNavBarScreens/printout.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/profile_page.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/requests.dart';
 import 'package:nsutbazaar/screens/DrawerScreens/add_listing.dart';
-import 'package:nsutbazaar/widgets/core/app_bar_drawer.dart';
 import 'package:nsutbazaar/widgets/core/backgroundContainer.dart';
 import 'package:nsutbazaar/widgets/core/nsutbazaar_appBar.dart';
 
 class NavBarScreens extends StatefulWidget {
-  const NavBarScreens({super.key});
+  const NavBarScreens({Key? key}) : super(key: key);
 
   @override
   State<NavBarScreens> createState() => _NavBarScreensState();
@@ -28,42 +23,15 @@ class _NavBarScreensState extends State<NavBarScreens> {
   static List<Widget> _screensList = [
     HomePage(),
     ListingsScreen(),
-    Container(),
     RequestsScreen(),
     ProfilePage()
   ];
 
   void _onItemTapped(int index) {
-    if (index == 2) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => AddListingScreen()),
-      ).then((value) {
-        setState(() {
-          _selectedIndex =
-              0; // Return to the home screen after navigating back from AddListingScreen
-        });
-      });
-    } else {
-      setState(() {
+    setState(() {
         _selectedIndex = index;
       });
-    }
   }
-
-  List<GButton> getBottomTabs(List<MyTabItem> items) {
-  return items.map((e) {
-    return GButton(
-      icon: e.icon,
-      iconSize: (e.title == "Add") ? 35.sp : 24.sp,
-      onPressed: () {
-        _onItemTapped(items.indexOf(e));
-      },
-      padding: EdgeInsets.zero
-    );
-  }).toList();
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -76,25 +44,96 @@ class _NavBarScreensState extends State<NavBarScreens> {
           index: _selectedIndex,
           children: _screensList,
         ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(color: Colors.transparent),
-          child: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.0.w, vertical: 10.h),
-              child: GNav(
-                  rippleColor: Color.fromARGB(102, 0, 0, 0),
-                  hoverColor: const Color.fromARGB(255, 0, 0, 0),
-                  gap: 3, // Gap between icon and text
-                  activeColor: DarkTheme.dtDarkPurple, // Selected item color
-                  //iconSize: 24.sp, // Icon size
-                  tabBackgroundColor: Colors.transparent,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                  tabs: getBottomTabs(NavBarItems),
-                  selectedIndex: _selectedIndex,
-                  //onTabChange: _onItemTapped,
-                  color: DarkTheme.dtUnselectedNavBar,
-                  duration: Duration(milliseconds: 350)),
+  //       floatingActionButton: SizedBox(
+  //         width: 50.w, // Increased width of the container
+  // height: 50.h,
+  //         child: FloatingActionButton(
+            
+  //           onPressed: () {
+  //             // Handle FAB tap
+  //           },
+  //           child: Icon(Icons.add,color: DarkTheme.dtDarkPurple,size: 30.sp,),
+  //           backgroundColor: Color.fromARGB(255, 0, 0, 0), // Change FAB background color
+  //         ),
+  //       ),
+  //       //floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomAppBar(
+          color: DarkTheme.dtBackgroundColor,
+          //shape: const CircularNotchedRectangle(),
+          notchMargin: 5,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 3.h),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround, // Added space around icons
+              children: <Widget>[
+                IconButton(
+                  splashRadius: 20.r,
+                  highlightColor: Colors.transparent,
+                  icon: Icon(
+                    Icons.home_filled,
+                    size: 25.sp,
+                    color: _selectedIndex == 0 ? DarkTheme.dtDarkPurple: Colors.grey,
+                  ),
+                  onPressed: () {
+                    _onItemTapped(0);
+                  },
+                ),
+                IconButton(
+                  splashRadius: 20.r,
+                  highlightColor: Colors.transparent,
+                  icon: Icon(
+                    Icons.feed_outlined,
+                    size: 25.sp,
+                    color: _selectedIndex == 1 ? DarkTheme.dtDarkPurple: Colors.grey,
+                  ),
+                  onPressed: () {
+                    _onItemTapped(1);
+                  },
+                ),
+                IconButton(
+                  splashRadius: 20.r,
+                  highlightColor: Colors.transparent,
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10.h),
+                  icon: Icon(
+                    Icons.add_circle_rounded,
+                    size: 40.sp,
+                  
+                    color: DarkTheme.dtLightPurple,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AddListingScreen()));
+      
+                  },
+                ),
+                //SizedBox(width: 20.w), // Added space from the edge of icons
+                IconButton(
+                  splashRadius: 20.r,
+                  highlightColor: Colors.transparent,
+                  icon: Icon(
+                    Icons.insert_comment,
+                    size: 25.sp,
+                    color: _selectedIndex == 2 ? DarkTheme.dtDarkPurple: Colors.grey,
+                  ),
+                  onPressed: () {
+                    _onItemTapped(2);
+                  },
+                ),
+                IconButton(
+                  splashRadius: 20.r,
+                  highlightColor: Colors.transparent,
+                  icon: Icon(
+                    Icons.person,
+                    size: 25.sp,
+                    color: _selectedIndex == 3 ? DarkTheme.dtDarkPurple: Colors.grey,
+                  ),
+                  onPressed: () {
+                    _onItemTapped(3);
+                  },
+                ),
+              ],
             ),
           ),
         ),
@@ -102,11 +141,3 @@ class _NavBarScreensState extends State<NavBarScreens> {
     );
   }
 }
-
-List<MyTabItem> NavBarItems = [
-  MyTabItem('Home', 'Home Screen', Icons.home_filled, false),
-  MyTabItem('Listings', 'Listings', Icons.feed_outlined, false),
-  MyTabItem('Add', 'Add', Icons.add, false),
-  MyTabItem('Requests', 'Requests', Icons.insert_comment, false),
-  MyTabItem('Profile', 'Profile', Icons.person, true),
-];

@@ -4,6 +4,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:nsutbazaar/auth/bloc/auth_bloc.dart';
 import 'package:nsutbazaar/auth/bloc/auth_event.dart';
 import 'package:nsutbazaar/auth/bloc/auth_state.dart';
+import 'package:nsutbazaar/auth/verify.dart';
+import 'package:nsutbazaar/constants/darkTheme.dart';
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:nsutbazaar/auth/login.dart';
@@ -18,7 +20,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController emailController = TextEditingController();
+  TextEditingController emailController = TextEditingController(text: "@nsut.ac.in");
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController rollnumberController = TextEditingController();
@@ -43,6 +45,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => NavBarScreens()));
                 }
+                else if (state is AuthStateCheckVerified) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => VerifyScreen()),
+                  );
+                }
               },
               builder: (context, state) {
                 if (state is AuthStateIsInRegistrationView ||
@@ -64,13 +72,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20.sp,
+                                fontSize: 18.sp,
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
+                          
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 10.h),
                             child: Text(
@@ -86,12 +92,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           SvgPicture.asset(
                             'assets/signup.svg',
                             semanticsLabel: 'An SVG image',
-                            width: 320.w,
-                            height: 140.h,
+                            width: 280.w,
                           ),
                           SizedBox(height: 20.h),
                           Container(
-                            height: 50.h,
+                            height: 40.h,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20.w, vertical: 5.h),
                             decoration: BoxDecoration(
@@ -120,7 +125,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       ),
                                       border: InputBorder.none,
                                       contentPadding:
-                                          EdgeInsets.symmetric(horizontal: 5.w),
+                                          EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.5.h),
                                     ),
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -128,9 +133,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 10.h),
+                          SizedBox(height: 5.h),
                           Container(
-                            height: 50.h,
+                            height: 40.h,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20.w, vertical: 5.h),
                             decoration: BoxDecoration(
@@ -159,7 +164,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       ),
                                       border: InputBorder.none,
                                       contentPadding:
-                                          EdgeInsets.symmetric(horizontal: 5.w),
+                                          EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.5.h),
                                     ),
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -167,9 +172,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 10.h),
+                          SizedBox(height: 5.h),
                           Container(
-                            height: 50.h,
+                            height: 40.h,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20.w, vertical: 5.h),
                             decoration: BoxDecoration(
@@ -198,7 +203,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       ),
                                       border: InputBorder.none,
                                       contentPadding:
-                                          EdgeInsets.symmetric(horizontal: 5.w),
+                                          EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.5.h),
                                     ),
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -206,9 +211,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 10.h),
+                          SizedBox(height: 5.h),
                           Container(
-                            height: 50.h,
+                            height: 40.h,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20.w, vertical: 5.h),
                             decoration: BoxDecoration(
@@ -237,7 +242,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       ),
                                       border: InputBorder.none,
                                       contentPadding:
-                                          EdgeInsets.symmetric(horizontal: 5.w),
+                                          EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.5.h),
                                     ),
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -245,9 +250,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 10.h),
+                          SizedBox(height: 5.h),
                           Container(
-                            height: 50.h,
+                            height: 40.h,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20.w, vertical: 5.h),
                             decoration: BoxDecoration(
@@ -276,7 +281,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       ),
                                       border: InputBorder.none,
                                       contentPadding:
-                                          EdgeInsets.symmetric(horizontal: 5.w),
+                                          EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.5.h),
                                     ),
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -284,9 +289,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 10.h),
+                          SizedBox(height: 5.h),
                           Container(
-                            height: 50.h,
+                            height: 40.h,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20.w, vertical: 5.h),
                             decoration: BoxDecoration(
@@ -316,7 +321,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       ),
                                       border: InputBorder.none,
                                       contentPadding:
-                                          EdgeInsets.symmetric(horizontal: 5.w),
+                                          EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.5.h),
                                     ),
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -324,7 +329,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 20.h),
+                          SizedBox(height: 10.h),
                           BlocBuilder<AuthBloc, AuthState>(
                             builder: (context, state) {
                               if (state is AuthStateIsLoading) {
@@ -352,6 +357,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           rollnumber != "" &&
                                           username != "") {
                                         context.read<AuthBloc>().add(Register(
+                                          context: context,
                                               email: email,
                                               password: password,
                                               rollnumber: rollnumber,
@@ -404,7 +410,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   Text(
                                     "Log in",
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: DarkTheme.dtLightPurple,
                                       fontSize: 15.sp,
                                       decoration: TextDecoration.underline,
                                     ),
