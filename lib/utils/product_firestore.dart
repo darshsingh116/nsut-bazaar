@@ -15,7 +15,6 @@ class ProductFirestore {
     try {
       await _firestore.collection('sellProducts').add(product.toJson());
     } catch (e) {
-      print('Error adding product: $e');
       // Handle the error as needed
     }
   }
@@ -33,7 +32,6 @@ class ProductFirestore {
       }).toList();
       return products;
     } catch (e) {
-      print('Error getting sell products: $e');
       return [];
     }
   }
@@ -56,7 +54,7 @@ int currentTime = DateTime.now().millisecondsSinceEpoch;
   todaySellProductsSnapshot.docs.forEach((doc) {
     String timestampString = doc['timestamp']; // Assuming 'timestamp' is the field name in Firestore
     int timestamp = int.tryParse(timestampString) ?? 0; // Convert string to int, default to 0 if parsing fails
-    if (timestamp >= currentTime - Duration(days: 1).inMilliseconds) {
+    if (timestamp >= currentTime - const Duration(days: 1).inMilliseconds) {
       todaySellProductsCount++;
     }
   });
@@ -67,7 +65,7 @@ int currentTime = DateTime.now().millisecondsSinceEpoch;
   todayRequestProductsSnapshot.docs.forEach((doc) {
     String timestampString = doc['timestamp']; // Assuming 'timestamp' is the field name in Firestore
     int timestamp = int.tryParse(timestampString) ?? 0; // Convert string to int, default to 0 if parsing fails
-    if (timestamp >= currentTime - Duration(days: 1).inMilliseconds) {
+    if (timestamp >= currentTime - const Duration(days: 1).inMilliseconds) {
       todayRequestProductsCount++;
     }
   });
@@ -97,7 +95,6 @@ int currentTime = DateTime.now().millisecondsSinceEpoch;
       }).toList();
       return products;
     } catch (e) {
-      print('Error getting sell products by user ID: $e');
       return [];
     }
   }
@@ -106,7 +103,6 @@ int currentTime = DateTime.now().millisecondsSinceEpoch;
     try {
       await _firestore.collection('requestProduct').add(product.toJson());
     } catch (e) {
-      print('Error adding request product: $e');
       // Handle the error as needed
     }
   }
@@ -123,7 +119,6 @@ int currentTime = DateTime.now().millisecondsSinceEpoch;
       }).toList();
       return products;
     } catch (e) {
-      print('Error getting request products: $e');
       // Handle the error as needed
       return []; // Return an empty list in case of error
     }
@@ -144,7 +139,6 @@ int currentTime = DateTime.now().millisecondsSinceEpoch;
       }).toList();
       return products;
     } catch (e) {
-      print('Error getting request products by user ID: $e');
       return [];
     }
   }
@@ -167,11 +161,8 @@ int currentTime = DateTime.now().millisecondsSinceEpoch;
         await doc.reference.delete();
         await firebaseStorageRepo.deleteImageFile(sellProductModel.imageUrl);
 
-        print(
-            'Product with SPID: ${sellProductModel.spid} deleted successfully');
       });
     } catch (e) {
-      print('Error deleting product: $e');
       // Handle the error as needed
     }
   }
@@ -185,10 +176,8 @@ int currentTime = DateTime.now().millisecondsSinceEpoch;
 
       querySnapshot.docs.forEach((doc) async {
         await doc.reference.delete();
-        print('Product with RPID: $rpid deleted successfully');
       });
     } catch (e) {
-      print('Error deleting product: $e');
       // Handle the error as needed
     }
   }

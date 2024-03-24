@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_skeleton_niu/loading_skeleton.dart';
+import 'package:nsutbazaar/constants/darkTheme.dart';
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/extensions/strings.dart';
 import 'package:nsutbazaar/models/SellProductModel.dart';
@@ -100,8 +101,8 @@ class _ProductDetailsState extends State<ProductDetails> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
-                  height: 300.h,
-                  width: double.infinity,
+                  height: MediaQuery.of(context).size.width/(150.w/100.h),
+                  width: MediaQuery.of(context).size.width,
                   child: CachedNetworkImage(
                     placeholder: (context, url) => LoadingSkeleton(
                       width: double.infinity,
@@ -165,7 +166,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   child: Text(
                     '\₹${widget.product.price.toStringAsFixed(2)}',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: DarkTheme.dtDarkPurple,
                       fontSize: 16.sp,
                     ),
                   ),
