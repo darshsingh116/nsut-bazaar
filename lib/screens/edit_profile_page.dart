@@ -7,9 +7,12 @@ import 'package:nsutbazaar/repositories/firebase_repo.dart';
 import 'package:nsutbazaar/repositories/firebase_storage_repo.dart';
 import 'package:nsutbazaar/utils/user_control.dart';
 import 'package:nsutbazaar/widgets/core/backgroundContainer.dart';
+import 'package:nsutbazaar/widgets/image_dialog.dart';
 
 class EditProfilePage extends StatefulWidget {
   final Function() onUpdateProfile;
+ 
+  
 
   const EditProfilePage({Key? key, required this.onUpdateProfile})
       : super(key: key);
@@ -23,6 +26,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _phoneNumberController = TextEditingController();
   TextEditingController _rollNumberController = TextEditingController();
+  String progileImg = "";
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     FirebaseRepository _authRepository = context.read<FirebaseRepository>();
     UserControl userControl =
         UserControl(_firebaseStorageRepo, _authRepository);
+    progileImg = (progileImg=="")?_authRepository.userModel.profileImg:progileImg;
 
     return backgroundContainer(
       child: Scaffold(
@@ -54,30 +59,48 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 SizedBox(height: 20.h),
                 Stack(
                   children: [
-                   
-                    CircleAvatar(
-                    radius: 80.r,
-                    backgroundImage: AssetImage('assets/paimon.jpeg'), // Replace 'assets/avatar_image.png' with your image asset path
-                  ),
-                   Positioned(
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return ImageDialog(assetImage: AssetImage(
+                            'assets/${progileImg}'));
+  },
+);
+                      },
+                      child: CircleAvatar(
+                        radius: 80.r,
+                        backgroundImage: AssetImage(
+                            'assets/${progileImg}'), // Replace 'assets/avatar_image.png' with your image asset path
+                      ),
+                    ),
+                    Positioned(
                       bottom: 0,
                       right: 10.w,
                       child: CircleAvatar(
-                    radius: 15.r,
-                    backgroundColor: DarkTheme.dtLightPurple,
-                    child: IconButton(
-                      icon: Icon(Icons.edit, size: 15.sp),
-                      color: Colors.black,
-                      onPressed: () {
-                        // Handle edit avatar action here
-                      },
+                        radius: 15.r,
+                        backgroundColor: DarkTheme.dtLightPurple,
+                        child: IconButton(
+                          icon: Icon(Icons.shuffle, size: 15.sp),
+                          color: Colors.black,
+                          onPressed: () {
+                            int currentNumber =
+                                int.parse(progileImg.split('.')[0]);
+                            int nextNumber = currentNumber + 1;
+                            if (nextNumber > 3) {
+                              nextNumber = 1; // Loop back to the first image
+                            }
+                            setState(() {
+                              progileImg = '$nextNumber.jpeg';
+                            });
+                          },
+                        ),
+                      ),
                     ),
-                  ),
-                    ),
-                    
                   ],
                 ),
-              SizedBox(height: 20.h),
+                SizedBox(height: 20.h),
                 Container(
                   height: 40.h,
                   padding:
@@ -106,8 +129,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               fontSize: 16.sp,
                             ),
                             border: InputBorder.none,
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 5.w,vertical: 6.h),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 5.w, vertical: 6.h),
                           ),
                           style: TextStyle(color: Colors.white),
                         ),
@@ -146,8 +169,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               fontSize: 16.sp,
                             ),
                             border: InputBorder.none,
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 5.w,vertical: 6.h),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 5.w, vertical: 6.h),
                           ),
                           style: TextStyle(color: Colors.white),
                         ),
@@ -158,7 +181,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 SizedBox(
                   height: 5.h,
                 ),
-                
                 Container(
                   height: 40.h,
                   padding:
@@ -187,8 +209,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               fontSize: 16.sp,
                             ),
                             border: InputBorder.none,
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 5.w,vertical: 6.h),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 5.w, vertical: 6.h),
                           ),
                           style: TextStyle(color: Colors.white),
                         ),
@@ -227,8 +249,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               fontSize: 16.sp,
                             ),
                             border: InputBorder.none,
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 5.w,vertical: 6.h),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 5.w, vertical: 6.h),
                           ),
                           style: TextStyle(color: Colors.white),
                         ),
@@ -248,10 +270,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       int newPhoneNumber =
                           int.tryParse(_phoneNumberController.text) ?? 0;
                       String newRollNumber = _rollNumberController.text;
-                
+
                       // Update user's profile with newFullname, newUsername, newEmail, newPhoneNumber, and newRollNumber
                       userControl.editUserInfo(newFullname, newUsername,
-                          newPhoneNumber, newRollNumber);
+                          newPhoneNumber, newRollNumber, progileImg);
                       widget
                           .onUpdateProfile(); // Pass updated data back to the profile page
                       Navigator.pop(context); // Go back to the profile page

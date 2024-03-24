@@ -4,9 +4,11 @@ import 'package:nsutbazaar/constants/darkTheme.dart';
 import 'package:nsutbazaar/models/TagItem.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/home_page.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/listings.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/plusPageView.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/profile_page.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/requests.dart';
 import 'package:nsutbazaar/screens/DrawerScreens/add_listing.dart';
+import 'package:nsutbazaar/widgets/addDialog.dart';
 import 'package:nsutbazaar/widgets/core/backgroundContainer.dart';
 import 'package:nsutbazaar/widgets/core/nsutbazaar_appBar.dart';
 
@@ -102,9 +104,13 @@ class _NavBarScreensState extends State<NavBarScreens> {
                     color: DarkTheme.dtLightPurple,
                   ),
                   onPressed: () {
-                    Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => AddListingScreen()));
+                    showDialog(
+      context: context,
+      builder: (context) => AddDialog(),
+    );
+        //             Navigator.push(
+        // context,
+        // MaterialPageRoute(builder: (context) => MyPageView()));
       
                   },
                 ),

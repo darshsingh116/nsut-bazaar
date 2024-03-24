@@ -11,7 +11,7 @@ class UserControl {
   );
 
   void editUserInfo(
-      String fullname, String username, int phoneNumber, String rollNumber) {
+      String fullname, String username, int phoneNumber, String rollNumber, String profileImg){
     if (fullname != "") {
       _authRepository.userModel.fullname = fullname;
     }
@@ -25,6 +25,7 @@ class UserControl {
     if (rollNumber != "") {
       _authRepository.userModel.rollNumber = rollNumber;
     }
+    _authRepository.userModel.profileImg = profileImg;
     _authRepository.updateUserModel();
   }
 }

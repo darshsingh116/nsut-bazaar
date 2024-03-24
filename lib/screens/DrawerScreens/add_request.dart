@@ -38,6 +38,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: const Text('Add Request'),
+          elevation: 0,
           backgroundColor: Colors.transparent,
         ),
         body: WillPopScope(
@@ -69,9 +70,9 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                           style:
                               TextStyle(color: Colors.white, fontSize: 16.sp),
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 5.h),
                         Container(
-                          height: 50.h,
+                          height: 40.h,
                           decoration: BoxDecoration(
                             color: Color.fromARGB(255, 36, 28, 41),
                             borderRadius: BorderRadius.circular(12.r),
@@ -88,7 +89,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                               ),
                               border: InputBorder.none,
                               contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 16.0),
+                                  EdgeInsets.symmetric(horizontal: 15.w,vertical: 10.h),
                             ),
                             style: TextStyle(color: Colors.white),
                             validator: (value) {
@@ -108,9 +109,9 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                           style:
                               TextStyle(color: Colors.white, fontSize: 16.sp),
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 5.h),
                         Container(
-                          height: 50.h,
+                          height: 40.h,
                           decoration: BoxDecoration(
                             color: Color.fromARGB(255, 36, 28, 41),
                             borderRadius: BorderRadius.circular(12.r),
@@ -127,7 +128,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                               ),
                               border: InputBorder.none,
                               contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 16.0),
+                                  EdgeInsets.symmetric(horizontal: 15.w,vertical: 10.h),
                             ),
                             keyboardType: TextInputType.number,
                             style: TextStyle(color: Colors.white),
@@ -148,7 +149,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                           style:
                               TextStyle(color: Colors.white, fontSize: 16.sp),
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 5.h),
                         Container(
                           height:
                               110.h, // Increase height for description field
@@ -169,7 +170,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                               ),
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 16.0, vertical: 12.0),
+                                  horizontal: 15.w, vertical: 12.0.h),
                             ),
                             style: TextStyle(color: Colors.white),
                             validator: (value) {
@@ -186,7 +187,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 50.h),
+                      padding: EdgeInsets.symmetric(vertical: 40.h),
                       child: SizedBox(
                         height: 48.h,
                         width: double.infinity,

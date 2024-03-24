@@ -31,13 +31,18 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   SizedBox(height: 5.h), // 15 vertical units of height
                   Container(
-                    width: 325.w,
-                    height: 150.h,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(20.r),
-                    ),
-                  ),
+  width: 325.w,
+  height: 150.h,
+  decoration: BoxDecoration(
+    color: Colors.grey,
+    borderRadius: BorderRadius.circular(20.r),
+    image: DecorationImage(
+      image: AssetImage('assets/sell_banner.png'), // Replace 'your_image.png' with your image asset path
+      fit: BoxFit.cover, // Adjust the fit as needed
+    ),
+  ),
+)
+,
                   SizedBox(height: 10.h), // 15 vertical units of height
                   Text(
                     "Activity",

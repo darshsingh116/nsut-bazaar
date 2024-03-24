@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +11,9 @@ import 'package:nsutbazaar/repositories/local_data.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_bloc.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_event.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_state.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/blocLatestPost/latest_post_bloc.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/blocLatestPost/latest_post_event.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/blocLatestPost/latest_post_state.dart';
 import 'package:nsutbazaar/screens/Product/product_details.dart';
 import 'package:nsutbazaar/widgets/cards/latest_post_card.dart';
 import 'package:nsutbazaar/widgets/cards/latest_post_card_skeleton_loading.dart';
@@ -62,6 +64,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
   @override
   Widget build(BuildContext context) {
     final listingsBloc = context.read<ListingsBloc>();
+    final latestPostBloc = context.read<LatestPostBloc>();
     final firebaseRepository = context.read<FirebaseRepository>();
     final localData = context.read<LocalData>();
     double containerWidth = 160.w;
@@ -185,16 +188,20 @@ class _ListingsScreenState extends State<ListingsScreen> {
                           Container(
                             height: 180.h,
                             width: double.infinity,
-                            child: BlocBuilder<ListingsBloc, ListingsState>(
+                            child:
+                                BlocBuilder<LatestPostBloc, LatestPostState>(                             
                               builder: (context, state) {
-                                if (state is ListingsStateLoading ||
-                                    state is ListingsStateInitial) {
+                                if (state is LatestPostStateInitial) {
+                                  latestPostBloc.add(LatestPostEventGetAllList(
+                                      firebaseRepository: firebaseRepository));
+                                }
+                                if (state is LatestPostStateLoading ||
+                                    state is LatestPostStateInitial) {
                                   return Center(
                                     child: LatestPostCardsSkeletonLoading(),
                                   );
-                                } else if (state is ListingsStateGotList ||
-                                    state is ListingsStateGotSearchedList) {
-                                  if (state is ListingsStateGotList) {
+                                } else if (state is LatestPostStateGotList) {
+                                  if (state is LatestPostStateGotList) {
                                     LatestPostList = state.productList;
                                   }
                                   if (LatestPostList.isEmpty) {
@@ -254,7 +261,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
                                         autoPlay: true,
                                         aspectRatio: 1.5,
                                         enlargeCenterPage: true,
-                                        viewportFraction: 0.65,
+                                        viewportFraction: 0.6,
                                         enlargeStrategy:
                                             CenterPageEnlargeStrategy.height,
                                       ),

@@ -111,7 +111,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
             //   context,
             //   MaterialPageRoute(builder: (context) => MyListings()),
             // );
-
+    
             return true;
           },
           child: SingleChildScrollView(
@@ -344,7 +344,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
                             );
                           }).toList(),
                         ),
-
+    
                         SizedBox(
                           height: 5.h,
                         ),
@@ -424,7 +424,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
                                               file!, authRepository.userModel);
                                       if (_formKey.currentState!.validate()) {
                                         _formKey.currentState!.save();
-
+    
                                         DateTime now = DateTime.now();
                                         int timestamp =
                                             now.millisecondsSinceEpoch;
@@ -434,7 +434,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
                                         bool isOthers = false;
                                         print(
                                             "~~~~~~~~~~~~~~~~~~~2~~~~~~~~~~~~~~~~~~${selectedCategory}");
-
+    
                                         if (selectedCategory == 'Books') {
                                           isBooks = true;
                                         } else if (selectedCategory ==
@@ -467,7 +467,7 @@ class _AddListingScreenState extends State<AddListingScreen> {
                                                         .userModel.profileImg,
                                                 username: authRepository.userModel.username
                                                     );
-
+    
                                         productFirestore
                                             .addSellProduct(product);
                                         Navigator.pop(context);

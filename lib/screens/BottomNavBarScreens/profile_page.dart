@@ -13,6 +13,7 @@ import 'package:nsutbazaar/auth/login.dart';
 import 'dart:ui';
 
 import 'package:nsutbazaar/screens/edit_profile_page.dart';
+import 'package:nsutbazaar/widgets/image_dialog.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -52,10 +53,21 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CircleAvatar(
-                        radius: 64.r,
-                        backgroundImage: AssetImage(
-                            'assets/${authRepository.userModel.profileImg}'),
+                      GestureDetector(
+                        onTap: () {
+                          showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return ImageDialog(assetImage: AssetImage(
+                              'assets/${authRepository.userModel.profileImg}'));
+  },
+);
+                        },
+                        child: CircleAvatar(
+                          radius: 64.r,
+                          backgroundImage: AssetImage(
+                              'assets/${authRepository.userModel.profileImg}'),
+                        ),
                       ),
                       SizedBox(
                         height: 16.h,

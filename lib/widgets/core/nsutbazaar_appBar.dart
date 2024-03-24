@@ -11,10 +11,14 @@ import 'package:nsutbazaar/repositories/local_data.dart';
 import 'package:nsutbazaar/screens/DrawerScreens/add_listing.dart';
 import 'package:nsutbazaar/screens/DrawerScreens/add_request.dart';
 import 'package:nsutbazaar/screens/Product/liked_sell_products.dart';
+import 'package:nsutbazaar/widgets/image_dialog.dart';
+import 'package:nsutbazaar/widgets/zoom_image.dart';
 
 PreferredSize nsutbazaarAppBar(BuildContext context) {
   final localData = context.read<LocalData>();
   final authRepository = context.read<FirebaseRepository>();
+  final AssetImage assetImage = AssetImage(
+                            'assets/${authRepository.userModel.profileImg}');
 
   return PreferredSize(
     preferredSize: Size.fromHeight(40.h),
@@ -43,14 +47,30 @@ PreferredSize nsutbazaarAppBar(BuildContext context) {
         ],
       ),
       actions: [
-        Padding(
-          padding:
-              EdgeInsets.only(right: 18.w, top: 5.h), // Add top padding here
-          child: CircleAvatar(
-            radius: 15.r,
-            backgroundImage: AssetImage(
-                            'assets/${authRepository.userModel.profileImg}'), // Replace with your local asset image path
-                      ),
+        GestureDetector(
+          onTap: () {
+
+            showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return ImageDialog(assetImage: assetImage);
+  },
+);
+            // Navigator.push(
+            //                   context,
+            //                   MaterialPageRoute(
+            //                     builder: (context) => ZoomedImage(assetImage: assetImage,),
+            //                   ),
+            //                 );
+          },
+          child: Padding(
+            padding:
+                EdgeInsets.only(right: 18.w, top: 5.h), // Add top padding here
+            child: CircleAvatar(
+              radius: 15.r,
+              backgroundImage: assetImage, // Replace with your local asset image path
+                        ),
+          ),
         ),
       ],
       iconTheme: IconThemeData(color: Colors.white, size: 24.sp),
