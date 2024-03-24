@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:nsutbazaar/constants/darkTheme.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,17 +34,19 @@ class _AddListingScreenState extends State<AddListingScreen> {
   File? file = null;
   bool isLoading = false;
 
-  Future<File?> cropSquareImage(File imageFile) async {
-    await ImageCropper().cropImage(
-      sourcePath: imageFile.path,
-      aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
-      aspectRatioPresets: [CropAspectRatioPreset.square],
-      compressQuality: 70,
-      compressFormat: ImageCompressFormat.jpg,
-      androidUiSettings: androidUiSettingsLocked(),
-      iosUiSettings: iosUiSettingsLocked(),
-    );
-  }
+Future<File?> cropSquareImage(File imageFile) async {
+  File? croppedFile = await ImageCropper().cropImage(
+    sourcePath: imageFile.path,
+    aspectRatio: CropAspectRatio(ratioX: 150.w, ratioY: 100.h),
+    aspectRatioPresets: [CropAspectRatioPreset.square],
+    compressQuality: 50,
+    compressFormat: ImageCompressFormat.jpg,
+    androidUiSettings: androidUiSettingsLocked(),
+    iosUiSettings: iosUiSettingsLocked(),
+  );
+
+  return croppedFile;
+}
 
   IOSUiSettings iosUiSettingsLocked() => IOSUiSettings(
         rotateClockwiseButtonHidden: false,
@@ -52,31 +55,34 @@ class _AddListingScreenState extends State<AddListingScreen> {
 
   AndroidUiSettings androidUiSettingsLocked() => AndroidUiSettings(
         toolbarTitle: 'Crop Image',
-        toolbarColor: Colors.red,
+        toolbarColor: DarkTheme.dtBackgroundColor,
         toolbarWidgetColor: Colors.white,
         hideBottomControls: true,
       );
 
   Future<File?> pickMedia({
-    required Future<File?> Function(File file) cropImage,
-  }) async {
-    final source = ImageSource.camera;
-    final pickedFile = await ImagePicker().pickImage(source: source);
+  required Future<File?> Function(File file) cropImage,
+}) async {
+  final source = ImageSource.camera;
+  final pickedFile = await ImagePicker().pickImage(source: source);
 
-    if (pickedFile == null) return null;
-    final file = File(pickedFile.path);
-    final crop = await cropImage(file);
-    print("huehue");
-    print(crop);
-    if (crop == null) {
-      return File(pickedFile.path);
-    } else {
-      // Create an instance of the state class
-      return crop; // Call cropImage on the instance
-    }
+  if (pickedFile == null) return null;
+  
+  final file = File(pickedFile.path);
+  final crop = await cropImage(file);
+  
+  if (crop == null) {
+    // Crop operation failed or was canceled, return original file
+    return file;
+  } else {
+    // Crop operation succeeded, return the cropped image
+    return crop;
   }
+}
+
 
   String? selectedCategory;
+  bool isAnonymous = false;
 
   late TextEditingController contactNumberController;
 
@@ -307,42 +313,90 @@ class _AddListingScreenState extends State<AddListingScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 5.h,
+                          height: 10.h,
                         ),
-                        DropdownButton<String>(
-                          value: selectedCategory ?? "Books",
-                          focusColor: Colors.white,
-                          icon:
-                              Icon(Icons.arrow_drop_down, color: Colors.white),
-                          iconSize: 24,
-                          elevation: 16,
-                          style: TextStyle(color: Colors.white , fontSize: 13.sp),
-                          dropdownColor: Colors.purple,
-                          underline: Container(
-                            height: 2,
-                            color: Colors.white,
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                            'Category',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 12.sp),
                           ),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedCategory = newValue;
-                              print(
-                                  selectedCategory); // Ensure that selectedCategory is updated
-                            });
-                          },
-                          items: <String>[
-                            'Books',
-                            'Sports',
-                            'Academic Tool',
-                            'Others'
-                          ].map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: TextStyle(color: Colors.white),
+                                  DropdownButton<String>(
+                                    value: selectedCategory ?? "Books",
+                                    focusColor:  DarkTheme.dtDarkPurple,
+                                    icon:
+                                        Icon(Icons.arrow_drop_down, color: DarkTheme.dtLightPurple),
+                                    iconSize: 24,
+                                    elevation: 16,
+                                    style: TextStyle(color:  DarkTheme.dtDarkPurple , fontSize: 13.sp),
+                                    dropdownColor: Colors.purple,
+                                    underline: Container(
+                                      height: 2,
+                                      color:  Color.fromARGB(255, 136, 136, 136),
+                                    ),
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        selectedCategory = newValue;
+                                        print(
+                                            selectedCategory); // Ensure that selectedCategory is updated
+                                      });
+                                    },
+                                    items: <String>[
+                                      'Books',
+                                      'Sports',
+                                      'Academic Tool',
+                                      'Others'
+                                    ].map<DropdownMenuItem<String>>((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ],
                               ),
-                            );
-                          }).toList(),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                Text(
+                            'Post Anonymously',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 12.sp),
+                          ),
+                          //SizedBox(height: 5.h),
+                          Transform.scale(
+                            scale: 1.sp,
+                            child: Switch(
+                                value: isAnonymous,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isAnonymous = value;
+                                  });
+                                },
+                                activeColor: Colors.purple, // Color when switched on
+                                activeTrackColor: Colors.purple.shade100, // Track color when switched on
+                                inactiveThumbColor: Colors.white, // Thumb color when switched off
+                                inactiveTrackColor: Colors.grey.shade400, // Track color when switched off
+                                materialTapTargetSize: MaterialTapTargetSize.padded, // Increase tap target size
+                                splashRadius: 30, // Increase splash radius
+                              ),
+                          ),
+                              ],),
+                              //SizedBox(width: 1.w,)
+                            ],
+                          ),
                         ),
     
                         SizedBox(
@@ -465,7 +519,8 @@ class _AddListingScreenState extends State<AddListingScreen> {
                                                 timestamp:timestamp.toString(),
                                                 profileImg: authRepository
                                                         .userModel.profileImg,
-                                                username: authRepository.userModel.username
+                                                username: authRepository.userModel.username,
+                                                isAnonymous: isAnonymous
                                                     );
     
                                         productFirestore

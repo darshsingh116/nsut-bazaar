@@ -26,6 +26,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
   String _productName = '';
   double _price = 0.0;
   String _description = '';
+  bool isAnonymous = false;
 
   @override
   Widget build(BuildContext context) {
@@ -184,6 +185,30 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                             },
                           ),
                         ),
+                        SizedBox(height: 20.h),
+                        Text(
+                          'Post Anonymously',
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 16.sp),
+                        ),
+                        //SizedBox(height: 5.h),
+                        Transform.scale(
+                          scale: 1.sp,
+                          child: Switch(
+                              value: isAnonymous,
+                              onChanged: (value) {
+                                setState(() {
+                                  isAnonymous = value;
+                                });
+                              },
+                              activeColor: Colors.purple, // Color when switched on
+                              activeTrackColor: Colors.purple.shade100, // Track color when switched on
+                              inactiveThumbColor: Colors.white, // Thumb color when switched off
+                              inactiveTrackColor: Colors.grey.shade400, // Track color when switched off
+                              materialTapTargetSize: MaterialTapTargetSize.padded, // Increase tap target size
+                              splashRadius: 30, // Increase splash radius
+                            ),
+                        ),
                       ],
                     ),
                     Padding(
@@ -209,7 +234,8 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                 timestamp: timestamp.toString(),
                                 contact: authRepository.userModel.phoneNumber,
                                 profileImg: authRepository.userModel.profileImg,
-                                username: authRepository.userModel.username
+                                username: authRepository.userModel.username,
+                                isAnonymous: isAnonymous
                               );
 
                               productFirestore.addRequestProduct(product);

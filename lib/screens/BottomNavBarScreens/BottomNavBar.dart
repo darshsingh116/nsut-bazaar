@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nsutbazaar/constants/darkTheme.dart';
 import 'package:nsutbazaar/models/TagItem.dart';
-import 'package:nsutbazaar/screens/BottomNavBarScreens/home_page.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/home/home_page.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/listings.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/plusPageView.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/profile_page.dart';

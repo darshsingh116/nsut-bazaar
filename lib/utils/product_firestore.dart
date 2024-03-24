@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:nsutbazaar/extensions/datetime.dart';
 import 'package:nsutbazaar/models/SellProductModel.dart';
 import 'package:nsutbazaar/models/RequestProductModel.dart';
 import 'package:nsutbazaar/repositories/firebase_storage_repo.dart';
@@ -36,6 +37,50 @@ class ProductFirestore {
       return [];
     }
   }
+
+
+Future<Map<String, dynamic>> getCountsAndData() async {
+  CollectionReference sellProductsRef = _firestore.collection('sellProducts');
+  CollectionReference requestProductRef = _firestore.collection('requestProduct');
+
+  // Get the count of documents in each collection
+  int sellProductsCount = (await sellProductsRef.get()).size;
+  int requestProductCount = (await requestProductRef.get()).size;
+int currentTime = DateTime.now().millisecondsSinceEpoch;
+  // Get data from sellProducts collection with timestamp for today
+
+  // Get data from sellProducts collection with timestamp for today
+  QuerySnapshot<Object?> todaySellProductsSnapshot = await sellProductsRef.get();
+  int todaySellProductsCount = 0;
+
+  todaySellProductsSnapshot.docs.forEach((doc) {
+    String timestampString = doc['timestamp']; // Assuming 'timestamp' is the field name in Firestore
+    int timestamp = int.tryParse(timestampString) ?? 0; // Convert string to int, default to 0 if parsing fails
+    if (timestamp >= currentTime - Duration(days: 1).inMilliseconds) {
+      todaySellProductsCount++;
+    }
+  });
+
+    QuerySnapshot<Object?> todayRequestProductsSnapshot = await requestProductRef.get();
+  int todayRequestProductsCount = 0;
+
+  todayRequestProductsSnapshot.docs.forEach((doc) {
+    String timestampString = doc['timestamp']; // Assuming 'timestamp' is the field name in Firestore
+    int timestamp = int.tryParse(timestampString) ?? 0; // Convert string to int, default to 0 if parsing fails
+    if (timestamp >= currentTime - Duration(days: 1).inMilliseconds) {
+      todayRequestProductsCount++;
+    }
+  });
+
+  return {
+    'sellProductsCount': sellProductsCount,
+    'requestProductCount': requestProductCount,
+    'todaySellProductsCount': (todaySellProductsCount+todayRequestProductsCount),
+  };
+}
+
+
+
 
   Future<List<SellProductModel>> getAllSellProductsByUserId(
       String userId) async {

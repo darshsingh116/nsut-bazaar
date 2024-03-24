@@ -10,6 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:nsutbazaar/firebase_options.dart';
 import 'package:nsutbazaar/auth/login.dart';
 import 'package:nsutbazaar/repositories/local_data.dart';
+import 'package:nsutbazaar/screens/BottomNavBarScreens/home/bloc/home_bloc.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/bloc/listings_bloc.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/listings/blocLatestPost/latest_post_bloc.dart';
 import 'package:nsutbazaar/screens/BottomNavBarScreens/requests/bloc/requests_bloc.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AuthBloc>(create: (BuildContext context) => AuthBloc()),
+          BlocProvider<HomeBloc>(create: (BuildContext context) => HomeBloc()),
           BlocProvider<ListingsBloc>(
               create: (BuildContext context) => ListingsBloc()),
           BlocProvider<LatestPostBloc>(
