@@ -90,7 +90,7 @@ class _MyRequestsState extends State<MyRequests> {
                 );
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return Center(
-                  child: Text('No products available'),
+                  child: Text('Nothing Here', style: TextStyle(color: Colors.white),),
                 );
               } else {
                 return ListView.builder(

@@ -37,6 +37,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
           backgroundColor: Colors.transparent,
           body: SafeArea(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding:
@@ -76,8 +77,21 @@ class _RequestsScreenState extends State<RequestsScreen> {
                     ]; // This will ensure no suggestion bar is shown
                   }),
                 ),
+                // SizedBox(
+                //   height: 5.h,
+                // ),
+                // Padding(
+                //             padding: EdgeInsets.symmetric(horizontal: 15.w),
+                //             child: Text(
+                //               "Requests",
+                //               style: TextStyle(
+                //                   color: Colors.white,
+                //                   fontSize: 15.sp,
+                //                   fontWeight: FontWeight.bold),
+                //             ),
+                //           ),
                 SizedBox(
-                  height: 12.h,
+                  height: 10.h,
                 ),
                 BlocBuilder<RequestsBloc, RequestsState>(
                   builder: (context, state) {

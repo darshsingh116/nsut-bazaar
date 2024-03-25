@@ -14,7 +14,7 @@ import 'package:nsutbazaar/screens/Product/liked_sell_products.dart';
 import 'package:nsutbazaar/widgets/image_dialog.dart';
 import 'package:nsutbazaar/widgets/zoom_image.dart';
 
-PreferredSize nsutbazaarAppBar(BuildContext context) {
+PreferredSize nsutbazaarAppBar(BuildContext context, int currentPage) {
   final localData = context.read<LocalData>();
   final authRepository = context.read<FirebaseRepository>();
   final AssetImage assetImage = AssetImage(
@@ -24,7 +24,7 @@ PreferredSize nsutbazaarAppBar(BuildContext context) {
     preferredSize: Size.fromHeight(40.h),
     child: AppBar(
       titleSpacing: 0,
-      title: Row(
+      title: (currentPage != 2)?Row(
         children: [
           Padding(
             padding: EdgeInsets.only(
@@ -45,6 +45,34 @@ PreferredSize nsutbazaarAppBar(BuildContext context) {
             ),
           ),
         ],
+      ):Row(
+       children: [
+        Padding(
+            padding: EdgeInsets.only(
+                left: 18.w, right: 5.w, top: 5.h), // Add top padding here
+            child: SvgPicture.asset(
+              'assets/nsut_bazaar_logo_no_bg.svg', // Replace 'your_svg_icon.svg' with your SVG icon asset path
+              width: 26.w,
+              height: 23.h,
+              //color: Colors.white,
+            ),
+          ),
+          Expanded(
+            child: Container(
+              child: Padding(
+                padding: EdgeInsets.only(top: 5.h), // Add top padding here
+                child: Center(
+                  child: Text(
+                    "All Request",
+                    style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(width: 2.w,)
+       ], 
       ),
       actions: [
         GestureDetector(
@@ -83,6 +111,7 @@ PreferredSize nsutbazaarAppBar(BuildContext context) {
       toolbarHeight: MediaQuery.of(context).size.height * 0.07,
       backgroundColor: Colors.transparent,
       elevation: 0,
+      centerTitle: (currentPage == 2)?true:false,
     ),
   );
 }

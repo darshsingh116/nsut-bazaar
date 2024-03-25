@@ -40,7 +40,7 @@ class _NavBarScreensState extends State<NavBarScreens> {
     return backgroundContainer(
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: nsutbazaarAppBar(context),
+        appBar: nsutbazaarAppBar(context,_selectedIndex),
         backgroundColor: Colors.transparent,
         body: IndexedStack(
           index: _selectedIndex,
