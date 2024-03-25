@@ -48,12 +48,12 @@ Future<File?> cropSquareImage(File imageFile) async {
   return croppedFile;
 }
 
-  IOSUiSettings iosUiSettingsLocked() => IOSUiSettings(
+  IOSUiSettings iosUiSettingsLocked() => const IOSUiSettings(
         rotateClockwiseButtonHidden: false,
         rotateButtonsHidden: false,
       );
 
-  AndroidUiSettings androidUiSettingsLocked() => AndroidUiSettings(
+  AndroidUiSettings androidUiSettingsLocked() => const AndroidUiSettings(
         toolbarTitle: 'Crop Image',
         toolbarColor: DarkTheme.dtBackgroundColor,
         toolbarWidgetColor: Colors.white,
@@ -99,7 +99,7 @@ Future<File?> cropSquareImage(File imageFile) async {
   Widget build(BuildContext context) {
     final authRepository = context.read<FirebaseRepository>();
     final productFirestore =
-        new ProductFirestore(authRepository.firebaseFirestore);
+        ProductFirestore(authRepository.firebaseFirestore);
 
     final firebaseStoreageRepo = context.read<FirebaseStorageRepo>();
 
@@ -145,39 +145,37 @@ Future<File?> cropSquareImage(File imageFile) async {
                         Container(
                           height: 40.h,
                           decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 36, 28,
+                              color: const Color.fromARGB(255, 36, 28,
                                   41), // Set background color to gray
                               borderRadius: BorderRadius.circular(12.r),
                               border: Border.all(
-                                  color: Color.fromARGB(
+                                  color: const Color.fromARGB(
                                       255, 74, 56, 87)) // Set border radius
                               ),
-                          child: Expanded(
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                hintText: ' Ex: Gaming Mouse',
-                                hintStyle: TextStyle(
-                                    color: Color.fromARGB(255, 176, 153, 189),
-                                    fontSize:
-                                        16.sp), // Set hint text color to white
-                                border: InputBorder
-                                    .none, // Remove border from input decoration
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 15.w,vertical: 10.h), // Set content padding
-                              ),
-                              style: TextStyle(
-                                  color:
-                                      Colors.white), // Set text color to white
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter product name';
-                                }
-                                return null;
-                              },
-                              onSaved: (value) {
-                                _productName = value!;
-                              },
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: ' Ex: Gaming Mouse',
+                              hintStyle: TextStyle(
+                                  color: const Color.fromARGB(255, 176, 153, 189),
+                                  fontSize:
+                                      16.sp), // Set hint text color to white
+                              border: InputBorder
+                                  .none, // Remove border from input decoration
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 15.w,vertical: 10.h), // Set content padding
                             ),
+                            style: const TextStyle(
+                                color:
+                                    Colors.white), // Set text color to white
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter product name';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _productName = value!;
+                            },
                           ),
                         ),
                         SizedBox(height: 10.h),
@@ -192,36 +190,34 @@ Future<File?> cropSquareImage(File imageFile) async {
                         Container(
                           height: 40.h,
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 36, 28, 41),
+                            color: const Color.fromARGB(255, 36, 28, 41),
                             borderRadius: BorderRadius.circular(12.r),
                             border: Border.all(
-                              color: Color.fromARGB(255, 74, 56, 87),
+                              color: const Color.fromARGB(255, 74, 56, 87),
                             ),
                           ),
-                          child: Expanded(
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                hintText: 'Enter Price',
-                                hintStyle: TextStyle(
-                                  color: Color.fromARGB(255, 176, 153, 189),
-                                  fontSize: 16.sp,
-                                ),
-                                border: InputBorder.none,
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 15.w,vertical: 10.h),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: 'Enter Price',
+                              hintStyle: TextStyle(
+                                color: const Color.fromARGB(255, 176, 153, 189),
+                                fontSize: 16.sp,
                               ),
-                              keyboardType: TextInputType.number,
-                              style: TextStyle(color: Colors.white),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter price';
-                                }
-                                return null;
-                              },
-                              onSaved: (value) {
-                                _price = double.parse(value!);
-                              },
+                              border: InputBorder.none,
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 15.w,vertical: 10.h),
                             ),
+                            keyboardType: TextInputType.number,
+                            style: const TextStyle(color: Colors.white),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter price';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _price = double.parse(value!);
+                            },
                           ),
                         ),
                         SizedBox(height: 10.h), // Add spacing between fields
@@ -236,38 +232,36 @@ Future<File?> cropSquareImage(File imageFile) async {
                         Container(
                           height: 40.h,
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 36, 28, 41),
+                            color: const Color.fromARGB(255, 36, 28, 41),
                             borderRadius: BorderRadius.circular(12.r),
                             border: Border.all(
-                              color: Color.fromARGB(255, 74, 56, 87),
+                              color: const Color.fromARGB(255, 74, 56, 87),
                             ),
                           ),
-                          child: Expanded(
-                            child: TextFormField(
-                              controller: contactNumberController,
-                              decoration: InputDecoration(
-                                hintText: 'Enter Contact Number',
-                                hintStyle: TextStyle(
-                                  color: Color.fromARGB(255, 176, 153, 189),
-                                  fontSize: 16.sp,
-                                ),
-                                border: InputBorder.none,
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 15.w,vertical: 10.h),
+                          child: TextFormField(
+                            controller: contactNumberController,
+                            decoration: InputDecoration(
+                              hintText: 'Enter Contact Number',
+                              hintStyle: TextStyle(
+                                color: const Color.fromARGB(255, 176, 153, 189),
+                                fontSize: 16.sp,
                               ),
-                              keyboardType: TextInputType.phone,
-                              style: TextStyle(color: Colors.white),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter contact number';
-                                }
-                                // You can add additional validation logic for contact number format here if needed
-                                return null;
-                              },
-                              onSaved: (value) {
-                                _contactNumber = int.parse(value!);
-                              },
+                              border: InputBorder.none,
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 15.w,vertical: 10.h),
                             ),
+                            keyboardType: TextInputType.phone,
+                            style: const TextStyle(color: Colors.white),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter contact number';
+                              }
+                              // You can add additional validation logic for contact number format here if needed
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _contactNumber = int.parse(value!);
+                            },
                           ),
                         ),
                         SizedBox(height: 10.h), // Add spacing between fields
@@ -281,10 +275,10 @@ Future<File?> cropSquareImage(File imageFile) async {
                           height:
                               100.h, // Increase height for description field
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 36, 28, 41),
+                            color: const Color.fromARGB(255, 36, 28, 41),
                             borderRadius: BorderRadius.circular(12.r),
                             border: Border.all(
-                              color: Color.fromARGB(255, 74, 56, 87),
+                              color: const Color.fromARGB(255, 74, 56, 87),
                             ),
                           ),
                           child: TextFormField(
@@ -292,15 +286,15 @@ Future<File?> cropSquareImage(File imageFile) async {
                             decoration: InputDecoration(
                               hintText: 'Enter Description',
                               hintStyle: TextStyle(
-                                color: Color.fromARGB(255, 176, 153, 189),
+                                color: const Color.fromARGB(255, 176, 153, 189),
                                 fontSize: 16.sp,
                               ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(
+                              contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 16.0,
                                   vertical: 12.0), // Adjust vertical padding
                             ),
-                            style: TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter description';
@@ -333,14 +327,14 @@ Future<File?> cropSquareImage(File imageFile) async {
                                     value: selectedCategory ?? "Books",
                                     focusColor:  DarkTheme.dtDarkPurple,
                                     icon:
-                                        Icon(Icons.arrow_drop_down, color: DarkTheme.dtLightPurple),
+                                        const Icon(Icons.arrow_drop_down, color: DarkTheme.dtLightPurple),
                                     iconSize: 24,
                                     elevation: 16,
                                     style: TextStyle(color:  DarkTheme.dtDarkPurple , fontSize: 13.sp),
                                     dropdownColor: Colors.purple,
                                     underline: Container(
                                       height: 2,
-                                      color:  Color.fromARGB(255, 136, 136, 136),
+                                      color:  const Color.fromARGB(255, 136, 136, 136),
                                     ),
                                     onChanged: (String? newValue) {
                                       setState(() {
@@ -359,7 +353,7 @@ Future<File?> cropSquareImage(File imageFile) async {
                                         value: value,
                                         child: Text(
                                           value,
-                                          style: TextStyle(color: Colors.white),
+                                          style: const TextStyle(color: Colors.white),
                                         ),
                                       );
                                     }).toList(),
@@ -413,13 +407,13 @@ Future<File?> cropSquareImage(File imageFile) async {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(
                                         8.r), // Set border radius
-                                    color: Color.fromARGB(255, 36, 28,
+                                    color: const Color.fromARGB(255, 36, 28,
                                         41), // Set background color
                                   ),
                                   child: Padding(
                                     padding:
                                         EdgeInsets.fromLTRB(0, 0, 2.w, 2.h),
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.add_a_photo_outlined,
                                       color: Colors.white,
                                       size: 24.0,
@@ -435,7 +429,7 @@ Future<File?> cropSquareImage(File imageFile) async {
                                     (file == null)
                                         ? "Upload Photo"
                                         : path.basename(file!.path),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.white, fontSize: 16.0),
                                     overflow: TextOverflow
                                         .ellipsis, // Wrap the text if it's too long
@@ -554,7 +548,7 @@ Future<File?> cropSquareImage(File imageFile) async {
                                           .bold, // Set text weight to bold
                                     ),
                                   )
-                                : CircularProgressIndicator(
+                                : const CircularProgressIndicator(
                                     color: Colors.white,
                                   ),
                           )),
