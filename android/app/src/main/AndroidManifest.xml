@@ -34,4 +34,17 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+
+    <queries>
+                       
+     <!-- Place inside the <queries> element. -->
+                    <intent>
+                     <action android:name="android.intent.action.VIEW" />
+                        <category android:name="android.intent.category.BROWSABLE" />
+                        <data android:scheme="https" />
+                    </intent>
+                    
+                    <package android:name="com.whatsapp" />
+                    <package android:name="org.telegram.messenger" />
+</queries>
 </manifest>

@@ -17,8 +17,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       user.reload();
       bool isVerified = user.emailVerified;
       emit(AuthStateIsLoading());
-      print("check verify");
-      print(isVerified);
       if(isVerified == true){
         emit(AuthStateLoggedIn());
       }else{
@@ -27,14 +25,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         
       } else {
         emit(AuthStateLoggedOut());
+        ScaffoldMessenger.of(event.context).showSnackBar(
+      SnackBar(
+        content: Text('Incorrect email/password'),
+      ),
+    );
       }
-      // try {
-      //   final userCredentail = await FirebaseAuth.instance
-      //       .signInWithEmailAndPassword(email: email, password: password);
-      //   emit(AuthStateLoggedIn());
-      // } on FirebaseAuthException catch (e) {
-      //   emit(AuthStateLoggedOut());
-      // }
     });
 
     on<AuthEventGoToLogin>((event, emit) async {

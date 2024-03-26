@@ -12,10 +12,11 @@ class AuthEventInitialize implements AuthEvent {
 }
 
 class LogIn implements AuthEvent {
+  final BuildContext context;
   final FirebaseRepository authRepository;
   final String email;
   final String password;
-  const LogIn(
+  const LogIn(this.context,  
       {required this.email,
       required this.password,
       required this.authRepository});

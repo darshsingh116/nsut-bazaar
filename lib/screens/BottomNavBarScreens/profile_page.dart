@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nsutbazaar/auth/bloc/auth_bloc.dart';
 import 'package:nsutbazaar/auth/bloc/auth_event.dart';
 import 'package:nsutbazaar/auth/bloc/auth_state.dart';
+import 'package:nsutbazaar/constants/darkTheme.dart';
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/extensions/strings.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
@@ -12,6 +13,7 @@ import 'dart:ui';
 
 import 'package:nsutbazaar/screens/edit_profile_page.dart';
 import 'package:nsutbazaar/widgets/image_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -21,11 +23,23 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
-    void updateProfile() {
+  void updateProfile() {
     setState(() {});
   }
 
+  void launchTelegram(String inviteLink) async {
+  try {
+    String url = 'https://t.me/$inviteLink';
+    Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $url';
+    }
+  } catch (e) {
+    print(e);
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -54,12 +68,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       GestureDetector(
                         onTap: () {
                           showDialog(
-  context: context,
-  builder: (BuildContext context) {
-    return ImageDialog(assetImage: AssetImage(
-                              'assets/${authRepository.userModel.profileImg}'));
-  },
-);
+                            context: context,
+                            builder: (BuildContext context) {
+                              return ImageDialog(
+                                  assetImage: AssetImage(
+                                      'assets/${authRepository.userModel.profileImg}'));
+                            },
+                          );
                         },
                         child: CircleAvatar(
                           radius: 64.r,
@@ -105,16 +120,18 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: ElevatedButton(
                                   onPressed: () {
                                     Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EditProfilePage(onUpdateProfile: updateProfile)));
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditProfilePage(
+                                                    onUpdateProfile:
+                                                        updateProfile)));
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor:
                                         PurpleTheme.ButtonDarkPurpleColor,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(12.r),
+                                      borderRadius: BorderRadius.circular(12.r),
                                     ),
                                   ),
                                   child: Text(
@@ -134,15 +151,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: ElevatedButton(
                                   onPressed: () {
                                     context
-                                  .read<AuthBloc>()
-                                  .add(LogOut(authRepository));
+                                        .read<AuthBloc>()
+                                        .add(LogOut(authRepository));
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: PurpleTheme
                                         .ButtonLightPurpleColor, // Light purple
                                     shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(12.r),
+                                      borderRadius: BorderRadius.circular(12.r),
                                     ),
                                   ),
                                   child: Text(
@@ -188,7 +204,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                 ),
-                SizedBox(height: 10.h,),
+                SizedBox(
+                  height: 10.h,
+                ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Row(
@@ -212,6 +230,74 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       )
                     ],
+                  ),
+                ),
+                SizedBox(height: 100.h),
+                SizedBox(
+                  width: 300.w,
+                  height: 40.h,
+                  child: ElevatedButton(
+                    onPressed: () {
+                     launchTelegram("kirito69420");
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: DarkTheme.dtLightPurple,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                    ),
+                    child:  Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'Report Bug',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 14.0.sp,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+           // Add some spacing between the text and icon
+          
+        ],
+      ),
+                  ),
+                ),
+                SizedBox(height: 5.h),
+                SizedBox(
+                  width: 300.w,
+                  height: 40.h,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      launchTelegram("nsutbazaar");
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255,42,171,238),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                    ),
+                    child:  Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.telegram_rounded ,
+            color: Colors.white,
+            size: 40.sp,
+          ),
+          SizedBox(width: 10.w),
+          Text(
+            'Join Community Group',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 14.0.sp,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+           // Add some spacing between the text and icon
+          
+        ],
+      ),
                   ),
                 )
               ],

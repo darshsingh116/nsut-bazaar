@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/extensions/strings.dart';
@@ -90,8 +91,29 @@ class _MyRequestsState extends State<MyRequests> {
                 );
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return Center(
-                  child: Text('Nothing Here', style: TextStyle(color: Colors.white),),
-                );
+                  child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 60.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 20.w, 5.h),
+                        child: SvgPicture.asset(
+                          'assets/nothing_here.svg',
+                          semanticsLabel: 'An SVG image',
+                          height: 300.h,
+                        ),
+                      ),
+                      Text(
+                        "Nothing Here",
+                        style: TextStyle(color: Colors.white, fontSize: 20.sp,fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                ));
               } else {
                 return ListView.builder(
                   itemCount: snapshot.data!.length,

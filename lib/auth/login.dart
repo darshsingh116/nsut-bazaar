@@ -206,6 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     final password = passwordController.text;
                                     context.read<AuthBloc>().add(
                                           LogIn(
+                                            context,
                                             email: email,
                                             password: password,
                                             authRepository: authRepository,
