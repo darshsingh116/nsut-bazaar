@@ -1,4 +1,4 @@
-package com.example.nsutbazar
+package com.nsutbazaar.app
 
 import io.flutter.embedding.android.FlutterActivity
 
