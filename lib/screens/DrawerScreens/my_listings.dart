@@ -223,6 +223,8 @@ class _MyListingCardState extends State<MyListingCard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                     widget.sellProductModel.productName,
                     style: TextStyle(
                         color: Colors.white,
@@ -231,6 +233,8 @@ class _MyListingCardState extends State<MyListingCard> {
                   ),
                   Text(
                     'Price: ₹${widget.sellProductModel.price}',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     style: TextStyle(
                         color: PurpleTheme.LightPurpleColor, fontSize: 14.sp),
                   ),

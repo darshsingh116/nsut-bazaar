@@ -107,12 +107,17 @@ class RequestListCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          requestProductModel.productName.toTitleCase(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.bold),
+                        SizedBox(
+                          width: 220.w,
+                          child: Text(
+                            requestProductModel.productName.toTitleCase(),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         Text(
                           '₹${requestProductModel.price.toString()}',

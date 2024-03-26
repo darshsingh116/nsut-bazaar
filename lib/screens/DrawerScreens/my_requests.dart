@@ -173,6 +173,8 @@ class _MyRequestCardState extends State<MyRequestCard> {
                 children: [
                   Text(
                     widget.requestProductModel.productName.toTitleCase(),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16.sp,
@@ -183,6 +185,8 @@ class _MyRequestCardState extends State<MyRequestCard> {
                   ),
                   Text(
                     'Price: ₹${widget.requestProductModel.price}',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     style: TextStyle(
                         color: PurpleTheme.LightPurpleColor, fontSize: 14.sp),
                   ),

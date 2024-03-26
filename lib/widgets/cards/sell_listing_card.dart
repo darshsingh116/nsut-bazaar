@@ -106,20 +106,34 @@ class _SellListCardState extends State<SellListCard> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          SizedBox(
+                            width: 110.w,
+                            child: Text(
                             widget.sellProductModel.productName.toTitleCase(),
                             textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.w400),
+                              color: Colors.white,
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.w400,
+                              
+                              
+                            ),
                           ),
-                          Text(
-                            '₹${widget.sellProductModel.price.toString()}',
-                            style: TextStyle(
-                                color: PurpleTheme.LightPurpleColor,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.bold),
+                          ),
+
+                          SizedBox(
+                            width: 110.w,
+                            child: Text(
+                              '₹${widget.sellProductModel.price.toString()}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: PurpleTheme.LightPurpleColor,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ],
                       ),
