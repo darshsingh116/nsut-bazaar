@@ -247,7 +247,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                 .emit(RequestsStateInitial());
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: PurpleTheme.ButtonLightPurpleColor,
+                            backgroundColor: PurpleTheme.ButtonLightPurpleColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.r),
                             ),

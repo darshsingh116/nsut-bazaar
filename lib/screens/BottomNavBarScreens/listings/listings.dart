@@ -313,9 +313,11 @@ class _ListingsScreenState extends State<ListingsScreen> {
                                   list = state.productList;
                                 }
                                 if (list.isEmpty) {
-                                  return Text(
-                                    'No products available',
-                                    style: TextStyle(color: Colors.white),
+                                  return Center(
+                                    child: Text(
+                                      'No products available',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
                                   );
                                 } else {
                                   list.shuffle();
