@@ -22,9 +22,12 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  bool _isObscure = true; // used to toggle visibility of passwd
+
   @override
   Widget build(BuildContext context) {
     final authRepository = context.read<FirebaseRepository>();
+
 
     return backgroundContainer(
       child: SafeArea(
@@ -43,8 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     context,
                     MaterialPageRoute(builder: (context) => NavBarScreens()),
                   );
-                }
-                else if (state is AuthStateCheckVerified) {
+                } else if (state is AuthStateCheckVerified) {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => VerifyScreen()),
@@ -113,8 +115,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Row(
                               children: [
                                 Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.h),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16.w, vertical: 6.h),
                                   child: Icon(
                                     Icons.email,
                                     color: Colors.white,
@@ -153,17 +155,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Row(
                               children: [
                                 Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.h),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16.w, vertical: 6.h),
                                   child: Icon(
                                     Icons.lock,
                                     color: Colors.white,
                                   ),
                                 ),
                                 Expanded(
+                                  flex: 1,
                                   child: TextField(
                                     controller: passwordController,
-                                    obscureText: true,
+                                    obscureText: _isObscure,
                                     decoration: InputDecoration(
                                       hintText: 'Password',
                                       hintStyle: TextStyle(
@@ -176,6 +179,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                           EdgeInsets.symmetric(horizontal: 0.0),
                                     ),
                                     style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 0,
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 16.w, vertical: 6.h),
+                                    child: IconButton(
+                                        icon: Icon(_isObscure
+                                            ? Icons.visibility
+                                            : Icons.visibility_off),
+                                        onPressed: () {
+                                          setState(() {
+                                            _isObscure = !_isObscure;
+                                          });
+                                        }),
                                   ),
                                 ),
                               ],
@@ -229,17 +248,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: GestureDetector(
                               onTap: () async {
                                 final email = emailController.text;
-                                 final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    
+                                final emailRegExp =
+                                    RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
                                 if (emailRegExp.hasMatch(email)) {
                                   await authRepository.resetPassword(email);
                                   ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Reset email sent'),
-        ),
-      );
-
-
+                                    SnackBar(
+                                      content: Text('Reset email sent'),
+                                    ),
+                                  );
                                 }
                               },
                               child: Padding(
@@ -257,12 +275,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           SizedBox(height: 40.h),
                           Text(
-                                  "Only university email are allowed",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.sp,
-                                  ),
-                                ),
+                            "Only university email are allowed",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.sp,
+                            ),
+                          ),
                           SizedBox(height: 5.h),
                           GestureDetector(
                             onTap: () {

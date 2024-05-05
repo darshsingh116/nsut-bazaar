@@ -20,12 +20,15 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController emailController = TextEditingController(text: "@nsut.ac.in");
+  TextEditingController emailController =
+      TextEditingController(text: "@nsut.ac.in");
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController rollnumberController = TextEditingController();
   TextEditingController phonenumberController = TextEditingController();
   TextEditingController fullnameController = TextEditingController();
+
+  bool _isObscure = true; // used to toggle visibility of passwd
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +47,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 } else if (state is AuthStateLoggedIn) {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => NavBarScreens()));
-                }
-                else if (state is AuthStateCheckVerified) {
+                } else if (state is AuthStateCheckVerified) {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => VerifyScreen()),
@@ -76,7 +78,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                           ),
-                          
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 10.h),
                             child: Text(
@@ -124,8 +125,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         fontSize: 16.sp,
                                       ),
                                       border: InputBorder.none,
-                                      contentPadding:
-                                          EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.5.h),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 16.w, vertical: 6.5.h),
                                     ),
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -163,8 +164,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         fontSize: 16.sp,
                                       ),
                                       border: InputBorder.none,
-                                      contentPadding:
-                                          EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.5.h),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 16.w, vertical: 6.5.h),
                                     ),
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -202,8 +203,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         fontSize: 16.sp,
                                       ),
                                       border: InputBorder.none,
-                                      contentPadding:
-                                          EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.5.h),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 16.w, vertical: 6.5.h),
                                     ),
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -241,8 +242,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         fontSize: 16.sp,
                                       ),
                                       border: InputBorder.none,
-                                      contentPadding:
-                                          EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.5.h),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 16.w, vertical: 6.5.h),
                                     ),
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -280,8 +281,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         fontSize: 16.sp,
                                       ),
                                       border: InputBorder.none,
-                                      contentPadding:
-                                          EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.5.h),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 16.w, vertical: 6.5.h),
                                     ),
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -309,9 +310,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                                 SizedBox(width: 10.w),
                                 Expanded(
+                                  flex: 1,
                                   child: TextField(
                                     controller: passwordController,
-                                    obscureText: true,
+                                    obscureText: _isObscure,
                                     decoration: InputDecoration(
                                       hintText: 'Password',
                                       hintStyle: TextStyle(
@@ -320,11 +322,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         fontSize: 16.sp,
                                       ),
                                       border: InputBorder.none,
-                                      contentPadding:
-                                          EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.5.h),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 16.w, vertical: 6.5.h),
                                     ),
                                     style: TextStyle(color: Colors.white),
                                   ),
+                                ),
+                                Expanded(
+                                  flex: 0,
+                                  child: IconButton(
+                                      icon: Icon(_isObscure
+                                          ? Icons.visibility
+                                          : Icons.visibility_off),
+                                      onPressed: () {
+                                        setState(() {
+                                          _isObscure = !_isObscure;
+                                        });
+                                      }),
                                 ),
                               ],
                             ),
@@ -357,7 +371,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           rollnumber != "" &&
                                           username != "") {
                                         context.read<AuthBloc>().add(Register(
-                                          context: context,
+                                              context: context,
                                               email: email,
                                               password: password,
                                               rollnumber: rollnumber,
