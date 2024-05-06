@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nsutbazaar/auth/bloc/auth_bloc.dart';
 import 'package:nsutbazaar/auth/bloc/auth_event.dart';
 import 'package:nsutbazaar/auth/bloc/auth_state.dart';
+import 'package:nsutbazaar/auth/login.dart';
 import 'package:nsutbazaar/constants/darkTheme.dart';
 import 'package:nsutbazaar/constants/purpleTheme.dart';
 import 'package:nsutbazaar/repositories/firebase_repo.dart';
@@ -47,6 +48,8 @@ class _VerifyScreenState extends State<VerifyScreen> {
                     context,
                     MaterialPageRoute(builder: (context) => NavBarScreens()),
                   );
+                } else if (state is AuthStateLoggedOut) {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                 }
               },
               builder: (context, state) {
@@ -110,6 +113,33 @@ class _VerifyScreenState extends State<VerifyScreen> {
                                     ),
                                   );
                                 },
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 15.h,), // Space between buttons
+                        SizedBox(
+                          height: 40.h,
+                          width: 300.w,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              context
+                                  .read<AuthBloc>()
+                                  .add(LogOut(authRepository));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: PurpleTheme
+                                  .ButtonDarkPurpleColor, // Light purple
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.r),
+                              ),
+                            ),
+                            child: Text(
+                              'Log Out',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
