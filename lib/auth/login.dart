@@ -273,11 +273,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 40.h),
+                          SizedBox(height: 45.h),
                           Text(
-                            "Only university email are allowed",
+                            "Only university emails are allowed",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.white38,
                               fontSize: 15.sp,
                             ),
                           ),
@@ -307,6 +307,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               ],
+                            ),
+                          ),
+                          SizedBox(height: 45.h),
+                          Text(
+                            "NSUT Bazaar is not affiliated to NSUT IMS.",
+                            style: TextStyle(
+                              color: Colors.white38,
+                              fontSize: 13.sp,
+                            ),
+                          ),
+                          Text(
+                            "Please use your registered account to Log In.",
+                            style: TextStyle(
+                              color: Colors.white38,
+                              fontSize: 13.sp,
                             ),
                           ),
                         ],
