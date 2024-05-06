@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nsutbazaar/constants/darkTheme.dart';
@@ -202,6 +203,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       Expanded(
                         child: TextField(
                           controller: _phoneNumberController,
+                          keyboardType: TextInputType.phone,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp("[0-9]"))
+                          ],
                           decoration: InputDecoration(
                             hintText: 'Phone Number',
                             hintStyle: TextStyle(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:nsutbazaar/auth/bloc/auth_bloc.dart';
@@ -232,8 +233,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                                 SizedBox(width: 10.w),
                                 Expanded(
-                                  child: TextField(
+                                  child: TextFormField(
                                     controller: phonenumberController,
+                                    keyboardType: TextInputType.phone,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp("[0-9]"))
+                                    ],
                                     decoration: InputDecoration(
                                       hintText: 'Phone Number',
                                       hintStyle: TextStyle(
